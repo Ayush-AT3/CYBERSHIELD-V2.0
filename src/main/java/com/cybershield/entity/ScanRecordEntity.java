@@ -36,6 +36,14 @@ public class ScanRecordEntity {
     @Column(length = 20)
     private String classification; // SAFE, SUSPICIOUS, DANGEROUS
 
+    @Column(length = 30)
+    private String mlPrediction; // PHISHING, LEGITIMATE
+
+    private Double mlProbability;
+
+    @Column(length = 100)
+    private String mlModelName;
+
     @Column(length = 3000)
     private String summary;
 
@@ -151,5 +159,29 @@ public class ScanRecordEntity {
             this.indicators = new ArrayList<>();
         }
         this.indicators.add(indicator);
+    }
+
+    public String getMlPrediction() {
+        return mlPrediction;
+    }
+
+    public void setMlPrediction(String mlPrediction) {
+        this.mlPrediction = mlPrediction;
+    }
+
+    public Double getMlProbability() {
+        return mlProbability;
+    }
+
+    public void setMlProbability(Double mlProbability) {
+        this.mlProbability = mlProbability;
+    }
+
+    public String getMlModelName() {
+        return mlModelName;
+    }
+
+    public void setMlModelName(String mlModelName) {
+        this.mlModelName = mlModelName;
     }
 }

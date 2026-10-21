@@ -6,6 +6,7 @@ let currentEmlFile = null;
 document.addEventListener("DOMContentLoaded", () => {
     initScoreGauge(0, "SAFE");
     initDropZone();
+    initRealTimeListeners();
     switchMainTool('home-view');
 });
 
@@ -33,15 +34,16 @@ function switchMainTool(toolId) {
     if (toolId === 'home-view') {
         if (homeView) homeView.classList.remove('hidden');
         if (navBtnHome) navBtnHome.classList.add('active');
+        // Always hide results when going home
         if (resultsSec) resultsSec.classList.add('hidden');
     } else if (toolId === 'email-tool') {
         if (emailTool) emailTool.classList.remove('hidden');
         if (navBtnEmail) navBtnEmail.classList.add('active');
-        if (resultsSec) resultsSec.classList.remove('hidden');
+        // Results section stays as-is (hidden until manual scan is run)
     } else if (toolId === 'url-tool') {
         if (urlTool) urlTool.classList.remove('hidden');
         if (navBtnUrl) navBtnUrl.classList.add('active');
-        if (resultsSec) resultsSec.classList.remove('hidden');
+        // Results section stays as-is (hidden until manual scan is run)
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -73,6 +75,8 @@ function clearManualFields() {
     document.getElementById('input-subject').value = '';
     document.getElementById('input-body').value = '';
     document.getElementById('attachments-container').innerHTML = '';
+    // Reset the inline email ML card to idle state
+    resetEmailMlCard();
 }
 
 // ============================================================
@@ -152,7 +156,7 @@ async function uploadAndScanEml() {
         const data = await res.json();
         renderScanResults(data);
 
-        // Ensure results section is shown and scroll smoothly to results
+        // Show results section and scroll to it
         const resSec = document.getElementById('results-section');
         if (resSec) resSec.classList.remove('hidden');
         resSec.scrollIntoView({ behavior: 'smooth' });
@@ -165,7 +169,7 @@ async function uploadAndScanEml() {
 }
 
 // ============================================================
-// Tool 1: Manual Email Scan
+// Tool 1: Manual Email Scan (Full 5-Layer Deep Forensic Scan)
 // ============================================================
 async function performManualEmailScan() {
     const sender = document.getElementById('input-sender').value.trim();
@@ -179,7 +183,7 @@ async function performManualEmailScan() {
 
     const btn = document.getElementById('btn-scan-manual');
     btn.disabled = true;
-    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Inspecting 4 Layers...`;
+    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Running 5-Layer Deep Scan…`;
 
     const payload = {
         sender: sender,
@@ -198,9 +202,13 @@ async function performManualEmailScan() {
 
         if (!res.ok) throw new Error('Scan failed with status ' + res.status);
         const data = await res.json();
+
+        // Full render: gauge + layers + findings table + advisory
         renderScanResults(data);
+        renderEmailMlCard(data);
         loadDatabaseHistory();
 
+        // Show the results section and scroll smoothly to it
         const resSec = document.getElementById('results-section');
         if (resSec) resSec.classList.remove('hidden');
         resSec.scrollIntoView({ behavior: 'smooth' });
@@ -208,12 +216,12 @@ async function performManualEmailScan() {
         alert('Scan Error: ' + err.message);
     } finally {
         btn.disabled = false;
-        btn.innerHTML = `<i class="fa-solid fa-shield-virus text-lg"></i> Analyze Email (4-Layer Engine)`;
+        btn.innerHTML = `<i class="fa-solid fa-shield-virus text-lg"></i> Analyze Email (5-Layer Engine)`;
     }
 }
 
 // ============================================================
-// Tool 2: URL Scan
+// Tool 2: URL Scan (Full 5-Layer Deep Forensic Scan)
 // ============================================================
 async function performUrlScan() {
     const urlInput = document.getElementById('input-target-url').value.trim();
@@ -224,7 +232,7 @@ async function performUrlScan() {
 
     const btn = document.getElementById('btn-scan-url');
     btn.disabled = true;
-    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Scanning URL...`;
+    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Running 5-Layer Deep Scan…`;
 
     try {
         const res = await fetch('/api/scan/url', {
@@ -235,9 +243,13 @@ async function performUrlScan() {
 
         if (!res.ok) throw new Error('URL scan failed with status ' + res.status);
         const data = await res.json();
+
+        // Full render: gauge + layers + findings table + advisory
         renderScanResults(data);
+        renderUrlMlCard(data);
         loadDatabaseHistory();
 
+        // Show the results section and scroll smoothly to it
         const resSec = document.getElementById('results-section');
         if (resSec) resSec.classList.remove('hidden');
         resSec.scrollIntoView({ behavior: 'smooth' });
@@ -245,12 +257,283 @@ async function performUrlScan() {
         alert('URL Scan Error: ' + err.message);
     } finally {
         btn.disabled = false;
-        btn.innerHTML = `<i class="fa-solid fa-magnifying-glass"></i> Scan URL`;
+        btn.innerHTML = `<i class="fa-solid fa-magnifying-glass text-lg"></i> Scan URL (5-Layer Engine)`;
     }
 }
 
 // ============================================================
-// Result Rendering (Gauge, Layers, Findings Table)
+// Real-Time Live Scan — ONLY updates the inline AI/ML card
+// Does NOT touch the gauge, layer scores, findings, or advisory
+// ============================================================
+let realtimeEmailTimer = null;
+let realtimeUrlTimer = null;
+
+function initRealTimeListeners() {
+    const senderInp = document.getElementById('input-sender');
+    const subjectInp = document.getElementById('input-subject');
+    const bodyInp = document.getElementById('input-body');
+    const urlInp = document.getElementById('input-target-url');
+
+    const handleEmailInput = () => {
+        const toggle = document.getElementById('toggle-realtime-email');
+        if (!toggle || !toggle.checked) return;
+
+        clearTimeout(realtimeEmailTimer);
+        realtimeEmailTimer = setTimeout(() => {
+            triggerRealtimeEmailScan();
+        }, 350);
+    };
+
+    if (senderInp) senderInp.addEventListener('input', handleEmailInput);
+    if (subjectInp) subjectInp.addEventListener('input', handleEmailInput);
+    if (bodyInp) bodyInp.addEventListener('input', handleEmailInput);
+
+    if (urlInp) {
+        urlInp.addEventListener('input', () => {
+            const toggle = document.getElementById('toggle-realtime-url');
+            if (!toggle || !toggle.checked) return;
+
+            clearTimeout(realtimeUrlTimer);
+            realtimeUrlTimer = setTimeout(() => {
+                triggerRealtimeUrlScan();
+            }, 350);
+        });
+    }
+}
+
+async function triggerRealtimeEmailScan() {
+    const sender = document.getElementById('input-sender')?.value.trim() || '';
+    const subject = document.getElementById('input-subject')?.value.trim() || '';
+    const body = document.getElementById('input-body')?.value.trim() || '';
+
+    // If all fields are empty, reset the inline card to idle
+    if (!sender && !subject && !body) {
+        resetEmailMlCard();
+        return;
+    }
+
+    // Show scanning pulse in status
+    setEmailMlStatus('scanning');
+
+    const payload = {
+        sender: sender,
+        subject: subject,
+        body: body,
+        attachments: typeof getAttachmentsData === 'function' ? getAttachmentsData() : [],
+        triggerVirusTotal: false  // Fast real-time — no external API wait
+    };
+
+    try {
+        const res = await fetch('/api/scan/email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+            const data = await res.json();
+            // ONLY update the inline email ML card — nothing else
+            renderEmailMlCard(data);
+        }
+    } catch (e) {
+        console.warn('Real-time email scan error:', e);
+        setEmailMlStatus('error');
+    }
+}
+
+async function triggerRealtimeUrlScan() {
+    const urlInput = document.getElementById('input-target-url')?.value.trim() || '';
+    if (!urlInput || urlInput.length < 5) {
+        resetUrlMlCard();
+        return;
+    }
+
+    // Show scanning pulse in status
+    setUrlMlStatus('scanning');
+
+    try {
+        const res = await fetch('/api/scan/url', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url: urlInput, forceVirusTotal: false })
+        });
+        if (res.ok) {
+            const data = await res.json();
+            // ONLY update the inline URL ML card — nothing else
+            renderUrlMlCard(data);
+        }
+    } catch (e) {
+        console.warn('Real-time URL scan error:', e);
+        setUrlMlStatus('error');
+    }
+}
+
+// ============================================================
+// Inline Email AI/ML Card — Real-Time Only Renderer
+// Updates: email-ml-* element IDs only (no gauge, no findings)
+// ============================================================
+function renderEmailMlCard(result) {
+    const mlPred = result.mlPrediction || 'LEGITIMATE';
+    const mlConf = result.mlConfidence || '0.0%';
+    const mlProb = (result.mlProbability !== undefined && result.mlProbability !== null) ? result.mlProbability : 0.0;
+    const mlFeatures = result.mlTopFeatures || [];
+
+    const badge = document.getElementById('email-ml-prediction-badge');
+    const confVal = document.getElementById('email-ml-confidence-val');
+    const probVal = document.getElementById('email-ml-prob-val');
+    const confBar = document.getElementById('email-ml-confidence-bar');
+    const chips = document.getElementById('email-ml-feature-chips');
+
+    if (badge) {
+        badge.innerText = mlPred;
+        if (mlPred === 'PHISHING') {
+            badge.className = 'text-lg font-extrabold tracking-wide font-mono text-red-400';
+            if (confBar) confBar.className = 'h-full bg-gradient-to-r from-amber-500 to-red-500 transition-all duration-500';
+        } else {
+            badge.className = 'text-lg font-extrabold tracking-wide font-mono text-emerald-400';
+            if (confBar) confBar.className = 'h-full bg-gradient-to-r from-emerald-500 to-cyan-500 transition-all duration-500';
+        }
+    }
+
+    if (confVal) confVal.innerText = mlConf;
+    if (probVal) probVal.innerText = `Prob: ${mlProb.toFixed(3)}`;
+    if (confBar) {
+        const confPercent = parseFloat(mlConf) || (mlProb * 100);
+        confBar.style.width = `${Math.min(100, Math.max(5, confPercent))}%`;
+    }
+
+    if (chips) {
+        if (mlFeatures.length > 0) {
+            chips.innerHTML = mlFeatures.map(f =>
+                `<span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-indigo-900/60 text-indigo-300 border border-indigo-700/60 shadow-sm">${escapeHtml(f)}</span>`
+            ).join('');
+        } else {
+            chips.innerHTML = `<span class="text-xs text-slate-400 italic">No suspicious lexical/NLP tokens detected</span>`;
+        }
+    }
+
+    // Update status to show live result
+    const isPhishing = mlPred === 'PHISHING';
+    const statusEl = document.getElementById('email-ml-status');
+    if (statusEl) {
+        statusEl.innerHTML = isPhishing
+            ? `<span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span> <span class="text-red-400 font-bold">⚠ Live detection: PHISHING signal detected</span>`
+            : `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> <span class="text-emerald-400">Live detection active — content appears legitimate</span>`;
+    }
+}
+
+// ============================================================
+// Inline URL AI/ML Card — Real-Time Only Renderer
+// Updates: url-ml-* element IDs only (no gauge, no findings)
+// ============================================================
+function renderUrlMlCard(result) {
+    const mlPred = result.mlPrediction || 'LEGITIMATE';
+    const mlConf = result.mlConfidence || '0.0%';
+    const mlProb = (result.mlProbability !== undefined && result.mlProbability !== null) ? result.mlProbability : 0.0;
+    const mlFeatures = result.mlTopFeatures || [];
+
+    const badge = document.getElementById('url-ml-prediction-badge');
+    const confVal = document.getElementById('url-ml-confidence-val');
+    const probVal = document.getElementById('url-ml-prob-val');
+    const confBar = document.getElementById('url-ml-confidence-bar');
+    const chips = document.getElementById('url-ml-feature-chips');
+
+    if (badge) {
+        badge.innerText = mlPred;
+        if (mlPred === 'PHISHING') {
+            badge.className = 'text-lg font-extrabold tracking-wide font-mono text-red-400';
+            if (confBar) confBar.className = 'h-full bg-gradient-to-r from-amber-500 to-red-500 transition-all duration-500';
+        } else {
+            badge.className = 'text-lg font-extrabold tracking-wide font-mono text-emerald-400';
+            if (confBar) confBar.className = 'h-full bg-gradient-to-r from-cyan-500 to-teal-500 transition-all duration-500';
+        }
+    }
+
+    if (confVal) confVal.innerText = mlConf;
+    if (probVal) probVal.innerText = `Prob: ${mlProb.toFixed(3)}`;
+    if (confBar) {
+        const confPercent = parseFloat(mlConf) || (mlProb * 100);
+        confBar.style.width = `${Math.min(100, Math.max(5, confPercent))}%`;
+    }
+
+    if (chips) {
+        if (mlFeatures.length > 0) {
+            chips.innerHTML = mlFeatures.map(f =>
+                `<span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-cyan-900/60 text-cyan-300 border border-cyan-700/60 shadow-sm">${escapeHtml(f)}</span>`
+            ).join('');
+        } else {
+            chips.innerHTML = `<span class="text-xs text-slate-400 italic">No suspicious lexical/NLP tokens detected</span>`;
+        }
+    }
+
+    // Update status to show live result
+    const isPhishing = mlPred === 'PHISHING';
+    const statusEl = document.getElementById('url-ml-status');
+    if (statusEl) {
+        statusEl.innerHTML = isPhishing
+            ? `<span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span> <span class="text-red-400 font-bold">⚠ Live detection: PHISHING URL signal detected</span>`
+            : `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> <span class="text-emerald-400">Live detection active — URL appears legitimate</span>`;
+    }
+}
+
+// ============================================================
+// Inline card reset helpers
+// ============================================================
+function resetEmailMlCard() {
+    const badge = document.getElementById('email-ml-prediction-badge');
+    const confVal = document.getElementById('email-ml-confidence-val');
+    const probVal = document.getElementById('email-ml-prob-val');
+    const confBar = document.getElementById('email-ml-confidence-bar');
+    const chips = document.getElementById('email-ml-feature-chips');
+    const statusEl = document.getElementById('email-ml-status');
+
+    if (badge) { badge.innerText = '—'; badge.className = 'text-lg font-extrabold tracking-wide font-mono text-slate-500'; }
+    if (confVal) { confVal.innerText = '— %'; confVal.className = 'text-lg font-extrabold font-mono text-slate-500'; }
+    if (probVal) probVal.innerText = 'Prob: —';
+    if (confBar) { confBar.style.width = '0%'; confBar.className = 'h-full bg-gradient-to-r from-emerald-500 to-cyan-500 transition-all duration-500'; }
+    if (chips) chips.innerHTML = `<span class="text-xs text-slate-500 italic">Enter email content to see live token analysis</span>`;
+    if (statusEl) statusEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-slate-600"></span> Awaiting input to begin live prediction…`;
+}
+
+function resetUrlMlCard() {
+    const badge = document.getElementById('url-ml-prediction-badge');
+    const confVal = document.getElementById('url-ml-confidence-val');
+    const probVal = document.getElementById('url-ml-prob-val');
+    const confBar = document.getElementById('url-ml-confidence-bar');
+    const chips = document.getElementById('url-ml-feature-chips');
+    const statusEl = document.getElementById('url-ml-status');
+
+    if (badge) { badge.innerText = '—'; badge.className = 'text-lg font-extrabold tracking-wide font-mono text-slate-500'; }
+    if (confVal) { confVal.innerText = '— %'; confVal.className = 'text-lg font-extrabold font-mono text-slate-500'; }
+    if (probVal) probVal.innerText = 'Prob: —';
+    if (confBar) { confBar.style.width = '0%'; confBar.className = 'h-full bg-gradient-to-r from-cyan-500 to-teal-500 transition-all duration-500'; }
+    if (chips) chips.innerHTML = `<span class="text-xs text-slate-500 italic">Enter a URL to see live token analysis</span>`;
+    if (statusEl) statusEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-slate-600"></span> Awaiting URL input to begin live prediction…`;
+}
+
+// Status helpers for inline cards
+function setEmailMlStatus(state) {
+    const el = document.getElementById('email-ml-status');
+    if (!el) return;
+    if (state === 'scanning') {
+        el.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span> <span class="text-cyan-400">Scanning in real-time…</span>`;
+    } else if (state === 'error') {
+        el.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> <span class="text-amber-400">Real-time scan unavailable</span>`;
+    }
+}
+
+function setUrlMlStatus(state) {
+    const el = document.getElementById('url-ml-status');
+    if (!el) return;
+    if (state === 'scanning') {
+        el.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span> <span class="text-cyan-400">Scanning URL in real-time…</span>`;
+    } else if (state === 'error') {
+        el.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> <span class="text-amber-400">Real-time scan unavailable</span>`;
+    }
+}
+
+// ============================================================
+// Full Scan Result Rendering — ONLY called on manual button click
+// Updates: gauge, layer scores, findings table, advisory, ML verdict card in results section
 // ============================================================
 function renderScanResults(result) {
     // Score is strictly capped between 0 and 15
@@ -276,11 +559,54 @@ function renderScanResults(result) {
     const l2 = result.layerResults.find(l => l.layerNumber === 2);
     const l3 = result.layerResults.find(l => l.layerNumber === 3);
     const l4 = result.layerResults.find(l => l.layerNumber === 4);
+    const l5 = result.layerResults.find(l => l.layerNumber === 5);
 
     document.getElementById('l1-score-pill').innerText = l1 ? l1.score.toFixed(1) : '0.0';
     document.getElementById('l2-score-pill').innerText = l2 ? l2.score.toFixed(1) : '0.0';
     document.getElementById('l3-score-pill').innerText = l3 ? l3.score.toFixed(1) : '0.0';
     document.getElementById('l4-score-pill').innerText = l4 ? l4.score.toFixed(1) : '0.0';
+    const l5Pill = document.getElementById('l5-score-pill');
+    if (l5Pill) l5Pill.innerText = l5 ? l5.score.toFixed(1) : '0.0';
+
+    // AI/ML Classification Engine Card in results section (full scan verdict)
+    const mlPred = result.mlPrediction || 'LEGITIMATE';
+    const mlConf = result.mlConfidence || '0.0%';
+    const mlProb = (result.mlProbability !== undefined && result.mlProbability !== null) ? result.mlProbability : 0.0;
+    const mlFeatures = result.mlTopFeatures || [];
+
+    const mlBadge = document.getElementById('ml-prediction-badge');
+    const mlConfVal = document.getElementById('ml-confidence-val');
+    const mlProbVal = document.getElementById('ml-prob-val');
+    const mlConfBar = document.getElementById('ml-confidence-bar');
+    const mlChips = document.getElementById('ml-feature-chips');
+
+    if (mlBadge) {
+        mlBadge.innerText = mlPred;
+        if (mlPred === 'PHISHING') {
+            mlBadge.className = 'text-lg font-extrabold tracking-wide font-mono text-red-400';
+            if (mlConfBar) mlConfBar.className = 'h-full bg-gradient-to-r from-amber-500 to-red-500 transition-all duration-500';
+        } else {
+            mlBadge.className = 'text-lg font-extrabold tracking-wide font-mono text-emerald-400';
+            if (mlConfBar) mlConfBar.className = 'h-full bg-gradient-to-r from-teal-500 to-emerald-500 transition-all duration-500';
+        }
+    }
+
+    if (mlConfVal) mlConfVal.innerText = mlConf;
+    if (mlProbVal) mlProbVal.innerText = `Prob: ${mlProb.toFixed(3)}`;
+    if (mlConfBar) {
+        const confPercent = parseFloat(mlConf) || (mlProb * 100);
+        mlConfBar.style.width = `${Math.min(100, Math.max(5, confPercent))}%`;
+    }
+
+    if (mlChips) {
+        if (mlFeatures.length > 0) {
+            mlChips.innerHTML = mlFeatures.map(f =>
+                `<span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-indigo-900/60 text-indigo-300 border border-indigo-700/60 shadow-sm">${escapeHtml(f)}</span>`
+            ).join('');
+        } else {
+            mlChips.innerHTML = `<span class="text-xs text-slate-400 italic">No suspicious lexical/NLP tokens detected</span>`;
+        }
+    }
 
     // Recommendations
     const recsList = document.getElementById('recs-list');
@@ -331,7 +657,7 @@ function renderScanResults(result) {
     document.getElementById('findings-count').innerText = `${totalFindings} Finding(s)`;
 
     if (totalFindings === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-emerald-400 font-bold text-sm">✓ Clean: No threat indicators triggered in any of the 4 detection layers.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-emerald-400 font-bold text-sm">✓ Clean: No threat indicators triggered in any of the detection layers.</td></tr>`;
     }
 }
 
@@ -426,7 +752,7 @@ function escapeHtml(str) {
 }
 
 // ============================================================
-// H2 Database History Management
+// Admin Panel — Database Scan History Management
 // ============================================================
 let cachedDatabaseScans = [];
 
@@ -437,7 +763,7 @@ async function loadDatabaseHistory() {
         cachedDatabaseScans = await res.json();
         renderDatabaseHistory(cachedDatabaseScans);
     } catch (err) {
-        console.warn('Could not fetch H2 database history:', err);
+        console.warn('Could not fetch Admin Panel database history:', err);
     }
 }
 
@@ -449,7 +775,7 @@ function renderDatabaseHistory(scans) {
         tbody.innerHTML = `
             <tr>
                 <td colspan="6" class="px-4 py-8 text-center text-slate-400 italic text-sm">
-                    No scans saved in H2 database yet. Run an email or URL scan above to automatically record it into H2!
+                    No scans saved in the Admin Panel yet. Run an email or URL scan above to automatically record it!
                 </td>
             </tr>`;
         return;
@@ -503,7 +829,7 @@ function viewSavedScan(index) {
         classification: scan.classification,
         totalExecutionTimeMs: scan.totalExecutionTimeMs || 0,
         summary: scan.summary,
-        recommendations: scan.summary ? [scan.summary] : ["Loaded from H2 Database audit record."],
+        recommendations: scan.summary ? [scan.summary] : ["Loaded from Admin Panel audit record."],
         layerResults: [
             {
                 layerNumber: 1,
@@ -551,4 +877,3 @@ function viewSavedScan(index) {
         resSec.scrollIntoView({ behavior: 'smooth' });
     }
 }
-

@@ -20,6 +20,7 @@ public class PhishingDetectionEngine {
     private final HeuristicUrlAnalysisService urlService;
     private final AttachmentAnalysisService attachmentService;
     private final CacheService cacheService;
+    private com.cybershield.service.ml.MlPhishingClassifierService mlClassifierService;
 
     @org.springframework.beans.factory.annotation.Autowired(required = false)
     private com.cybershield.service.database.DatabaseService databaseService;
@@ -30,12 +31,25 @@ public class PhishingDetectionEngine {
                                    HeuristicUrlAnalysisService urlService,
                                    AttachmentAnalysisService attachmentService,
                                    CacheService cacheService) {
+        this(keywordService, senderService, regexService, urlService, attachmentService, cacheService, null);
+    }
+
+    @org.springframework.beans.factory.annotation.Autowired
+    public PhishingDetectionEngine(KeywordDetectionService keywordService,
+                                   SenderVerificationService senderService,
+                                   RegexPatternAnalysisService regexService,
+                                   HeuristicUrlAnalysisService urlService,
+                                   AttachmentAnalysisService attachmentService,
+                                   CacheService cacheService,
+                                   @org.springframework.beans.factory.annotation.Autowired(required = false)
+                                   com.cybershield.service.ml.MlPhishingClassifierService mlClassifierService) {
         this.keywordService = keywordService;
         this.senderService = senderService;
         this.regexService = regexService;
         this.urlService = urlService;
         this.attachmentService = attachmentService;
         this.cacheService = cacheService;
+        this.mlClassifierService = mlClassifierService;
     }
 
     public ScanResult scanEmail(EmailScanRequest request) {
@@ -119,9 +133,44 @@ public class PhishingDetectionEngine {
         result.addLayerResult(l4Result);
 
         // ==========================================
+        // LAYER 5: AI-ML NLP & Behavioral Model
+        // ==========================================
+        long l5Start = System.currentTimeMillis();
+        LayerResult l5Result = new LayerResult(5, "Layer 5: AI-ML NLP & Behavioral Model");
+
+        if (mlClassifierService != null) {
+            com.cybershield.model.MlPredictionResult mlResult = mlClassifierService.predictEmail(request.getSubject(), request.getBody());
+            result.setMlPrediction(mlResult.getPrediction());
+            result.setMlProbability(mlResult.getProbability());
+            result.setMlConfidence(String.format("%.1f%%", mlResult.getConfidencePercentage()));
+            result.setMlModelName(mlResult.getModelName());
+            result.setMlTopFeatures(mlResult.getTopContributingFeatures());
+
+            if ("PHISHING".equalsIgnoreCase(mlResult.getPrediction())) {
+                ThreatIndicator mlIndicator = new ThreatIndicator(
+                        "LAYER_5_ML",
+                        "ML_PHISHING_PREDICTION",
+                        "AI/ML Model Flagged Phishing (" + result.getMlConfidence() + ")",
+                        String.format("Trained ensemble NLP model classified content as phishing with %.1f%% confidence.",
+                                mlResult.getConfidencePercentage()),
+                        mlResult.getProbability() > 0.85 ? "HIGH" : "MEDIUM",
+                        mlResult.getRiskScoreContribution(),
+                        String.join(", ", mlResult.getTopContributingFeatures())
+                );
+                l5Result.addIndicator(mlIndicator);
+            }
+            l5Result.setSummary(String.format("ML Classifier (%s): %s with %.1f%% confidence.",
+                    mlResult.getModelName(), mlResult.getPrediction(), mlResult.getConfidencePercentage()));
+        } else {
+            l5Result.setSummary("ML Classifier not active.");
+        }
+        l5Result.setExecutionTimeMs(System.currentTimeMillis() - l5Start);
+        result.addLayerResult(l5Result);
+
+        // ==========================================
         // CUMULATIVE RISK SCORING & CLASSIFICATION (Capped at 15.0 max)
         // ==========================================
-        double cumulativeScore = l1Result.getScore() + l2Result.getScore() + l3Result.getScore() + l4Result.getScore();
+        double cumulativeScore = l1Result.getScore() + l2Result.getScore() + l3Result.getScore() + l4Result.getScore() + l5Result.getScore();
         cumulativeScore = Math.min(15.0, cumulativeScore);
         cumulativeScore = Math.round(cumulativeScore * 10.0) / 10.0;
         result.setOverallRiskScore(cumulativeScore);
@@ -155,11 +204,47 @@ public class PhishingDetectionEngine {
         List<ThreatIndicator> indicators = urlService.analyzeUrl(request.getUrl(), request.isForceVirusTotal());
         indicators.forEach(l3Result::addIndicator);
 
-        double score = Math.min(15.0, l3Result.getScore());
-        score = Math.round(score * 10.0) / 10.0;
         l3Result.setSummary(String.format("Heuristic analysis produced %d threat indicators.", indicators.size()));
         l3Result.setExecutionTimeMs(System.currentTimeMillis() - startTime);
         result.addLayerResult(l3Result);
+
+        // ==========================================
+        // LAYER 5: AI-ML URL Classifier
+        // ==========================================
+        long l5Start = System.currentTimeMillis();
+        LayerResult l5Result = new LayerResult(5, "Layer 5: AI-ML URL Model");
+
+        if (mlClassifierService != null) {
+            com.cybershield.model.MlPredictionResult mlResult = mlClassifierService.predictUrl(request.getUrl());
+            result.setMlPrediction(mlResult.getPrediction());
+            result.setMlProbability(mlResult.getProbability());
+            result.setMlConfidence(String.format("%.1f%%", mlResult.getConfidencePercentage()));
+            result.setMlModelName(mlResult.getModelName());
+            result.setMlTopFeatures(mlResult.getTopContributingFeatures());
+
+            if ("PHISHING".equalsIgnoreCase(mlResult.getPrediction())) {
+                ThreatIndicator mlIndicator = new ThreatIndicator(
+                        "LAYER_5_ML",
+                        "ML_URL_PHISHING_PREDICTION",
+                        "AI/ML Model Flagged URL (" + result.getMlConfidence() + ")",
+                        String.format("Trained URL model classified destination as phishing with %.1f%% confidence.",
+                                mlResult.getConfidencePercentage()),
+                        mlResult.getProbability() > 0.85 ? "HIGH" : "MEDIUM",
+                        mlResult.getRiskScoreContribution(),
+                        String.join(", ", mlResult.getTopContributingFeatures())
+                );
+                l5Result.addIndicator(mlIndicator);
+            }
+            l5Result.setSummary(String.format("ML URL Classifier (%s): %s with %.1f%% confidence.",
+                    mlResult.getModelName(), mlResult.getPrediction(), mlResult.getConfidencePercentage()));
+        } else {
+            l5Result.setSummary("ML URL Classifier not active.");
+        }
+        l5Result.setExecutionTimeMs(System.currentTimeMillis() - l5Start);
+        result.addLayerResult(l5Result);
+
+        double score = Math.min(15.0, l3Result.getScore() + l5Result.getScore());
+        score = Math.round(score * 10.0) / 10.0;
 
         result.setOverallRiskScore(score);
         result.setClassification(RiskClassification.fromScore(score));

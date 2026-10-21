@@ -19,10 +19,18 @@ public class ScanResult {
     private Instant timestamp;
     private long totalExecutionTimeMs;
 
+    // AI/ML Inference Results
+    private String mlPrediction; // PHISHING or LEGITIMATE
+    private double mlProbability; // 0.0 to 1.0
+    private String mlConfidence; // e.g. "94.5%"
+    private String mlModelName; // e.g. "TF-IDF + Random Forest Classifier"
+    private List<String> mlTopFeatures = new ArrayList<>();
+
     public ScanResult() {
         this.scanId = UUID.randomUUID().toString();
         this.timestamp = Instant.now();
     }
+
 
     public void addLayerResult(LayerResult layerResult) {
         if (layerResult != null) {
@@ -124,5 +132,45 @@ public class ScanResult {
 
     public void setTotalExecutionTimeMs(long totalExecutionTimeMs) {
         this.totalExecutionTimeMs = totalExecutionTimeMs;
+    }
+
+    public String getMlPrediction() {
+        return mlPrediction;
+    }
+
+    public void setMlPrediction(String mlPrediction) {
+        this.mlPrediction = mlPrediction;
+    }
+
+    public double getMlProbability() {
+        return mlProbability;
+    }
+
+    public void setMlProbability(double mlProbability) {
+        this.mlProbability = mlProbability;
+    }
+
+    public String getMlConfidence() {
+        return mlConfidence;
+    }
+
+    public void setMlConfidence(String mlConfidence) {
+        this.mlConfidence = mlConfidence;
+    }
+
+    public String getMlModelName() {
+        return mlModelName;
+    }
+
+    public void setMlModelName(String mlModelName) {
+        this.mlModelName = mlModelName;
+    }
+
+    public List<String> getMlTopFeatures() {
+        return mlTopFeatures;
+    }
+
+    public void setMlTopFeatures(List<String> mlTopFeatures) {
+        this.mlTopFeatures = mlTopFeatures;
     }
 }

@@ -92,6 +92,9 @@ public class DatabaseService implements CommandLineRunner {
             record.setSubject(result.getSubject());
             record.setOverallRiskScore(result.getOverallRiskScore());
             record.setClassification(result.getClassification() != null ? result.getClassification().name() : "SAFE");
+            record.setMlPrediction(result.getMlPrediction());
+            record.setMlProbability(result.getMlProbability());
+            record.setMlModelName(result.getMlModelName());
             record.setSummary(result.getSummary());
             record.setTotalExecutionTimeMs(result.getTotalExecutionTimeMs());
             record.setCreatedAt(result.getTimestamp() != null ? result.getTimestamp() : Instant.now());

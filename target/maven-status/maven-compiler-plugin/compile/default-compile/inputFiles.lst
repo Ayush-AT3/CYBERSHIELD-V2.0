@@ -1,3 +1,4 @@
+C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\service\ml\MlPhishingClassifierService.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\model\RiskClassification.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\service\layer3\BrandImpersonationDetector.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\controller\AnalyticsController.java
@@ -27,6 +28,7 @@ C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\model\T
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\service\EmlParserService.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\model\PhishingKeyword.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\model\EmailScanRequest.java
+C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\model\MlPredictionResult.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\model\VirusTotalResponse.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\service\layer4\AttachmentAnalysisService.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\entity\KeywordEntity.java
