@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # CyberShield: Smart Web Security System for Phishing Detection
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/yourusername/cybershield)
@@ -94,3 +95,6 @@ This project is licensed under the **MIT License** – see the `LICENSE` file fo
 
 ---
 *Generated with assistance from Google Antigravity.*
+=======
+# CYBERSHIELD-V2.0
+>>>>>>> 00a805616b2fa610fd93f82694b5e41333998edb
