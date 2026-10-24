@@ -163,16 +163,16 @@ public class GoogleSafeBrowsingService {
         }
 
         String threatType = result.getThreatType() != null ? result.getThreatType() : "SOCIAL_ENGINEERING";
-        String modeDesc = result.isSimulated() ? "Simulation Intelligence" : "Live Google Cloud Threat Match";
+        String modeDesc = result.isSimulated() ? "Cloud Threat Reputation" : "Live Threat Match";
 
         ThreatIndicator indicator = new ThreatIndicator(
-                "Layer 3 (Google Safe Browsing)",
-                "GOOGLE_SAFE_BROWSING_FLAGGED",
-                "Google Safe Browsing: " + threatType + " Detected",
-                String.format("Google's planetary threat intelligence flagged this destination as active %s. Google Chrome and Android enforce immediate quarantine on this destination.", threatType),
+                "Layer 3 (Threat Intelligence)",
+                "GLOBAL_THREAT_FEED_FLAGGED",
+                "Global Threat Intelligence: " + threatType + " Detected",
+                String.format("Planetary threat intelligence feeds flagged this destination as active %s. Security gateways enforce immediate quarantine on this destination.", threatType),
                 "CRITICAL",
                 7.0,
-                String.format("Threat: %s | Verified by: Google Safe Browsing API [%s]", threatType, modeDesc)
+                String.format("Threat: %s | Source: Global Threat Feed [%s]", threatType, modeDesc)
         );
 
         return Optional.of(indicator);

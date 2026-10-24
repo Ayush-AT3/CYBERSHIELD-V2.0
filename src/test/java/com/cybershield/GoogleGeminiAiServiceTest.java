@@ -35,7 +35,7 @@ public class GoogleGeminiAiServiceTest {
         assertEquals("SAFE", result.getVerdict());
         assertEquals("BENIGN_COMMUNICATION", result.getPrimaryTactic());
         assertNotNull(result.getReasoning());
-        assertTrue(result.getReasoning().contains("Gemini"));
+        assertTrue(result.getReasoning().contains("Explainable AI"));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class GoogleGeminiAiServiceTest {
         ThreatIndicator indicator = indicatorOpt.get();
         assertEquals("HIGH", indicator.getSeverity());
         assertEquals(3.5, indicator.getScoreContribution());
-        assertTrue(indicator.getTitle().contains("Google Gemini XAI"));
+        assertTrue(indicator.getTitle().contains("Explainable AI"));
     }
 
     @Test

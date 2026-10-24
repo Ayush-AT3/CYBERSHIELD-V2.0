@@ -45,7 +45,7 @@ public class GoogleSafeBrowsingServiceTest {
         ThreatIndicator indicator = indicatorOpt.get();
         assertEquals("CRITICAL", indicator.getSeverity());
         assertEquals(7.0, indicator.getScoreContribution());
-        assertTrue(indicator.getTitle().contains("Google Safe Browsing"));
+        assertTrue(indicator.getTitle().contains("Global Threat Intelligence"));
     }
 
     @Test

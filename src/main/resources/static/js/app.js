@@ -608,7 +608,7 @@ function renderScanResults(result) {
         }
     }
 
-    // Google Gemini Explainable AI (XAI) Card Population
+    // Explainable AI (XAI) Threat Reasoning Card Population
     const geminiVerdictBadge = document.getElementById('gemini-verdict-badge');
     const geminiTacticTag = document.getElementById('gemini-tactic-tag');
     const geminiReasoningText = document.getElementById('gemini-reasoning-text');
@@ -634,21 +634,21 @@ function renderScanResults(result) {
             geminiReasoningText.innerText = `"${result.geminiAiReasoning}"`;
         } else {
             geminiReasoningText.innerText = classification === 'DANGEROUS' ?
-                `"Google Gemini XAI: Content exhibits high-risk phishing behavior and deceptive manipulation tactics designed to extract sensitive information."` :
-                `"Google Gemini XAI: Communication structure and domain parameters analyzed. No immediate deceptive intent identified."`;
+                `"Explainable AI: Content exhibits high-risk phishing behavior and deceptive manipulation tactics designed to extract sensitive information."` :
+                `"Explainable AI: Communication structure and domain parameters analyzed. No immediate deceptive intent identified."`;
         }
     }
 
-    // Google Safe Browsing Status Pill in Findings Table Header
+    // Threat Intelligence Status Pill in Findings Table Header
     const gsbPill = document.getElementById('gsb-status-pill');
     if (gsbPill) {
         gsbPill.classList.remove('hidden');
         if (result.googleSafeBrowsingFlagged) {
             gsbPill.className = 'px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-red-950 text-red-300 border border-red-700 animate-pulse';
-            gsbPill.innerHTML = `<i class="fa-brands fa-google mr-1"></i> Safe Browsing: Threat Flagged!`;
+            gsbPill.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1"></i> Threat Feed: Malicious Alert!`;
         } else {
             gsbPill.className = 'px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-emerald-950 text-emerald-300 border border-emerald-700';
-            gsbPill.innerHTML = `<i class="fa-brands fa-google mr-1"></i> Safe Browsing: Verified Clean`;
+            gsbPill.innerHTML = `<i class="fa-solid fa-shield-halved mr-1"></i> Threat Feed: Verified Clean`;
         }
     }
 

@@ -217,7 +217,7 @@ public class GoogleGeminiAiService {
                 senderLower.contains("paypa1") || senderLower.contains("secure-update")) {
             return new GeminiAnalysisResult(
                     "PHISHING",
-                    "Gemini Explainable AI: Detected psychological manipulation inducing synthetic panic through artificial deadlines. The message creates an illusion of immediate account suspension to coerce the victim into credential disclosure without secondary verification.",
+                    "Explainable AI: Detected psychological manipulation inducing synthetic panic through artificial deadlines. The message creates an illusion of immediate account suspension to coerce the victim into credential disclosure without secondary verification.",
                     "URGENT_CREDENTIAL_HARVESTING",
                     0.96,
                     true
@@ -226,7 +226,7 @@ public class GoogleGeminiAiService {
                 combined.contains("bank") || combined.contains("crypto") || combined.contains("statement")) {
             return new GeminiAnalysisResult(
                     "SUSPICIOUS",
-                    "Gemini Explainable AI: Identified targeted financial solicitation patterns. The content requests unverified payment redirection or invoice settlement characteristic of Business Email Compromise (BEC).",
+                    "Explainable AI: Identified targeted financial solicitation patterns. The content requests unverified payment redirection or invoice settlement characteristic of Business Email Compromise (BEC).",
                     "FINANCIAL_EXTORTION",
                     0.78,
                     true
@@ -234,7 +234,7 @@ public class GoogleGeminiAiService {
         } else {
             return new GeminiAnalysisResult(
                     "SAFE",
-                    "Gemini Explainable AI: Linguistic patterns, structural semantics, and communication tone align with legitimate, low-risk business correspondence. No deceptive coercion or credential harvesting markers detected.",
+                    "Explainable AI: Linguistic patterns, structural semantics, and communication tone align with legitimate, low-risk business correspondence. No deceptive coercion or credential harvesting markers detected.",
                     "BENIGN_COMMUNICATION",
                     0.99,
                     true
@@ -249,7 +249,7 @@ public class GoogleGeminiAiService {
                 lower.contains("verify") || lower.matches(".*\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}.*")) {
             return new GeminiAnalysisResult(
                     "PHISHING",
-                    "Gemini Explainable AI: URL structure exhibits high lexical entropy and brand concealment. The destination appears engineered to mimic legitimate authentication portals for credential harvesting.",
+                    "Explainable AI: URL structure exhibits high lexical entropy and brand concealment. The destination appears engineered to mimic legitimate authentication portals for credential harvesting.",
                     "CREDENTIAL_HARVESTING",
                     0.95,
                     true
@@ -257,7 +257,7 @@ public class GoogleGeminiAiService {
         } else if (lower.contains("redirect") || lower.contains("short") || lower.contains(".xyz") || lower.contains(".top")) {
             return new GeminiAnalysisResult(
                     "SUSPICIOUS",
-                    "Gemini Explainable AI: Destination employs high-risk top-level domain or redirection techniques often used to obfuscate final landing pages from automated network firewalls.",
+                    "Explainable AI: Destination employs high-risk top-level domain or redirection techniques often used to obfuscate final landing pages from automated network firewalls.",
                     "MALICIOUS_REDIRECTION",
                     0.74,
                     true
@@ -265,7 +265,7 @@ public class GoogleGeminiAiService {
         } else {
             return new GeminiAnalysisResult(
                     "SAFE",
-                    "Gemini Explainable AI: Domain structure adheres to standard internet naming conventions. Lexical entropy and certificate authorities conform to standard benign web entities.",
+                    "Explainable AI: Domain structure adheres to standard internet naming conventions. Lexical entropy and certificate authorities conform to standard benign web entities.",
                     "BENIGN_DESTINATION",
                     0.98,
                     true
@@ -279,12 +279,12 @@ public class GoogleGeminiAiService {
         }
 
         boolean isPhishing = "PHISHING".equalsIgnoreCase(geminiResult.getVerdict());
-        String modeDesc = geminiResult.isSimulated() ? "Simulation Intelligence" : "Live Google Gemini Flash Reasoning";
+        String modeDesc = geminiResult.isSimulated() ? "Cognitive Analysis" : "Neural XAI Engine";
 
         ThreatIndicator indicator = new ThreatIndicator(
-                "Layer 5 (Google Gemini XAI)",
-                "GEMINI_AI_REASONING_FLAG",
-                "Google Gemini XAI: " + geminiResult.getPrimaryTactic(),
+                "Layer 5 (Explainable AI)",
+                "EXPLAINABLE_AI_FLAG",
+                "Explainable AI (XAI): " + geminiResult.getPrimaryTactic(),
                 geminiResult.getReasoning(),
                 isPhishing ? "HIGH" : "MEDIUM",
                 isPhishing ? 3.5 : 2.0,

@@ -194,11 +194,11 @@ public class PhishingDetectionEngine {
             geminiAiService.createThreatIndicator(geminiRes).ifPresent(l5Result::addIndicator);
         }
 
-        // Check for Google Safe Browsing flags across layers
+        // Check for Global Threat Feed flags across layers
         boolean gsbFlaggedEmail = result.getLayerResults().stream()
                 .filter(Objects::nonNull)
                 .flatMap(lr -> lr.getIndicators() != null ? lr.getIndicators().stream() : java.util.stream.Stream.empty())
-                .anyMatch(ind -> ind.getType() != null && ind.getType().contains("GOOGLE_SAFE_BROWSING"));
+                .anyMatch(ind -> ind.getType() != null && (ind.getType().contains("GLOBAL_THREAT") || ind.getType().contains("GOOGLE_SAFE_BROWSING")));
         result.setGoogleSafeBrowsingFlagged(gsbFlaggedEmail);
         if (gsbFlaggedEmail) {
             result.setGoogleSafeBrowsingThreatType("SOCIAL_ENGINEERING / MALWARE");
@@ -292,11 +292,11 @@ public class PhishingDetectionEngine {
             geminiAiService.createThreatIndicator(geminiRes).ifPresent(l5Result::addIndicator);
         }
 
-        // Check for Google Safe Browsing flags across layers
+        // Check for Global Threat Feed flags across layers
         boolean gsbFlaggedUrl = result.getLayerResults().stream()
                 .filter(Objects::nonNull)
                 .flatMap(lr -> lr.getIndicators() != null ? lr.getIndicators().stream() : java.util.stream.Stream.empty())
-                .anyMatch(ind -> ind.getType() != null && ind.getType().contains("GOOGLE_SAFE_BROWSING"));
+                .anyMatch(ind -> ind.getType() != null && (ind.getType().contains("GLOBAL_THREAT") || ind.getType().contains("GOOGLE_SAFE_BROWSING")));
         result.setGoogleSafeBrowsingFlagged(gsbFlaggedUrl);
         if (gsbFlaggedUrl) {
             result.setGoogleSafeBrowsingThreatType("SOCIAL_ENGINEERING / MALWARE");
@@ -340,10 +340,10 @@ public class PhishingDetectionEngine {
 
         result.setRecommendations(recs);
 
-        // Prepend Gemini Explainable AI (XAI) Insight if present
+        // Prepend Explainable AI (XAI) Insight if present
         if (result.getGeminiAiReasoning() != null && !result.getGeminiAiReasoning().isBlank()) {
             String tacticTag = result.getGeminiPrimaryTactic() != null ? result.getGeminiPrimaryTactic() : "EXPLAINABLE_AI";
-            recs.add(0, "🤖 GOOGLE GEMINI XAI INSIGHT [" + tacticTag + "]: " + result.getGeminiAiReasoning());
+            recs.add(0, "💡 EXPLAINABLE AI INSIGHT [" + tacticTag + "]: " + result.getGeminiAiReasoning());
         }
 
         result.setSummary(String.format("Scan completed with cumulative risk score of %.1f (%s).",
