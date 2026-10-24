@@ -5,6 +5,8 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Manifest V3](https://img.shields.io/badge/Chrome_Extension-Manifest_V3-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)](https://developer.chrome.com/docs/extensions/mv3/intro/)
 [![Machine Learning](https://img.shields.io/badge/ML-TF--IDF%20%2B%20Random%20Forest-FF6F00?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![Google Gemini](https://img.shields.io/badge/GenAI-Google%20Gemini%20Flash-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
+[![Google Safe Browsing](https://img.shields.io/badge/Security-Google%20Safe%20Browsing-34A853?style=for-the-badge&logo=google-chrome&logoColor=white)](https://developers.google.com/safe-browsing)
 [![Database](https://img.shields.io/badge/Database-H2_Embedded_SQL-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.h2database.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
@@ -83,9 +85,9 @@ Every manual scan runs through five isolated, decoupled analytical layers:
 |:---:|:---|:---|
 | **L1** | **Header & Spoofing Verification** | Analyzes email headers for **SPF, DKIM, and DMARC** alignment. Detects **Display Name Spoofing**, sender envelope mismatches, and **Punycode / IDN Homograph** attacks (e.g., Cyrillic characters masquerading as Latin alphabets). |
 | **L2** | **Lexical & Keyword Analysis** | Implements an **$O(n+m)$ Aho-Corasick Pattern Matching Automaton** to detect high-urgency psychological coercion terms, password reset demands, financial extortion patterns, and fake wire-transfer requests. |
-| **L3** | **Heuristic URL & Entropy Engine** | Calculates **Shannon Information Entropy $H(X)$** on URLs and domains to identify algorithmic domain generation (DGA) and hex/IP obfuscation. Detects URL shortener chains, suspicious subdomains, and high-risk TLDs. |
+| **L3** | **Heuristic URL & Entropy Engine** | Calculates **Shannon Information Entropy $H(X)$** on URLs and domains to identify algorithmic domain generation (DGA) and hex/IP obfuscation. Integrates **Google Safe Browsing API v4** to cross-examine destinations against Google Chrome's live planetary threat database. |
 | **L4** | **Attachment & Payload Forensics** | Inspects binary signatures and file MIME types for executable extensions (`.exe`, `.scr`, `.vbs`, `.bat`, `.ps1`), double extensions (`invoice.pdf.exe`), and macro-enabled Office payloads (`.xlsm`, `.docm`). |
-| **L5** | **Threat Intelligence Integration** | Queries **VirusTotal API** feeds in real time for domain and URL reputation scores. Features an automated sandbox simulation fallback mode for offline/air-gapped demonstrations. |
+| **L5** | **Threat Intelligence & Google Gemini XAI** | Integrates **VirusTotal API** alongside **Google Gemini Generative AI (`gemini-2.5-flash`)** to deliver Explainable AI (XAI) threat reasoning, detect zero-day Business Email Compromise (BEC), and generate plain-English defense advisories. |
 
 ---
 

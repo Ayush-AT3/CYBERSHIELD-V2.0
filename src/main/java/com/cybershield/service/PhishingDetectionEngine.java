@@ -25,6 +25,12 @@ public class PhishingDetectionEngine {
     @org.springframework.beans.factory.annotation.Autowired(required = false)
     private com.cybershield.service.database.DatabaseService databaseService;
 
+    @org.springframework.beans.factory.annotation.Autowired(required = false)
+    private com.cybershield.service.ml.GoogleGeminiAiService geminiAiService;
+
+    @org.springframework.beans.factory.annotation.Autowired(required = false)
+    private com.cybershield.service.layer3.GoogleSafeBrowsingService safeBrowsingService;
+
     public PhishingDetectionEngine(KeywordDetectionService keywordService,
                                    SenderVerificationService senderService,
                                    RegexPatternAnalysisService regexService,
@@ -50,6 +56,14 @@ public class PhishingDetectionEngine {
         this.attachmentService = attachmentService;
         this.cacheService = cacheService;
         this.mlClassifierService = mlClassifierService;
+    }
+
+    public void setGeminiAiService(com.cybershield.service.ml.GoogleGeminiAiService geminiAiService) {
+        this.geminiAiService = geminiAiService;
+    }
+
+    public void setSafeBrowsingService(com.cybershield.service.layer3.GoogleSafeBrowsingService safeBrowsingService) {
+        this.safeBrowsingService = safeBrowsingService;
     }
 
     public ScanResult scanEmail(EmailScanRequest request) {
@@ -168,6 +182,29 @@ public class PhishingDetectionEngine {
         result.addLayerResult(l5Result);
 
         // ==========================================
+        // GOOGLE GEMINI GENERATIVE & EXPLAINABLE AI (XAI)
+        // ==========================================
+        if (geminiAiService != null) {
+            com.cybershield.model.GeminiAnalysisResult geminiRes = geminiAiService.analyzeEmail(
+                    request.getSubject(), request.getSender(), request.getBody(), result.getLayerResults());
+            result.setGeminiAiReasoning(geminiRes.getReasoning());
+            result.setGeminiThreatVerdict(geminiRes.getVerdict());
+            result.setGeminiPrimaryTactic(geminiRes.getPrimaryTactic());
+
+            geminiAiService.createThreatIndicator(geminiRes).ifPresent(l5Result::addIndicator);
+        }
+
+        // Check for Google Safe Browsing flags across layers
+        boolean gsbFlaggedEmail = result.getLayerResults().stream()
+                .filter(Objects::nonNull)
+                .flatMap(lr -> lr.getIndicators() != null ? lr.getIndicators().stream() : java.util.stream.Stream.empty())
+                .anyMatch(ind -> ind.getType() != null && ind.getType().contains("GOOGLE_SAFE_BROWSING"));
+        result.setGoogleSafeBrowsingFlagged(gsbFlaggedEmail);
+        if (gsbFlaggedEmail) {
+            result.setGoogleSafeBrowsingThreatType("SOCIAL_ENGINEERING / MALWARE");
+        }
+
+        // ==========================================
         // CUMULATIVE RISK SCORING & CLASSIFICATION (Capped at 15.0 max)
         // ==========================================
         double cumulativeScore = l1Result.getScore() + l2Result.getScore() + l3Result.getScore() + l4Result.getScore() + l5Result.getScore();
@@ -243,6 +280,28 @@ public class PhishingDetectionEngine {
         l5Result.setExecutionTimeMs(System.currentTimeMillis() - l5Start);
         result.addLayerResult(l5Result);
 
+        // ==========================================
+        // GOOGLE GEMINI GENERATIVE & EXPLAINABLE AI (XAI) FOR URL
+        // ==========================================
+        if (geminiAiService != null) {
+            com.cybershield.model.GeminiAnalysisResult geminiRes = geminiAiService.analyzeUrl(request.getUrl(), l3Result);
+            result.setGeminiAiReasoning(geminiRes.getReasoning());
+            result.setGeminiThreatVerdict(geminiRes.getVerdict());
+            result.setGeminiPrimaryTactic(geminiRes.getPrimaryTactic());
+
+            geminiAiService.createThreatIndicator(geminiRes).ifPresent(l5Result::addIndicator);
+        }
+
+        // Check for Google Safe Browsing flags across layers
+        boolean gsbFlaggedUrl = result.getLayerResults().stream()
+                .filter(Objects::nonNull)
+                .flatMap(lr -> lr.getIndicators() != null ? lr.getIndicators().stream() : java.util.stream.Stream.empty())
+                .anyMatch(ind -> ind.getType() != null && ind.getType().contains("GOOGLE_SAFE_BROWSING"));
+        result.setGoogleSafeBrowsingFlagged(gsbFlaggedUrl);
+        if (gsbFlaggedUrl) {
+            result.setGoogleSafeBrowsingThreatType("SOCIAL_ENGINEERING / MALWARE");
+        }
+
         double score = Math.min(15.0, l3Result.getScore() + l5Result.getScore());
         score = Math.round(score * 10.0) / 10.0;
 
@@ -280,6 +339,13 @@ public class PhishingDetectionEngine {
         }
 
         result.setRecommendations(recs);
+
+        // Prepend Gemini Explainable AI (XAI) Insight if present
+        if (result.getGeminiAiReasoning() != null && !result.getGeminiAiReasoning().isBlank()) {
+            String tacticTag = result.getGeminiPrimaryTactic() != null ? result.getGeminiPrimaryTactic() : "EXPLAINABLE_AI";
+            recs.add(0, "🤖 GOOGLE GEMINI XAI INSIGHT [" + tacticTag + "]: " + result.getGeminiAiReasoning());
+        }
+
         result.setSummary(String.format("Scan completed with cumulative risk score of %.1f (%s).",
                 result.getOverallRiskScore(), c.getLabel()));
     }

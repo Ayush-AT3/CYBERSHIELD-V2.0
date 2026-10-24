@@ -1,5 +1,7 @@
 package com.cybershield.service.cache;
 
+import com.cybershield.model.GeminiAnalysisResult;
+import com.cybershield.model.GoogleSafeBrowsingResult;
 import com.cybershield.model.ScanResult;
 import com.cybershield.model.VirusTotalResponse;
 import com.cybershield.service.layer1.AhoCorasickEngine;
@@ -23,6 +25,18 @@ public class CacheService {
     // Cache for VirusTotal API lookups (prevents repeated external API hits, 24h TTL)
     private final Cache<String, VirusTotalResponse> virusTotalCache = Caffeine.newBuilder()
             .expireAfterWrite(24, TimeUnit.HOURS)
+            .maximumSize(1000)
+            .build();
+
+    // Cache for Google Safe Browsing API lookups (prevents repeated external API hits, 12h TTL)
+    private final Cache<String, GoogleSafeBrowsingResult> safeBrowsingCache = Caffeine.newBuilder()
+            .expireAfterWrite(12, TimeUnit.HOURS)
+            .maximumSize(2000)
+            .build();
+
+    // Cache for Google Gemini Generative AI Reasoning (prevents repeated LLM calls, 12h TTL)
+    private final Cache<String, GeminiAnalysisResult> geminiCache = Caffeine.newBuilder()
+            .expireAfterWrite(12, TimeUnit.HOURS)
             .maximumSize(1000)
             .build();
 
@@ -57,6 +71,28 @@ public class CacheService {
     public VirusTotalResponse getCachedVirusTotal(String url) {
         if (url == null) return null;
         return virusTotalCache.getIfPresent(url.trim().toLowerCase());
+    }
+
+    public void cacheGoogleSafeBrowsing(String url, GoogleSafeBrowsingResult result) {
+        if (url != null && result != null) {
+            safeBrowsingCache.put(url.trim().toLowerCase(), result);
+        }
+    }
+
+    public GoogleSafeBrowsingResult getCachedGoogleSafeBrowsing(String url) {
+        if (url == null) return null;
+        return safeBrowsingCache.getIfPresent(url.trim().toLowerCase());
+    }
+
+    public void cacheGeminiResult(String key, GeminiAnalysisResult result) {
+        if (key != null && result != null) {
+            geminiCache.put(key, result);
+        }
+    }
+
+    public GeminiAnalysisResult getCachedGeminiResult(String key) {
+        if (key == null) return null;
+        return geminiCache.getIfPresent(key);
     }
 
     public void recordScan(ScanResult scanResult) {

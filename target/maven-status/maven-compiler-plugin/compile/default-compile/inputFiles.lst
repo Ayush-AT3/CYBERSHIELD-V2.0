@@ -6,14 +6,17 @@ C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\CyberSh
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\service\layer3\VirusTotalIntegrationService.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\service\layer1\AhoCorasickEngine.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\service\layer3\HeuristicUrlAnalysisService.java
+C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\model\GeminiAnalysisResult.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\service\layer4\FileTypeRiskRegistry.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\service\PhishingDetectionEngine.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\service\database\DatabaseService.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\model\UrlScanRequest.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\service\layer1\KeywordDetectionService.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\service\supabase\SupabaseClientService.java
+C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\model\GoogleSafeBrowsingResult.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\repository\KeywordRepository.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\service\cache\CacheService.java
+C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\service\ml\GoogleGeminiAiService.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\controller\ScanController.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\model\ScanResult.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\entity\ScanRecordEntity.java
@@ -26,6 +29,7 @@ C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\model\L
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\service\layer1\SenderVerificationService.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\model\ThreatIndicator.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\service\EmlParserService.java
+C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\service\layer3\GoogleSafeBrowsingService.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\model\PhishingKeyword.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\model\EmailScanRequest.java
 C:\Users\USER\OneDrive\Desktop\CyberShield\src\main\java\com\cybershield\model\MlPredictionResult.java

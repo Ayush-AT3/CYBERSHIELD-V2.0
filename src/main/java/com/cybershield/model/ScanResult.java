@@ -26,6 +26,15 @@ public class ScanResult {
     private String mlModelName; // e.g. "TF-IDF + Random Forest Classifier"
     private List<String> mlTopFeatures = new ArrayList<>();
 
+    // Google Gemini Generative & Explainable AI (XAI)
+    private String geminiAiReasoning;
+    private String geminiThreatVerdict;
+    private String geminiPrimaryTactic;
+
+    // Google Safe Browsing Threat Intelligence
+    private Boolean googleSafeBrowsingFlagged;
+    private String googleSafeBrowsingThreatType;
+
     public ScanResult() {
         this.scanId = UUID.randomUUID().toString();
         this.timestamp = Instant.now();
@@ -172,5 +181,45 @@ public class ScanResult {
 
     public void setMlTopFeatures(List<String> mlTopFeatures) {
         this.mlTopFeatures = mlTopFeatures;
+    }
+
+    public String getGeminiAiReasoning() {
+        return geminiAiReasoning;
+    }
+
+    public void setGeminiAiReasoning(String geminiAiReasoning) {
+        this.geminiAiReasoning = geminiAiReasoning;
+    }
+
+    public String getGeminiThreatVerdict() {
+        return geminiThreatVerdict;
+    }
+
+    public void setGeminiThreatVerdict(String geminiThreatVerdict) {
+        this.geminiThreatVerdict = geminiThreatVerdict;
+    }
+
+    public String getGeminiPrimaryTactic() {
+        return geminiPrimaryTactic;
+    }
+
+    public void setGeminiPrimaryTactic(String geminiPrimaryTactic) {
+        this.geminiPrimaryTactic = geminiPrimaryTactic;
+    }
+
+    public Boolean getGoogleSafeBrowsingFlagged() {
+        return googleSafeBrowsingFlagged;
+    }
+
+    public void setGoogleSafeBrowsingFlagged(Boolean googleSafeBrowsingFlagged) {
+        this.googleSafeBrowsingFlagged = googleSafeBrowsingFlagged;
+    }
+
+    public String getGoogleSafeBrowsingThreatType() {
+        return googleSafeBrowsingThreatType;
+    }
+
+    public void setGoogleSafeBrowsingThreatType(String googleSafeBrowsingThreatType) {
+        this.googleSafeBrowsingThreatType = googleSafeBrowsingThreatType;
     }
 }

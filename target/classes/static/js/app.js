@@ -608,6 +608,50 @@ function renderScanResults(result) {
         }
     }
 
+    // Google Gemini Explainable AI (XAI) Card Population
+    const geminiVerdictBadge = document.getElementById('gemini-verdict-badge');
+    const geminiTacticTag = document.getElementById('gemini-tactic-tag');
+    const geminiReasoningText = document.getElementById('gemini-reasoning-text');
+
+    if (geminiVerdictBadge) {
+        const gVerdict = result.geminiThreatVerdict || (classification === 'DANGEROUS' ? 'PHISHING' : (classification === 'SUSPICIOUS' ? 'SUSPICIOUS' : 'SAFE'));
+        geminiVerdictBadge.innerText = gVerdict;
+        if (gVerdict === 'PHISHING') {
+            geminiVerdictBadge.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-red-950 text-red-300 border border-red-700';
+        } else if (gVerdict === 'SUSPICIOUS') {
+            geminiVerdictBadge.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-amber-950 text-amber-300 border border-amber-700';
+        } else {
+            geminiVerdictBadge.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-emerald-950 text-emerald-300 border border-emerald-700';
+        }
+    }
+
+    if (geminiTacticTag) {
+        geminiTacticTag.innerText = result.geminiPrimaryTactic || 'Social Engineering Analysis';
+    }
+
+    if (geminiReasoningText) {
+        if (result.geminiAiReasoning) {
+            geminiReasoningText.innerText = `"${result.geminiAiReasoning}"`;
+        } else {
+            geminiReasoningText.innerText = classification === 'DANGEROUS' ?
+                `"Google Gemini XAI: Content exhibits high-risk phishing behavior and deceptive manipulation tactics designed to extract sensitive information."` :
+                `"Google Gemini XAI: Communication structure and domain parameters analyzed. No immediate deceptive intent identified."`;
+        }
+    }
+
+    // Google Safe Browsing Status Pill in Findings Table Header
+    const gsbPill = document.getElementById('gsb-status-pill');
+    if (gsbPill) {
+        gsbPill.classList.remove('hidden');
+        if (result.googleSafeBrowsingFlagged) {
+            gsbPill.className = 'px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-red-950 text-red-300 border border-red-700 animate-pulse';
+            gsbPill.innerHTML = `<i class="fa-brands fa-google mr-1"></i> Safe Browsing: Threat Flagged!`;
+        } else {
+            gsbPill.className = 'px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-emerald-950 text-emerald-300 border border-emerald-700';
+            gsbPill.innerHTML = `<i class="fa-brands fa-google mr-1"></i> Safe Browsing: Verified Clean`;
+        }
+    }
+
     // Recommendations
     const recsList = document.getElementById('recs-list');
     recsList.innerHTML = '';

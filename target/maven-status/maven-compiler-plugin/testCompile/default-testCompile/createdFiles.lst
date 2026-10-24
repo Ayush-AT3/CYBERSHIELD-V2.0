@@ -1,1 +1,10 @@
+com\cybershield\CumulativeRiskScoringTest.class
 com\cybershield\MlPhishingClassifierServiceTest.class
+com\cybershield\GoogleSafeBrowsingServiceTest.class
+com\cybershield\RegexPatternAnalysisTest.class
+com\cybershield\HeuristicUrlAnalysisTest.class
+com\cybershield\EmlParserServiceTest.class
+com\cybershield\SenderVerificationTest.class
+com\cybershield\AhoCorasickEngineTest.class
+com\cybershield\GoogleGeminiAiServiceTest.class
+com\cybershield\AttachmentAnalysisTest.class

@@ -1,7 +1,9 @@
 package com.cybershield.service.layer3;
 
+import com.cybershield.model.GoogleSafeBrowsingResult;
 import com.cybershield.model.ThreatIndicator;
 import com.cybershield.model.VirusTotalResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -23,13 +25,23 @@ public class HeuristicUrlAnalysisService {
     private final ShannonEntropyCalculator entropyCalculator;
     private final BrandImpersonationDetector brandDetector;
     private final VirusTotalIntegrationService virusTotalService;
+    private GoogleSafeBrowsingService safeBrowsingService;
+
+    @Autowired
+    public HeuristicUrlAnalysisService(ShannonEntropyCalculator entropyCalculator,
+                                      BrandImpersonationDetector brandDetector,
+                                      VirusTotalIntegrationService virusTotalService,
+                                      @Autowired(required = false) GoogleSafeBrowsingService safeBrowsingService) {
+        this.entropyCalculator = entropyCalculator;
+        this.brandDetector = brandDetector;
+        this.virusTotalService = virusTotalService;
+        this.safeBrowsingService = safeBrowsingService;
+    }
 
     public HeuristicUrlAnalysisService(ShannonEntropyCalculator entropyCalculator,
                                       BrandImpersonationDetector brandDetector,
                                       VirusTotalIntegrationService virusTotalService) {
-        this.entropyCalculator = entropyCalculator;
-        this.brandDetector = brandDetector;
-        this.virusTotalService = virusTotalService;
+        this(entropyCalculator, brandDetector, virusTotalService, null);
     }
 
     public List<String> extractUrls(String text) {
@@ -180,6 +192,12 @@ public class HeuristicUrlAnalysisService {
             if (shouldQueryVt) {
                 VirusTotalResponse vtResponse = virusTotalService.scanUrl(urlString);
                 virusTotalService.createIndicatorFromVt(vtResponse).ifPresent(indicators::add);
+            }
+
+            // --- 10. Google Safe Browsing Threat Intelligence ---
+            if (safeBrowsingService != null) {
+                GoogleSafeBrowsingResult gsbResult = safeBrowsingService.checkUrl(urlString);
+                safeBrowsingService.createThreatIndicator(urlString, gsbResult).ifPresent(indicators::add);
             }
 
         } catch (Exception e) {
