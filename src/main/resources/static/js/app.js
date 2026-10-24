@@ -688,16 +688,16 @@ function renderScanResults(result) {
                                      sev === 'MEDIUM'   ? 'sev-medium'   :
                                      sev === 'LOW'      ? 'sev-low'      : 'sev-info';
 
-                    const scoreColor = ind.scoreContribution > 2 ? 'var(--neon-red)' :
-                                       ind.scoreContribution > 0 ? 'var(--neon-amber)' : 'var(--text-dim)';
+                    const scoreColor = ind.scoreContribution > 2 ? 'var(--accent-red)' :
+                                       ind.scoreContribution > 0 ? 'var(--accent-amber)' : 'var(--text-dim)';
 
                     tr.innerHTML = `
-                        <td style="color:#A5B4FC;white-space:nowrap;">${escapeHtml(ind.layer || '')}</td>
+                        <td style="color:#93C5FD;white-space:nowrap;">${escapeHtml(ind.layer || '')}</td>
                         <td style="color:#ffffff;font-weight:600;">${escapeHtml(ind.title || '')}</td>
                         <td><span class="${sevClass}">${sev}</span></td>
                         <td style="color:${scoreColor};font-weight:700;">+${(ind.scoreContribution || 0).toFixed(1)}</td>
-                        <td style="color:var(--neon-cyan);word-break:break-all;max-width:140px;">${escapeHtml(ind.evidence || '')}</td>
-                        <td style="color:var(--text-primary);line-height:1.5;">${escapeHtml(ind.description || '')}</td>
+                        <td style="color:var(--accent-cyan);word-break:break-all;max-width:140px;">${escapeHtml(ind.evidence || '')}</td>
+                        <td style="color:var(--text-main);line-height:1.5;">${escapeHtml(ind.description || '')}</td>
                     `;
                     tbody.appendChild(tr);
                 });
@@ -708,7 +708,7 @@ function renderScanResults(result) {
     document.getElementById('findings-count').innerText = `${totalFindings} Finding(s)`;
 
     if (totalFindings === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="p-10 text-center font-mono text-sm font-bold" style="color:var(--neon-cyan);">✓ CLEAN — No threat indicators triggered in any detection layer.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" class="p-10 text-center font-mono text-sm font-bold" style="color:var(--accent-cyan);">✓ CLEAN — No threat indicators triggered in any detection layer.</td></tr>`;
     }
 }
 
@@ -788,12 +788,9 @@ function updateScoreGauge(score, classification) {
 }
 
 function getColorForClassification(c) {
-    if (c === 'DANGEROUS') return '#FF3B30';   // Ramotion hazard red
-    if (c === 'SUSPICIOUS') return '#FFB800';  // Ramotion electric amber
-    const theme = document.body.getAttribute('data-theme') || 'lime';
-    if (theme === 'cyan') return '#00F0FF';
-    if (theme === 'amber') return '#FFB800';
-    return '#CCFF00';                           // Ramotion signature lime
+    if (c === 'DANGEROUS') return '#EF4444';   // Hazard red
+    if (c === 'SUSPICIOUS') return '#F59E0B';  // Electric amber
+    return '#00F5D4';                           // DevTools cyan (safe)
 }
 
 function formatBytes(bytes) {
@@ -849,7 +846,7 @@ function renderDatabaseHistory(scans) {
                           (classification === 'SUSPICIOUS' ? 'badge-suspicious' : 'badge-safe');
 
         const typeBadgeStyle = scan.scanType === 'URL'
-            ? 'background:rgba(0,245,212,0.10);color:var(--neon-cyan);border:1px solid rgba(0,245,212,0.25);'
+            ? 'background:rgba(0,245,212,0.10);color:var(--accent-cyan);border:1px solid rgba(0,245,212,0.25);'
             : 'background:rgba(59,130,246,0.10);color:#93C5FD;border:1px solid rgba(59,130,246,0.25);';
 
         const displayTarget = scan.inputTarget || scan.subject || scan.sender || 'Scan Record';
@@ -859,10 +856,10 @@ function renderDatabaseHistory(scans) {
             <td><span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded" style="${typeBadgeStyle}">${escapeHtml(scan.scanType || 'EMAIL')}</span></td>
             <td class="font-semibold text-white max-w-xs truncate" title="${escapeHtml(displayTarget)}">${escapeHtml(displayTarget)}</td>
             <td><span class="text-xs font-bold font-mono px-2.5 py-0.5 rounded ${badgeClass}">${classification}</span></td>
-            <td class="font-mono font-bold" style="color:${classification === 'DANGEROUS' ? 'var(--neon-red)' : (classification === 'SUSPICIOUS' ? 'var(--neon-amber)' : 'var(--neon-cyan)')}">${(scan.overallRiskScore || 0).toFixed(1)} / 15</td>
-            <td style="color:var(--text-primary);">${dateStr}</td>
+            <td class="font-mono font-bold" style="color:${classification === 'DANGEROUS' ? 'var(--accent-red)' : (classification === 'SUSPICIOUS' ? 'var(--accent-amber)' : 'var(--accent-cyan)')}">${(scan.overallRiskScore || 0).toFixed(1)} / 15</td>
+            <td style="color:var(--text-main);">${dateStr}</td>
             <td class="text-right">
-                <button onclick="viewSavedScan(${index})" class="text-xs font-bold px-3 py-1.5 rounded-lg transition btn-neon-cobalt" style="font-size:11px;">
+                <button onclick="viewSavedScan(${index})" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg bg-[#141B2D] text-[#00F5D4] border border-[#222B3D] hover:border-[#00F5D4] transition">
                     <i class="fa-solid fa-eye mr-1"></i> View Audit
                 </button>
             </td>

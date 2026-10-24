@@ -9,73 +9,54 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body data-theme="lime" class="w-screen min-h-screen flex flex-col p-0 m-0">
-
-    <!-- Watermark Background Engineering Labels (Ramotion aesthetic) -->
-    <div class="bg-watermark top-12 left-8">CYBERSHIELD // DEVTOOLS</div>
-    <div class="bg-watermark top-44 right-12">DEFENSE_GRID [01]</div>
-    <div class="bg-watermark bottom-16 left-12">ENGINE // HYBRID_AI</div>
-    <div class="bg-watermark bottom-12 right-20">SECURITY_PLATFORM</div>
+<body class="w-screen min-h-screen flex flex-col p-0 m-0">
 
     <!-- ══════════════════════════════════════════════════════════
-         DEVTOOLS HEADER / NAV
+         TOP NAVIGATION BAR
          ══════════════════════════════════════════════════════════ -->
-    <header class="w-full devtools-header px-6 lg:px-12 py-3.5 flex flex-col md:flex-row justify-between items-center gap-4">
+    <header class="w-full navbar-wrapper px-6 lg:px-12 py-3.5 flex flex-col md:flex-row justify-between items-center gap-4">
 
-        <!-- Left: Logo & Subtitle -->
+        <!-- Logo & Branding -->
         <div onclick="switchMainTool('home-view')" class="flex items-center gap-3 cursor-pointer group select-none">
-            <!-- Geometric DevTools Logo (Hexagonal shield outline) -->
-            <div class="w-9 h-9 rounded-lg flex items-center justify-center bg-black border border-[#2A2F3D] group-hover:border-[var(--theme-accent)] transition">
-                <i class="fa-solid fa-shield-halved text-base text-accent"></i>
+            <div class="w-10 h-10 rounded-xl bg-[#0D111A] border border-[#222B3D] flex items-center justify-center group-hover:border-[#00F5D4] transition"
+                 style="box-shadow:0 0 20px -5px rgba(0,245,212,0.25);">
+                <i class="fa-solid fa-shield-halved text-lg" style="color:var(--accent-cyan);"></i>
             </div>
             <div>
                 <div class="flex items-center gap-2">
-                    <span class="text-base font-extrabold tracking-tight text-white font-heading">CyberShield</span>
-                    <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#13161F] text-accent border border-[#2A2F3D]">v2.0</span>
+                    <span class="text-lg font-extrabold tracking-tight text-white font-sans">CyberShield</span>
+                    <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#141B2D] text-[#00F5D4] border border-[#222B3D]">v2.0</span>
                 </div>
-                <p class="text-[10px] font-mono text-gray-400 tracking-wider">SMART PHISHING DETECTION SYSTEM</p>
+                <p class="text-[10px] font-mono text-[#8E9AB0] tracking-wider">SMART PHISHING DETECTION SYSTEM</p>
             </div>
         </div>
 
-        <!-- Center: Navigation Tabs -->
-        <nav class="flex items-center gap-2 flex-wrap justify-center">
-            <button onclick="switchMainTool('home-view')" id="nav-btn-home"
-                    class="nav-tab-btn active">
+        <!-- Navigation Links -->
+        <nav class="flex items-center gap-1.5 flex-wrap justify-center">
+            <button onclick="switchMainTool('home-view')" id="nav-btn-home" class="nav-link-btn active">
                 <i class="fa-solid fa-house text-xs"></i>
                 <span>// Home</span>
             </button>
-            <button onclick="switchMainTool('email-tool')" id="nav-btn-email"
-                    class="nav-tab-btn">
+            <button onclick="switchMainTool('email-tool')" id="nav-btn-email" class="nav-link-btn">
                 <i class="fa-solid fa-envelope text-xs"></i>
                 <span>// 01. Analyse Email</span>
             </button>
-            <button onclick="switchMainTool('url-tool')" id="nav-btn-url"
-                    class="nav-tab-btn">
+            <button onclick="switchMainTool('url-tool')" id="nav-btn-url" class="nav-link-btn">
                 <i class="fa-solid fa-globe text-xs"></i>
                 <span>// 02. Scan URL</span>
             </button>
-            <a href="/h2-console" target="_blank" title="Open Admin Panel"
-               class="nav-tab-btn no-underline">
+            <a href="/h2-console" target="_blank" title="Open Admin Panel" class="nav-link-btn">
                 <i class="fa-solid fa-database text-xs text-amber-400"></i>
                 <span class="hidden sm:inline">// Admin Panel</span>
                 <i class="fa-solid fa-arrow-up-right-from-square text-[9px] opacity-60"></i>
             </a>
         </nav>
 
-        <!-- Right: Status Beacon & Palette Switcher (from video: Lime, Cyan, Amber) -->
-        <div class="flex items-center gap-4">
-            <!-- Video Theme Colorway Selector -->
-            <div class="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-[#0b0c10] border border-[#1E222D]" title="Switch Video Aesthetic Colorway">
-                <span class="text-[10px] font-mono text-gray-400 font-bold mr-1">THEME:</span>
-                <button onclick="setDevToolsTheme('lime')" id="theme-btn-lime" class="theme-pill-btn active" style="background:#CCFF00;" title="Orbis Lime"></button>
-                <button onclick="setDevToolsTheme('cyan')" id="theme-btn-cyan" class="theme-pill-btn" style="background:#00F0FF;" title="DefraDB Cyan"></button>
-                <button onclick="setDevToolsTheme('amber')" id="theme-btn-amber" class="theme-pill-btn" style="background:#FFB800;" title="LensVM Amber"></button>
-            </div>
-
-            <!-- Pulsing Status Badge -->
-            <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded bg-[#090a0d] border border-[#232733]">
-                <span class="w-2 h-2 rounded-full animate-pulse" style="background:var(--theme-accent);box-shadow:0 0 8px var(--theme-accent);"></span>
-                <span class="text-[10px] font-mono font-bold tracking-wider text-accent">ENGINE ACTIVE</span>
+        <!-- Right: Status Beacon -->
+        <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#0D111A] border border-[#222B3D]">
+                <span class="w-2 h-2 rounded-full animate-pulse" style="background:var(--accent-cyan);box-shadow:0 0 8px var(--accent-cyan);"></span>
+                <span class="text-[11px] font-mono font-bold tracking-wider" style="color:var(--accent-cyan);">ENGINE ACTIVE</span>
             </div>
         </div>
     </header>
@@ -83,229 +64,264 @@
     <!-- ══════════════════════════════════════════════════════════
          MAIN VIEWPORT
          ══════════════════════════════════════════════════════════ -->
-    <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 relative z-10">
+    <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
         <!-- ╔═══════════════════════════════════════════╗
              ║  VIEW 0: HOME / LANDING                  ║
              ╚═══════════════════════════════════════════╝ -->
-        <section id="home-view" class="space-y-10">
+        <section id="home-view" class="space-y-8">
 
-            <!-- Hero Window Frame (Exact layout from Ramotion video) -->
-            <div class="devtools-frame rounded-2xl p-8 lg:p-14 overflow-hidden relative">
-                <!-- Iconic Top-Left Tab Tag -->
-                <div class="devtools-tab-tag">&gt;&gt; SECURITY ENGINES</div>
-                <div class="corner-bracket-br"></div>
-
-                <!-- Concentric Rings in Background (from video) -->
-                <div class="concentric-rings hidden md:block">
-                    <div class="ring ring-1"></div>
-                    <div class="ring ring-2"></div>
-                    <div class="ring ring-3"></div>
+            <!-- Hero DevTools Console Window -->
+            <div class="space-y-0">
+                <!-- Industrial Tab Tag -->
+                <div class="devtools-tab">
+                    <i class="fa-solid fa-terminal text-xs"></i>
+                    <span>&gt;&gt; SECURITY ENGINES</span>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-                    <!-- Left Hero Content (7 cols) -->
-                    <div class="lg:col-span-7 space-y-6 pt-4">
-                        <div class="inline-flex items-center gap-2 text-xs font-mono font-bold text-accent">
-                            <i class="fa-solid fa-cubes text-sm"></i>
-                            <span>HYBRID FIVE-TIER AI ARCHITECTURE</span>
+                <div class="devtools-window overflow-hidden">
+                    <!-- Title Bar -->
+                    <div class="window-titlebar">
+                        <div class="window-dots">
+                            <span class="window-dot dot-red"></span>
+                            <span class="window-dot dot-yellow"></span>
+                            <span class="window-dot dot-green"></span>
+                            <span class="text-[11px] font-mono text-[#8E9AB0] ml-2">cybershield-console: ~ / five-layer-defense</span>
                         </div>
-
-                        <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight font-heading">
-                            Intelligent <span class="text-accent">Phishing &amp; Web</span> Threat Defense
-                        </h2>
-
-                        <p class="text-sm sm:text-base text-gray-300 leading-relaxed font-normal max-w-xl">
-                            Evaluate deceptive communications, spoofed identities, and malicious URLs with an
-                            enterprise five-layer hybrid security engine — combining Aho-Corasick linear-time pattern matching,
-                            regex psychological cues, heuristic domain entropy, and Supervised Machine Learning.
-                        </p>
-
-                        <!-- Ramotion Split Action Buttons -->
-                        <div class="flex flex-wrap items-center gap-5 pt-3">
-                            <button onclick="switchMainTool('email-tool')" class="btn-ramotion">
-                                <span class="btn-text">
-                                    <i class="fa-solid fa-envelope-open-text"></i>
-                                    Analyse Email
-                                </span>
-                                <span class="btn-notch">
-                                    <i class="fa-solid fa-bolt text-xs"></i>
-                                </span>
-                            </button>
-
-                            <button onclick="switchMainTool('url-tool')" class="btn-ghost-link">
-                                <span>Scan Suspicious URL</span>
-                                <i class="fa-solid fa-arrow-right text-xs"></i>
-                            </button>
-                        </div>
-
-                        <!-- Technical Stats Bar -->
-                        <div class="grid grid-cols-3 gap-6 pt-6 border-t border-[#1E222D] font-mono text-xs">
-                            <div>
-                                <div class="text-xl font-bold text-white font-heading">48,600+</div>
-                                <div class="text-[11px] text-gray-400 mt-0.5">// SCANS_ANALYZED</div>
-                            </div>
-                            <div>
-                                <div class="text-xl font-bold text-accent font-heading">98.2%</div>
-                                <div class="text-[11px] text-gray-400 mt-0.5">// ML_ACCURACY</div>
-                            </div>
-                            <div>
-                                <div class="text-xl font-bold text-white font-heading">&lt;40ms</div>
-                                <div class="text-[11px] text-gray-400 mt-0.5">// INFERENCE_TIME</div>
-                            </div>
-                        </div>
+                        <div class="text-[11px] font-mono text-[#8E9AB0]">STATUS: 200 OK</div>
                     </div>
 
-                    <!-- Right Graphic (5 cols) — Exact Halftone Screen + Isometric Rhombus from Video -->
-                    <div class="lg:col-span-5 flex flex-col items-center justify-center space-y-4">
-                        <div class="w-full max-w-sm devtools-frame rounded-xl overflow-hidden">
-                            <div class="subcard-tag">// RADAR_TELEMETRY</div>
-                            <div class="halftone-screen">
-                                <div class="halftone-glyph">
-                                    <i class="fa-solid fa-shield-virus text-4xl"></i>
-                                </div>
+                    <!-- Inner Window Content -->
+                    <div class="p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        
+                        <!-- Left: Headline & Actions (7 cols) -->
+                        <div class="lg:col-span-7 space-y-6">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold bg-[#141B2D] border border-[#222B3D]" style="color:var(--accent-cyan);">
+                                <i class="fa-solid fa-microchip"></i>
+                                <span>FIVE-LAYER HYBRID THREAT INSPECTION</span>
                             </div>
-                            <div class="p-3 bg-[#0d0e12] border-t border-[#1E222D] flex items-center justify-between text-[11px] font-mono">
-                                <span class="text-gray-400">STATE: <strong class="text-white">MONITORING</strong></span>
-                                <span class="text-accent flex items-center gap-1.5">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-accent animate-ping"></span>
-                                    ONLINE
-                                </span>
+
+                            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight font-sans">
+                                Intelligent <span style="color:var(--accent-cyan);">Phishing &amp; Malware</span> Defense
+                            </h1>
+
+                            <p class="text-sm sm:text-base text-[#8E9AB0] leading-relaxed max-w-xl">
+                                Evaluate deceptive communications, spoofed identities, and malicious URLs with an
+                                enterprise five-layer hybrid security engine — combining Aho-Corasick linear-time pattern matching,
+                                regex psychological indicators, heuristic domain analysis, and Supervised Machine Learning.
+                            </p>
+
+                            <!-- Ramotion Split Action Buttons -->
+                            <div class="flex flex-wrap items-center gap-4 pt-2">
+                                <button onclick="switchMainTool('email-tool')" class="btn-devtools">
+                                    <span class="btn-main">
+                                        <i class="fa-solid fa-envelope-open-text"></i>
+                                        Analyse Email
+                                    </span>
+                                    <span class="btn-notch">
+                                        <i class="fa-solid fa-bolt"></i>
+                                    </span>
+                                </button>
+
+                                <button onclick="switchMainTool('url-tool')" class="btn-devtools-ghost">
+                                    <span>Scan Suspicious URL</span>
+                                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                                </button>
+                            </div>
+
+                            <!-- Telemetry Stats Row -->
+                            <div class="grid grid-cols-3 gap-4 pt-6 border-t border-[#1C2333] font-mono text-xs">
+                                <div>
+                                    <div class="text-xl sm:text-2xl font-bold text-white">48,600+</div>
+                                    <div class="text-[11px] text-[#8E9AB0] mt-0.5">// SCANS_ANALYZED</div>
+                                </div>
+                                <div>
+                                    <div class="text-xl sm:text-2xl font-bold" style="color:var(--accent-cyan);">98.2%</div>
+                                    <div class="text-[11px] text-[#8E9AB0] mt-0.5">// ML_ACCURACY</div>
+                                </div>
+                                <div>
+                                    <div class="text-xl sm:text-2xl font-bold text-white">&lt;40ms</div>
+                                    <div class="text-[11px] text-[#8E9AB0] mt-0.5">// INFERENCE_TIME</div>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- CAD Hazard Stripe Accent Box (from video corner) -->
-                        <div class="w-full max-w-sm h-10 cad-stripes rounded-lg flex items-center justify-between px-4 text-[10px] font-mono text-gray-400">
-                            <span>[CAD_REF: L1_L5_ENG]</span>
-                            <span>HASH: 8F4C20A</span>
+                        <!-- Right: Animated Radar & System Telemetry Card (5 cols) -->
+                        <div class="lg:col-span-5 flex flex-col space-y-4">
+                            <div class="telemetry-card">
+                                <div class="px-4 py-2.5 bg-[#0A0E17] border-b border-[#1C2333] flex items-center justify-between text-xs font-mono">
+                                    <span class="font-bold text-white">// RADAR_TELEMETRY</span>
+                                    <span class="text-[10px] text-[#00F5D4] font-bold">LIVE_FEED</span>
+                                </div>
+
+                                <!-- Radar Sweep Display -->
+                                <div class="radar-sweep-box">
+                                    <div class="radar-ring radar-ring-1"></div>
+                                    <div class="radar-ring radar-ring-2"></div>
+                                    <div class="radar-ring radar-ring-3"></div>
+                                    <div class="radar-sweep-line"></div>
+                                    <div class="radar-glyph">
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Telemetry Diagnostics List -->
+                                <div class="p-3.5 space-y-2 bg-[#0D111A] text-xs font-mono">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[#8E9AB0]">AHO_CORASICK_ENGINE:</span>
+                                        <span class="text-emerald-400 font-bold">ONLINE</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[#8E9AB0]">RANDOM_FOREST_NLP:</span>
+                                        <span class="text-emerald-400 font-bold">LOADED</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[#8E9AB0]">THREAT_INTELLIGENCE:</span>
+                                        <span class="text-[#00F5D4] font-bold">SYNCHRONIZED</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CAD Hazard Box -->
+                            <div class="cad-hazard-box">
+                                <span>[ENGINE_SPEC: L1–L5]</span>
+                                <span>TELEMETRY: VERIFIED</span>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
 
-            <!-- Two Tool Access Cards (Ramotion Card Grid) -->
+            <!-- Two Tool Selector Cards -->
             <div class="space-y-4">
                 <div class="flex items-center justify-between">
-                    <div class="text-xs font-mono font-bold uppercase tracking-wider text-gray-400 flex items-center gap-2">
-                        <span class="text-accent">//</span> SELECT SECURITY TOOL
+                    <div class="text-xs font-mono font-bold uppercase tracking-wider text-[#8E9AB0] flex items-center gap-2">
+                        <span style="color:var(--accent-cyan);font-weight:900;">//</span> SELECT SECURITY TOOL
                     </div>
-                    <span class="text-[11px] font-mono text-gray-500">2 INSTRUMENTS DEPLOYED</span>
+                    <span class="text-[11px] font-mono text-[#52607A]">2 INSTRUMENTS AVAILABLE</span>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                    <!-- Tool #1: Analyse Email -->
-                    <div class="devtools-frame rounded-2xl p-7 flex flex-col justify-between space-y-6 group">
-                        <div class="devtools-tab-tag">&gt;&gt; TOOL // 01</div>
-                        <div class="corner-bracket-br"></div>
-
-                        <div class="space-y-4 pt-3">
-                            <div class="flex items-center justify-between">
-                                <div class="w-12 h-12 rounded-xl bg-[#090a0d] border border-[#232733] flex items-center justify-center text-xl text-accent group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-envelope-open-text"></i>
-                                </div>
-                                <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#13161F] text-gray-400 border border-[#232733]">RFC 822 COMPLIANT</span>
-                            </div>
-
-                            <div>
-                                <h3 class="text-2xl font-bold text-white font-heading">1) Analyse Email</h3>
-                                <p class="text-xs text-gray-400 mt-2 leading-relaxed">
-                                    Examine full email content through <strong>Manual Input</strong> (Sender address, Subject, and Body) or direct <strong>.eml File Upload</strong>.
-                                </p>
-                            </div>
-
-                            <ul class="text-xs text-gray-300 space-y-2 font-mono pt-3 border-t border-[#1E222D]">
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i> Sender domain verification &amp; spoofing checks</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i> Aho-Corasick multi-keyword linear pattern search</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i> Urgency and credential harvesting regex indicators</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-accent text-[10px]"></i> Embedded URL extraction &amp; attachment payload check</li>
-                            </ul>
+                    <!-- Tool 1: Analyse Email -->
+                    <div>
+                        <div class="devtools-tab">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>&gt;&gt; TOOL // 01</span>
                         </div>
+                        <div class="devtools-window p-7 flex flex-col justify-between space-y-6">
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div class="w-12 h-12 rounded-xl bg-[#0A0E17] border border-[#222B3D] flex items-center justify-center text-xl" style="color:var(--accent-cyan);">
+                                        <i class="fa-solid fa-envelope-open-text"></i>
+                                    </div>
+                                    <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#141B2D] text-[#8E9AB0] border border-[#222B3D]">RFC 822 COMPLIANT</span>
+                                </div>
 
-                        <button onclick="switchMainTool('email-tool')" class="btn-ramotion w-full justify-between">
-                            <span class="btn-text">
-                                <i class="fa-solid fa-envelope-circle-check"></i>
-                                Open 1) Analyse Email
-                            </span>
-                            <span class="btn-notch">
-                                <i class="fa-solid fa-arrow-right text-xs"></i>
-                            </span>
-                        </button>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-white">1) Analyse Email</h3>
+                                    <p class="text-xs text-[#8E9AB0] mt-2 leading-relaxed">
+                                        Examine full email content through <strong>Manual Input</strong> (Sender address, Subject, and Body) or direct <strong>.eml File Upload</strong>.
+                                    </p>
+                                </div>
+
+                                <ul class="text-xs text-[#E2E8F0] space-y-2 font-mono pt-3 border-t border-[#1C2333]">
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-[10px]" style="color:var(--accent-cyan);"></i> Sender domain verification &amp; spoofing checks</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-[10px]" style="color:var(--accent-cyan);"></i> Aho-Corasick multi-keyword pattern search</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-[10px]" style="color:var(--accent-cyan);"></i> Urgency &amp; credential harvesting regex triggers</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-[10px]" style="color:var(--accent-cyan);"></i> Embedded URL extraction &amp; payload inspection</li>
+                                </ul>
+                            </div>
+
+                            <button onclick="switchMainTool('email-tool')" class="btn-devtools w-full justify-between">
+                                <span class="btn-main">
+                                    <i class="fa-solid fa-envelope-circle-check"></i>
+                                    Open 1) Analyse Email
+                                </span>
+                                <span class="btn-notch">
+                                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                                </span>
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- Tool #2: Scan URL -->
-                    <div class="devtools-frame rounded-2xl p-7 flex flex-col justify-between space-y-6 group">
-                        <div class="devtools-tab-tag" style="background:var(--accent-cyan);color:#000;">&gt;&gt; TOOL // 02</div>
-                        <div class="corner-bracket-br" style="border-color:var(--accent-cyan);"></div>
-
-                        <div class="space-y-4 pt-3">
-                            <div class="flex items-center justify-between">
-                                <div class="w-12 h-12 rounded-xl bg-[#090a0d] border border-[#232733] flex items-center justify-center text-xl text-cyan-400 group-hover:scale-105 transition">
-                                    <i class="fa-solid fa-globe"></i>
-                                </div>
-                                <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#13161F] text-gray-400 border border-[#232733]">URI / FQDN SCAN</span>
-                            </div>
-
-                            <div>
-                                <h3 class="text-2xl font-bold text-white font-heading">2) Scan URL</h3>
-                                <p class="text-xs text-gray-400 mt-2 leading-relaxed">
-                                    Instantly evaluate suspicious links with structural heuristics, mathematical entropy calculations, and threat intelligence feeds.
-                                </p>
-                            </div>
-
-                            <ul class="text-xs text-gray-300 space-y-2 font-mono pt-3 border-t border-[#1E222D]">
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 text-[10px]"></i> Direct IP host detection &amp; high-risk TLD checks</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 text-[10px]"></i> Shannon entropy calculation for obfuscated domains</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 text-[10px]"></i> Brand impersonation &amp; Levenshtein typosquatting</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 text-[10px]"></i> Live VirusTotal cloud threat intelligence query</li>
-                            </ul>
+                    <!-- Tool 2: Scan URL -->
+                    <div>
+                        <div class="devtools-tab lime">
+                            <i class="fa-solid fa-globe"></i>
+                            <span>&gt;&gt; TOOL // 02</span>
                         </div>
+                        <div class="devtools-window p-7 flex flex-col justify-between space-y-6">
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div class="w-12 h-12 rounded-xl bg-[#0A0E17] border border-[#222B3D] flex items-center justify-center text-xl" style="color:var(--accent-lime);">
+                                        <i class="fa-solid fa-globe"></i>
+                                    </div>
+                                    <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#141B2D] text-[#8E9AB0] border border-[#222B3D]">URI / FQDN SCAN</span>
+                                </div>
 
-                        <button onclick="switchMainTool('url-tool')" class="btn-ramotion w-full justify-between" style="background:var(--accent-cyan);">
-                            <span class="btn-text">
-                                <i class="fa-solid fa-magnifying-glass-chart"></i>
-                                Open 2) Scan URL
-                            </span>
-                            <span class="btn-notch">
-                                <i class="fa-solid fa-arrow-right text-xs"></i>
-                            </span>
-                        </button>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-white">2) Scan URL</h3>
+                                    <p class="text-xs text-[#8E9AB0] mt-2 leading-relaxed">
+                                        Instantly evaluate suspicious links with structural heuristics, mathematical Shannon entropy calculations, and threat intelligence.
+                                    </p>
+                                </div>
+
+                                <ul class="text-xs text-[#E2E8F0] space-y-2 font-mono pt-3 border-t border-[#1C2333]">
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-[10px]" style="color:var(--accent-lime);"></i> Direct IP host detection &amp; high-risk TLD checks</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-[10px]" style="color:var(--accent-lime);"></i> Shannon entropy calculation for obfuscated domains</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-[10px]" style="color:var(--accent-lime);"></i> Brand impersonation &amp; typosquatting checks</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-[10px]" style="color:var(--accent-lime);"></i> Live threat intelligence query</li>
+                                </ul>
+                            </div>
+
+                            <button onclick="switchMainTool('url-tool')" class="btn-devtools lime w-full justify-between">
+                                <span class="btn-main">
+                                    <i class="fa-solid fa-magnifying-glass-chart"></i>
+                                    Open 2) Scan URL
+                                </span>
+                                <span class="btn-notch">
+                                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                                </span>
+                            </button>
+                        </div>
                     </div>
 
                 </div>
             </div>
 
-            <!-- Pipeline Architecture Reference -->
-            <div class="devtools-frame p-6 rounded-2xl space-y-4">
-                <div class="text-xs font-mono font-bold uppercase tracking-wider text-gray-400 flex items-center gap-2">
-                    <span class="text-accent">//</span> 5-TIER INSPECTION PIPELINE ARCHITECTURE
+            <!-- Five Layer Architecture Reference -->
+            <div class="devtools-window p-6 space-y-4">
+                <div class="text-xs font-mono font-bold uppercase tracking-wider text-[#8E9AB0] flex items-center gap-2">
+                    <span style="color:var(--accent-cyan);">//</span> FIVE-TIER HYBRID DETECTION PIPELINE
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-xs">
-                    <div class="p-4 rounded-xl bg-[#0b0c10] border border-[#1E222D] space-y-1">
-                        <div class="font-mono text-accent font-bold text-[10px]">LAYER 01</div>
+                    <div class="p-4 rounded-xl bg-[#0A0E17] border border-[#1C2333] space-y-1">
+                        <div class="font-mono text-[#00F5D4] font-bold text-[10px]">LAYER 01</div>
                         <div class="font-bold text-white">Keywords &amp; Sender</div>
-                        <div class="text-gray-400 text-[11px]">Aho-Corasick linear-time pattern matching.</div>
+                        <div class="text-[#8E9AB0] text-[11px]">Aho-Corasick linear-time pattern matching.</div>
                     </div>
-                    <div class="p-4 rounded-xl bg-[#0b0c10] border border-[#1E222D] space-y-1">
-                        <div class="font-mono text-accent font-bold text-[10px]">LAYER 02</div>
+                    <div class="p-4 rounded-xl bg-[#0A0E17] border border-[#1C2333] space-y-1">
+                        <div class="font-mono text-[#00F5D4] font-bold text-[10px]">LAYER 02</div>
                         <div class="font-bold text-white">Linguistic Regex</div>
-                        <div class="text-gray-400 text-[11px]">Urgency cues and credential harvesting patterns.</div>
+                        <div class="text-[#8E9AB0] text-[11px]">Urgency cues and credential harvesting phrases.</div>
                     </div>
-                    <div class="p-4 rounded-xl bg-[#0b0c10] border border-[#1E222D] space-y-1">
-                        <div class="font-mono text-accent font-bold text-[10px]">LAYER 03</div>
+                    <div class="p-4 rounded-xl bg-[#0A0E17] border border-[#1C2333] space-y-1">
+                        <div class="font-mono text-[#00F5D4] font-bold text-[10px]">LAYER 03</div>
                         <div class="font-bold text-white">URL &amp; Threat Feed</div>
-                        <div class="text-gray-400 text-[11px]">Shannon entropy and threat intelligence.</div>
+                        <div class="text-[#8E9AB0] text-[11px]">Shannon entropy and threat intelligence.</div>
                     </div>
-                    <div class="p-4 rounded-xl bg-[#0b0c10] border border-[#1E222D] space-y-1">
-                        <div class="font-mono text-accent font-bold text-[10px]">LAYER 04</div>
+                    <div class="p-4 rounded-xl bg-[#0A0E17] border border-[#1C2333] space-y-1">
+                        <div class="font-mono text-[#00F5D4] font-bold text-[10px]">LAYER 04</div>
                         <div class="font-bold text-white">Payload Analysis</div>
-                        <div class="text-gray-400 text-[11px]">Double extensions and dangerous executables.</div>
+                        <div class="text-[#8E9AB0] text-[11px]">Double extensions and dangerous executables.</div>
                     </div>
-                    <div class="p-4 rounded-xl bg-[#0b0c10] border border-[#1E222D] space-y-1">
-                        <div class="font-mono text-accent font-bold text-[10px]">LAYER 05</div>
+                    <div class="p-4 rounded-xl bg-[#0A0E17] border border-[#1C2333] space-y-1">
+                        <div class="font-mono text-[#00F5D4] font-bold text-[10px]">LAYER 05</div>
                         <div class="font-bold text-white">AI/ML Classification</div>
-                        <div class="text-gray-400 text-[11px]">TF-IDF + Random Forest NLP model.</div>
+                        <div class="text-[#8E9AB0] text-[11px]">TF-IDF + Random Forest NLP model.</div>
                     </div>
                 </div>
             </div>
@@ -319,47 +335,41 @@
         <section id="email-tool" class="hidden space-y-6">
 
             <!-- Mode Selector Bar -->
-            <div class="devtools-frame rounded-xl px-5 py-3 flex items-center justify-between flex-wrap gap-4">
+            <div class="devtools-window p-4 flex items-center justify-between flex-wrap gap-4">
                 <div class="flex items-center gap-3">
-                    <span class="text-xs font-mono font-bold text-gray-400 uppercase">// INPUT_MODE:</span>
-                    <button onclick="switchEmailMode('manual')" id="mode-btn-manual"
-                            class="sub-toggle-btn active">
+                    <span class="text-xs font-mono font-bold text-[#8E9AB0] uppercase">// INPUT_MODE:</span>
+                    <button onclick="switchEmailMode('manual')" id="mode-btn-manual" class="sub-mode-btn active">
                         <i class="fa-solid fa-keyboard mr-1.5"></i> Manual Input
                     </button>
-                    <button onclick="switchEmailMode('eml')" id="mode-btn-eml"
-                            class="sub-toggle-btn">
+                    <button onclick="switchEmailMode('eml')" id="mode-btn-eml" class="sub-mode-btn">
                         <i class="fa-solid fa-file-arrow-up mr-1.5"></i> Upload .eml File
                     </button>
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <!-- Real-Time Mode Toggle -->
-                    <label class="flex items-center gap-2 cursor-pointer bg-[#0b0c10] px-3.5 py-1.5 rounded border border-[#232733] hover:border-accent transition">
-                        <input type="checkbox" id="toggle-realtime-email" checked class="w-4 h-4 rounded text-accent focus:ring-accent" style="accent-color:var(--theme-accent);">
-                        <span class="text-xs font-mono font-bold text-accent flex items-center gap-1.5">
-                            <span class="w-2 h-2 rounded-full animate-pulse" style="background:var(--theme-accent);"></span>
+                    <label class="flex items-center gap-2 cursor-pointer bg-[#0A0E17] px-3.5 py-1.5 rounded-lg border border-[#222B3D] hover:border-[#00F5D4] transition">
+                        <input type="checkbox" id="toggle-realtime-email" checked class="w-4 h-4 rounded text-[#00F5D4]" style="accent-color:var(--accent-cyan);">
+                        <span class="text-xs font-mono font-bold text-[#00F5D4] flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full animate-pulse" style="background:var(--accent-cyan);"></span>
                             ⚡ Real-Time Live Scan
                         </span>
                     </label>
 
-                    <button onclick="clearManualFields()" class="text-xs text-gray-400 hover:text-white px-3 py-1.5 rounded border border-[#232733] hover:border-gray-500 font-mono transition">
-                        <i class="fa-solid fa-eraser mr-1"></i> Clear
+                    <button onclick="clearManualFields()" class="text-xs text-[#8E9AB0] hover:text-white px-3 py-1.5 rounded-lg border border-[#222B3D] font-mono transition">
+                        <i class="fa-solid fa-eraser mr-1"></i> Clear Fields
                     </button>
                 </div>
             </div>
 
-            <!-- Manual Email Inspection Form -->
-            <div id="email-manual-section" class="devtools-frame p-8 rounded-2xl relative">
-                <div class="devtools-tab-tag">&gt;&gt; EMAIL_INSPECTION_CONSOLE</div>
-                <div class="corner-bracket-br"></div>
-
-                <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start pt-3">
+            <!-- Manual Email Inspection Console -->
+            <div id="email-manual-section" class="devtools-window p-8">
+                <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
 
                     <!-- Left: Input fields (7 cols) -->
                     <div class="xl:col-span-7 space-y-5">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-xs font-mono font-bold text-gray-300 mb-2 uppercase">// SENDER (FROM):</label>
+                                <label class="block text-xs font-mono font-bold text-gray-300 mb-2 uppercase">// FROM (SENDER):</label>
                                 <input id="input-sender" type="text" placeholder="e.g. security-update@paypaI-support.com"
                                        class="w-full px-4 py-3 text-sm">
                             </div>
@@ -377,23 +387,23 @@
                         </div>
 
                         <!-- Attachments Row -->
-                        <div class="p-4 rounded-xl bg-[#0b0c10] border border-[#1E222D] space-y-3">
+                        <div class="p-4 rounded-xl bg-[#0A0E17] border border-[#1C2333] space-y-3">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs font-mono font-bold text-gray-300 flex items-center gap-2 uppercase">
-                                    <i class="fa-solid fa-paperclip text-accent"></i>
-                                    Attachments (Layer 4)
+                                    <i class="fa-solid fa-paperclip text-[#00F5D4]"></i>
+                                    Email Attachments (Layer 4)
                                 </span>
                                 <button type="button" onclick="addAttachmentRow()"
-                                        class="text-xs font-mono font-bold px-3 py-1.5 rounded bg-[#13161F] text-accent border border-[#2A2F3D] hover:border-accent transition">
+                                        class="text-xs font-mono font-bold px-3 py-1.5 rounded bg-[#141B2D] text-[#00F5D4] border border-[#222B3D] hover:border-[#00F5D4] transition">
                                     + Add File
                                 </button>
                             </div>
                             <div id="attachments-container" class="space-y-2"></div>
                         </div>
 
-                        <!-- Action Button -->
-                        <button id="btn-scan-manual" onclick="performManualEmailScan()" class="btn-ramotion w-full justify-between py-1">
-                            <span class="btn-text text-sm">
+                        <!-- Scan Button -->
+                        <button id="btn-scan-manual" onclick="performManualEmailScan()" class="btn-devtools w-full justify-between">
+                            <span class="btn-main text-sm">
                                 <i class="fa-solid fa-shield-virus"></i>
                                 Analyze Email (5-Layer Hybrid Engine)
                             </span>
@@ -403,25 +413,32 @@
                         </button>
                     </div>
 
-                    <!-- Right: Live AI/ML Prediction Telemetry Card (5 cols) -->
+                    <!-- Right: Inline ML Classification Card (5 cols) -->
                     <div class="xl:col-span-5">
-                        <div id="email-ml-card" class="devtools-frame rounded-xl p-5 space-y-4">
-                            <div class="subcard-tag">// AI_ML_CLASSIFIER_TELEMETRY</div>
+                        <div id="email-ml-card" class="devtools-window p-6 space-y-4">
+                            <div class="flex items-center justify-between border-b border-[#1C2333] pb-3">
+                                <span class="text-xs font-mono font-bold uppercase tracking-wider text-[#00F5D4] flex items-center gap-2">
+                                    <i class="fa-solid fa-brain"></i> AI/ML Classification Engine
+                                </span>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#141B2D] text-[#8E9AB0] border border-[#222B3D]">
+                                    Unified Model
+                                </span>
+                            </div>
 
-                            <div id="email-ml-status" class="text-xs font-mono text-gray-400 flex items-center gap-2 pt-1">
+                            <div id="email-ml-status" class="text-xs font-mono text-[#8E9AB0] flex items-center gap-2">
                                 <span class="w-1.5 h-1.5 rounded-full bg-gray-500"></span>
                                 Awaiting input to begin live prediction…
                             </div>
 
                             <div class="flex items-center justify-between pt-2">
                                 <div>
-                                    <span class="text-[11px] font-mono text-gray-400 block uppercase">Model Prediction:</span>
+                                    <span class="text-[11px] font-mono text-[#8E9AB0] block uppercase">Model Prediction:</span>
                                     <span id="email-ml-prediction-badge" class="text-xl font-extrabold font-mono text-gray-500">
                                         —
                                     </span>
                                 </div>
                                 <div class="text-right">
-                                    <span class="text-[11px] font-mono text-gray-400 block uppercase">Confidence:</span>
+                                    <span class="text-[11px] font-mono text-[#8E9AB0] block uppercase">Confidence:</span>
                                     <span id="email-ml-confidence-val" class="text-xl font-extrabold font-mono text-gray-500">
                                         — %
                                     </span>
@@ -430,27 +447,27 @@
 
                             <!-- Confidence Meter -->
                             <div class="space-y-1.5">
-                                <div class="w-full bg-[#0b0c10] rounded h-2 overflow-hidden border border-[#1E222D]">
-                                    <div id="email-ml-confidence-bar" class="h-full transition-all duration-500" style="width:0%;background:var(--theme-accent);"></div>
+                                <div class="w-full bg-[#0A0E17] rounded h-2 overflow-hidden border border-[#1C2333]">
+                                    <div id="email-ml-confidence-bar" class="h-full transition-all duration-500" style="width:0%;background:var(--accent-cyan);"></div>
                                 </div>
-                                <div class="flex justify-between text-[11px] text-gray-400 font-mono">
-                                    <span>Model: TF-IDF + Random Forest</span>
+                                <div class="flex justify-between text-[11px] text-[#8E9AB0] font-mono">
+                                    <span>TF-IDF + Random Forest</span>
                                     <span id="email-ml-prob-val">Prob: —</span>
                                 </div>
                             </div>
 
-                            <!-- Influential Feature Tokens -->
-                            <div class="pt-3 border-t border-[#1E222D]">
+                            <!-- Token Chips -->
+                            <div class="pt-3 border-t border-[#1C2333]">
                                 <span class="text-[11px] font-mono font-bold text-gray-300 block mb-2 uppercase flex items-center gap-1.5">
-                                    <i class="fa-solid fa-microchip text-accent"></i> Key Influential Tokens:
+                                    <i class="fa-solid fa-microchip text-[#00F5D4]"></i> Key Influential Tokens:
                                 </span>
                                 <div id="email-ml-feature-chips" class="flex flex-wrap gap-1.5">
                                     <span class="text-xs text-gray-500 italic font-mono">Enter email content to see live token analysis</span>
                                 </div>
                             </div>
 
-                            <div class="text-[11px] text-gray-400 font-mono border-t border-[#1E222D] pt-3 flex items-start gap-1.5">
-                                <i class="fa-solid fa-circle-info text-accent mt-0.5"></i>
+                            <div class="text-[11px] text-[#8E9AB0] font-mono border-t border-[#1C2333] pt-3 flex items-start gap-1.5">
+                                <i class="fa-solid fa-circle-info text-[#00F5D4] mt-0.5"></i>
                                 Click <strong>Analyze Email</strong> for the full 5-layer cumulative forensic audit.
                             </div>
                         </div>
@@ -460,42 +477,39 @@
             </div>
 
             <!-- Upload .eml File Panel -->
-            <div id="email-eml-section" class="hidden devtools-frame p-8 rounded-2xl relative space-y-6">
-                <div class="devtools-tab-tag">&gt;&gt; RFC822_EML_PARSER</div>
-                <div class="corner-bracket-br"></div>
-
-                <div class="pt-2">
-                    <h3 class="text-xl font-bold text-white font-heading">Upload RFC 822 Email File (.eml)</h3>
-                    <p class="text-xs text-gray-400 mt-1">Upload an exported .eml message to automatically extract headers, HTML/plain-text bodies, and file attachments.</p>
+            <div id="email-eml-section" class="hidden devtools-window p-8 space-y-6">
+                <div>
+                    <h3 class="text-xl font-bold text-white">Upload RFC 822 Email File (.eml)</h3>
+                    <p class="text-xs text-[#8E9AB0] mt-1">Upload an exported .eml message to automatically extract headers, HTML/plain-text bodies, and file attachments.</p>
                 </div>
 
                 <div id="eml-drop-zone" class="drop-zone py-16 rounded-xl text-center cursor-pointer space-y-3"
                      onclick="document.getElementById('eml-file-input').click()">
                     <input type="file" id="eml-file-input" accept=".eml" class="hidden" onchange="handleEmlFileSelect(this.files)">
-                    <div class="w-16 h-16 rounded-xl bg-[#13161F] text-accent flex items-center justify-center mx-auto text-2xl border border-[#232733]">
+                    <div class="w-16 h-16 rounded-xl bg-[#141B2D] text-[#00F5D4] flex items-center justify-center mx-auto text-2xl border border-[#222B3D]">
                         <i class="fa-solid fa-cloud-arrow-up"></i>
                     </div>
                     <div>
-                        <p class="text-sm font-bold text-white font-mono">Drag &amp; drop your <span class="text-accent">.eml</span> file here</p>
-                        <p class="text-xs text-gray-400 mt-1 font-mono">or click to browse local files</p>
+                        <p class="text-sm font-bold text-white font-mono">Drag &amp; drop your <span style="color:var(--accent-cyan);">.eml</span> file here</p>
+                        <p class="text-xs text-[#8E9AB0] mt-1 font-mono">or click to browse local files</p>
                     </div>
                 </div>
 
-                <div id="eml-file-preview" class="hidden p-5 rounded-xl bg-[#0b0c10] border border-[#1E222D] space-y-4">
-                    <div class="flex items-center justify-between border-b border-[#1E222D] pb-3">
+                <div id="eml-file-preview" class="hidden p-5 rounded-xl bg-[#0A0E17] border border-[#1C2333] space-y-4">
+                    <div class="flex items-center justify-between border-b border-[#1C2333] pb-3">
                         <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-file-code text-2xl text-accent"></i>
+                            <i class="fa-solid fa-file-code text-2xl text-[#00F5D4]"></i>
                             <div>
                                 <div id="eml-filename" class="text-sm font-mono font-bold text-white">selected_email.eml</div>
-                                <div id="eml-filesize" class="text-xs text-gray-400 font-mono">0 KB</div>
+                                <div id="eml-filesize" class="text-xs text-[#8E9AB0] font-mono">0 KB</div>
                             </div>
                         </div>
                         <button onclick="clearEmlFile()" class="text-xs text-red-400 hover:text-red-300 font-mono px-3 py-1.5 rounded border border-red-900 transition">
                             Remove
                         </button>
                     </div>
-                    <button id="btn-scan-eml" onclick="uploadAndScanEml()" class="btn-ramotion w-full justify-between">
-                        <span class="btn-text">
+                    <button id="btn-scan-eml" onclick="uploadAndScanEml()" class="btn-devtools w-full justify-between">
+                        <span class="btn-main">
                             <i class="fa-solid fa-bolt"></i>
                             Analyze Uploaded .eml File
                         </span>
@@ -513,20 +527,17 @@
              ║  VIEW 2: TOOL 2 - SCAN URL               ║
              ╚═══════════════════════════════════════════╝ -->
         <section id="url-tool" class="hidden">
-            <div class="devtools-frame p-8 rounded-2xl relative space-y-6">
-                <div class="devtools-tab-tag" style="background:var(--accent-cyan);color:#000;">&gt;&gt; URL_HEURISTIC_SCANNER</div>
-                <div class="corner-bracket-br" style="border-color:var(--accent-cyan);"></div>
+            <div class="devtools-window p-8 space-y-6">
 
-                <div class="flex flex-wrap justify-between items-center gap-3 border-b border-[#1E222D] pb-4 pt-2">
+                <div class="flex flex-wrap justify-between items-center gap-3 border-b border-[#1C2333] pb-4">
                     <div>
-                        <h3 class="text-xl font-bold text-white font-heading">Scan Target URL</h3>
-                        <p class="text-xs text-gray-400 mt-1">Inspect any domain, IP-host, or web route for typosquatting, Shannon entropy, and malicious feeds.</p>
+                        <h3 class="text-xl font-bold text-white">Scan Target URL</h3>
+                        <p class="text-xs text-[#8E9AB0] mt-1">Inspect any domain, IP-host, or web route for typosquatting, Shannon entropy, and malicious threat feeds.</p>
                     </div>
 
-                    <!-- Real-Time URL Toggle -->
-                    <label class="flex items-center gap-2 cursor-pointer bg-[#0b0c10] px-3.5 py-1.5 rounded border border-[#232733] hover:border-cyan-400 transition">
-                        <input type="checkbox" id="toggle-realtime-url" checked class="w-4 h-4 rounded text-cyan-400" style="accent-color:var(--accent-cyan);">
-                        <span class="text-xs font-mono font-bold text-cyan-400 flex items-center gap-1.5">
+                    <label class="flex items-center gap-2 cursor-pointer bg-[#0A0E17] px-3.5 py-1.5 rounded-lg border border-[#222B3D] hover:border-[#00F5D4] transition">
+                        <input type="checkbox" id="toggle-realtime-url" checked class="w-4 h-4 rounded text-[#00F5D4]" style="accent-color:var(--accent-cyan);">
+                        <span class="text-xs font-mono font-bold text-[#00F5D4] flex items-center gap-1.5">
                             <span class="w-2 h-2 rounded-full animate-pulse" style="background:var(--accent-cyan);"></span>
                             ⚡ Real-Time Live Scan
                         </span>
@@ -543,8 +554,8 @@
                                    class="w-full px-4 py-3.5 text-sm font-mono">
                         </div>
 
-                        <button id="btn-scan-url" onclick="performUrlScan()" class="btn-ramotion w-full justify-between" style="background:var(--accent-cyan);">
-                            <span class="btn-text text-sm">
+                        <button id="btn-scan-url" onclick="performUrlScan()" class="btn-devtools w-full justify-between">
+                            <span class="btn-main text-sm">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                                 Scan URL (5-Layer Hybrid Engine)
                             </span>
@@ -553,9 +564,8 @@
                             </span>
                         </button>
 
-                        <!-- URL Security Capabilities Checklist -->
-                        <div class="p-4 rounded-xl bg-[#0b0c10] border border-[#1E222D] space-y-2 text-xs font-mono text-gray-300">
-                            <div class="text-[10px] text-gray-500 uppercase">// AUTOMATED_LAYER_CHECKS:</div>
+                        <div class="p-4 rounded-xl bg-[#0A0E17] border border-[#1C2333] space-y-2 text-xs font-mono text-gray-300">
+                            <div class="text-[10px] text-[#8E9AB0] uppercase">// AUTOMATED_LAYER_CHECKS:</div>
                             <div class="grid grid-cols-2 gap-2 text-[11px]">
                                 <div>✓ Direct IP address as host</div>
                                 <div>✓ High-risk top-level domains</div>
@@ -569,53 +579,58 @@
 
                     <!-- Right: URL ML Classification Card (5 cols) -->
                     <div class="xl:col-span-5">
-                        <div id="url-ml-card" class="devtools-frame rounded-xl p-5 space-y-4">
-                            <div class="subcard-tag" style="background:var(--accent-cyan);color:#000;">// URL_ML_CLASSIFIER_TELEMETRY</div>
+                        <div id="url-ml-card" class="devtools-window p-6 space-y-4">
+                            <div class="flex items-center justify-between border-b border-[#1C2333] pb-3">
+                                <span class="text-xs font-mono font-bold uppercase tracking-wider text-[#00F5D4] flex items-center gap-2">
+                                    <i class="fa-solid fa-brain"></i> AI/ML Classification Engine
+                                </span>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#141B2D] text-[#8E9AB0] border border-[#222B3D]">
+                                    Unified Model
+                                </span>
+                            </div>
 
-                            <div id="url-ml-status" class="text-xs font-mono text-gray-400 flex items-center gap-2 pt-1">
+                            <div id="url-ml-status" class="text-xs font-mono text-[#8E9AB0] flex items-center gap-2">
                                 <span class="w-1.5 h-1.5 rounded-full bg-gray-500"></span>
                                 Awaiting URL input to begin live prediction…
                             </div>
 
                             <div class="flex items-center justify-between pt-2">
                                 <div>
-                                    <span class="text-[11px] font-mono text-gray-400 block uppercase">Model Prediction:</span>
+                                    <span class="text-[11px] font-mono text-[#8E9AB0] block uppercase">Model Prediction:</span>
                                     <span id="url-ml-prediction-badge" class="text-xl font-extrabold font-mono text-gray-500">
                                         —
                                     </span>
                                 </div>
                                 <div class="text-right">
-                                    <span class="text-[11px] font-mono text-gray-400 block uppercase">Confidence:</span>
+                                    <span class="text-[11px] font-mono text-[#8E9AB0] block uppercase">Confidence:</span>
                                     <span id="url-ml-confidence-val" class="text-xl font-extrabold font-mono text-gray-500">
                                         — %
                                     </span>
                                 </div>
                             </div>
 
-                            <!-- Confidence Meter -->
                             <div class="space-y-1.5">
-                                <div class="w-full bg-[#0b0c10] rounded h-2 overflow-hidden border border-[#1E222D]">
+                                <div class="w-full bg-[#0A0E17] rounded h-2 overflow-hidden border border-[#1C2333]">
                                     <div id="url-ml-confidence-bar" class="h-full transition-all duration-500" style="width:0%;background:var(--accent-cyan);"></div>
                                 </div>
-                                <div class="flex justify-between text-[11px] text-gray-400 font-mono">
-                                    <span>Model: TF-IDF + Random Forest</span>
+                                <div class="flex justify-between text-[11px] text-[#8E9AB0] font-mono">
+                                    <span>TF-IDF + Random Forest</span>
                                     <span id="url-ml-prob-val">Prob: —</span>
                                 </div>
                             </div>
 
-                            <!-- Influential Feature Tokens -->
-                            <div class="pt-3 border-t border-[#1E222D]">
+                            <div class="pt-3 border-t border-[#1C2333]">
                                 <span class="text-[11px] font-mono font-bold text-gray-300 block mb-2 uppercase flex items-center gap-1.5">
-                                    <i class="fa-solid fa-microchip text-cyan-400"></i> Top Influential Tokens:
+                                    <i class="fa-solid fa-microchip text-[#00F5D4]"></i> Top Influential Tokens:
                                 </span>
                                 <div id="url-ml-feature-chips" class="flex flex-wrap gap-1.5">
                                     <span class="text-xs text-gray-500 italic font-mono">Enter a URL to see live token analysis</span>
                                 </div>
                             </div>
 
-                            <div class="text-[11px] text-gray-400 font-mono border-t border-[#1E222D] pt-3 flex items-start gap-1.5">
-                                <i class="fa-solid fa-circle-info text-cyan-400 mt-0.5"></i>
-                                Click <strong>Scan URL</strong> for the complete 5-layer cumulative forensic audit.
+                            <div class="text-[11px] text-[#8E9AB0] font-mono border-t border-[#1C2333] pt-3 flex items-start gap-1.5">
+                                <i class="fa-solid fa-circle-info text-[#00F5D4] mt-0.5"></i>
+                                Click <strong>Scan URL</strong> for the full 5-layer cumulative forensic audit.
                             </div>
                         </div>
                     </div>
@@ -636,96 +651,92 @@
                 <div class="xl:col-span-5 space-y-6">
 
                     <!-- Cumulative Score Gauge -->
-                    <div class="devtools-frame rounded-2xl p-6 text-center space-y-4 relative">
-                        <div class="devtools-tab-tag">&gt;&gt; CUMULATIVE_RISK</div>
-                        <div class="corner-bracket-br"></div>
-
-                        <div class="pt-3">
-                            <span class="text-xs font-mono font-bold uppercase tracking-wider text-gray-400 block">// OVERALL RISK ENGINE (0 – 15)</span>
+                    <div class="devtools-window p-6 text-center space-y-4">
+                        <div>
+                            <span class="text-xs font-mono font-bold uppercase tracking-wider text-[#8E9AB0] block">// OVERALL RISK ENGINE (0 – 15)</span>
                         </div>
 
                         <div class="relative w-44 h-44 mx-auto flex items-center justify-center my-2">
                             <canvas id="scoreGaugeCanvas" width="176" height="176"></canvas>
                             <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                                <span id="gauge-score-value" class="text-5xl font-extrabold font-mono tracking-tight text-white font-heading">0.0</span>
+                                <span id="gauge-score-value" class="text-5xl font-extrabold font-mono tracking-tight text-white">0.0</span>
                                 <span id="gauge-risk-label" class="text-xs font-extrabold px-3 py-0.5 rounded-full mt-2 badge-safe font-mono">SAFE</span>
                             </div>
                         </div>
 
-                        <!-- Threshold Bar -->
-                        <div class="grid grid-cols-3 gap-2 text-[10px] font-mono pt-3 border-t border-[#1E222D]">
-                            <div class="p-2 rounded bg-[#0b0c10] border border-emerald-900/50 text-emerald-400 font-bold">
+                        <div class="grid grid-cols-3 gap-2 text-[10px] font-mono pt-3 border-t border-[#1C2333]">
+                            <div class="p-2 rounded bg-[#0A0E17] border border-emerald-900/50 text-emerald-400 font-bold">
                                 SAFE<br>1 – 5
                             </div>
-                            <div class="p-2 rounded bg-[#0b0c10] border border-amber-900/50 text-amber-400 font-bold">
+                            <div class="p-2 rounded bg-[#0A0E17] border border-amber-900/50 text-amber-400 font-bold">
                                 SUSPICIOUS<br>5 – 10
                             </div>
-                            <div class="p-2 rounded bg-[#0b0c10] border border-red-900/50 text-red-400 font-bold">
+                            <div class="p-2 rounded bg-[#0A0E17] border border-red-900/50 text-red-400 font-bold">
                                 DANGEROUS<br>10 – 15
                             </div>
                         </div>
 
-                        <div class="text-xs text-gray-400 font-mono flex items-center justify-between pt-1">
+                        <div class="text-xs text-[#8E9AB0] font-mono flex items-center justify-between pt-1">
                             <span>// EXECUTION_SPEED:</span>
-                            <span id="scan-time-label" class="text-accent font-bold">— ms</span>
+                            <span id="scan-time-label" class="text-[#00F5D4] font-bold">— ms</span>
                         </div>
                     </div>
 
                     <!-- Five Detection Layer Breakdown -->
-                    <div class="devtools-frame rounded-2xl p-5 space-y-3">
-                        <div class="text-xs font-mono font-bold uppercase tracking-wider text-gray-400">// DETECTION_LAYER_TELEMETRY</div>
+                    <div class="devtools-window p-5 space-y-3">
+                        <div class="text-xs font-mono font-bold uppercase tracking-wider text-[#8E9AB0]">// DETECTION_LAYER_TELEMETRY</div>
 
                         <div class="space-y-2 text-xs">
-                            <div class="p-3 rounded-lg bg-[#0b0c10] border border-[#1E222D] flex justify-between items-center">
+                            <div class="p-3 rounded-lg bg-[#0A0E17] border border-[#1C2333] flex justify-between items-center">
                                 <span class="font-mono text-gray-300">L1: Keywords &amp; Sender</span>
                                 <span id="l1-score-pill" class="layer-score-pill">0.0</span>
                             </div>
-                            <div class="p-3 rounded-lg bg-[#0b0c10] border border-[#1E222D] flex justify-between items-center">
+                            <div class="p-3 rounded-lg bg-[#0A0E17] border border-[#1C2333] flex justify-between items-center">
                                 <span class="font-mono text-gray-300">L2: Regex Linguistic</span>
                                 <span id="l2-score-pill" class="layer-score-pill">0.0</span>
                             </div>
-                            <div class="p-3 rounded-lg bg-[#0b0c10] border border-[#1E222D] flex justify-between items-center">
+                            <div class="p-3 rounded-lg bg-[#0A0E17] border border-[#1C2333] flex justify-between items-center">
                                 <span class="font-mono text-gray-300">L3: Heuristic URL &amp; VT</span>
                                 <span id="l3-score-pill" class="layer-score-pill">0.0</span>
                             </div>
-                            <div class="p-3 rounded-lg bg-[#0b0c10] border border-[#1E222D] flex justify-between items-center">
+                            <div class="p-3 rounded-lg bg-[#0A0E17] border border-[#1C2333] flex justify-between items-center">
                                 <span class="font-mono text-gray-300">L4: Attachment Payloads</span>
                                 <span id="l4-score-pill" class="layer-score-pill">0.0</span>
                             </div>
-                            <div class="p-3 rounded-lg bg-[#0b0c10] border border-[#2A2F3D] flex justify-between items-center">
-                                <span class="font-mono text-accent font-bold">L5: AI/ML NLP &amp; Classifier</span>
-                                <span id="l5-score-pill" class="layer-score-pill text-accent border-[var(--theme-accent)]">0.0</span>
+                            <div class="p-3 rounded-lg bg-[#0A0E17] border border-[#222B3D] flex justify-between items-center">
+                                <span class="font-mono text-[#00F5D4] font-bold">L5: AI/ML NLP &amp; Classifier</span>
+                                <span id="l5-score-pill" class="layer-score-pill text-[#00F5D4] border-[#00F5D4]">0.0</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Explainable AI (XAI) Cognitive Threat Reasoning Card -->
-                    <div id="gemini-xai-card" class="devtools-frame rounded-2xl p-5 space-y-3">
-                        <div class="flex items-center justify-between border-b border-[#1E222D] pb-3">
-                            <div class="text-xs font-mono font-bold uppercase tracking-wider text-accent flex items-center gap-2">
+                    <div id="gemini-xai-card" class="devtools-window p-5 space-y-3">
+                        <div class="flex items-center justify-between border-b border-[#1C2333] pb-3">
+                            <div class="text-xs font-mono font-bold uppercase tracking-wider text-[#00F5D4] flex items-center gap-2">
                                 <i class="fa-solid fa-brain"></i> Threat Reasoning &bull; Explainable AI
                             </div>
-                            <span id="gemini-verdict-badge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#13161F] text-gray-400 border border-[#232733]">
+                            <span id="gemini-verdict-badge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#141B2D] text-[#8E9AB0] border border-[#222B3D]">
                                 STANDBY
                             </span>
                         </div>
 
                         <div class="text-xs font-mono flex items-center gap-2">
-                            <span class="text-gray-400">// ATTACK_TACTIC:</span>
-                            <span id="gemini-tactic-tag" class="font-bold text-accent bg-[#0b0c10] px-2 py-0.5 rounded border border-[#232733] text-[11px]">
+                            <span class="text-[#8E9AB0]">// ATTACK_TACTIC:</span>
+                            <span id="gemini-tactic-tag" class="font-bold text-[#00F5D4] bg-[#0A0E17] px-2 py-0.5 rounded border border-[#222B3D] text-[11px]">
                                 Standby
                             </span>
                         </div>
 
-                        <p id="gemini-reasoning-text" class="text-xs text-gray-300 leading-relaxed italic bg-[#090a0d] p-3 rounded-lg border border-[#1E222D]">
+                        <p id="gemini-reasoning-text" class="text-xs text-gray-300 leading-relaxed italic bg-[#0A0E17] p-3 rounded-lg border border-[#1C2333]">
                             Run a scan above to generate contextual threat analysis and plain-English attack explanations.
                         </p>
                     </div>
 
                     <!-- Defense Advisory Card -->
-                    <div class="devtools-frame rounded-2xl p-5 space-y-3">
-                        <div class="text-xs font-mono font-bold uppercase tracking-wider text-gray-400 flex items-center gap-2">
-                            <i class="fa-solid fa-shield-halved text-accent"></i> // DEFENSE_ADVISORY
+                    <div class="devtools-window p-5 space-y-3">
+                        <div class="text-xs font-mono font-bold uppercase tracking-wider text-[#8E9AB0] flex items-center gap-2">
+                            <i class="fa-solid fa-shield-halved text-[#00F5D4]"></i> // DEFENSE_ADVISORY
                         </div>
                         <ul id="recs-list" class="list-disc list-inside text-xs text-gray-300 space-y-2 leading-relaxed">
                             <li>Enter email details or provide a URL above, then click Analyze to receive a tailored defense plan.</li>
@@ -735,22 +746,18 @@
                 </div>
 
                 <!-- Right Column: Forensic Findings Terminal (7 cols) -->
-                <div class="xl:col-span-7 devtools-frame rounded-2xl overflow-hidden relative">
-                    <div class="devtools-tab-tag">&gt;&gt; FORENSIC_LOG</div>
-                    <div class="corner-bracket-br"></div>
-
-                    <!-- Header -->
-                    <div class="flex items-center justify-between px-6 py-4 border-b border-[#1E222D] bg-[#090a0d] pt-8">
+                <div class="xl:col-span-7 devtools-window overflow-hidden">
+                    <div class="flex items-center justify-between px-6 py-4 border-b border-[#1C2333] bg-[#0A0E17]">
                         <div class="flex items-center gap-3">
                             <h3 class="text-sm font-bold text-white font-mono flex items-center gap-2">
-                                <i class="fa-solid fa-terminal text-accent"></i>
+                                <i class="fa-solid fa-terminal text-[#00F5D4]"></i>
                                 Forensic Findings &amp; Evidence
                             </h3>
                             <span id="gsb-status-pill" class="hidden px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-950 text-emerald-400 border border-emerald-800">
                                 <i class="fa-solid fa-shield-halved mr-1"></i> Threat Feed: Clean
                             </span>
                         </div>
-                        <span id="findings-count" class="text-xs font-mono font-bold bg-[#13161F] text-gray-300 px-3 py-1 rounded border border-[#232733]">
+                        <span id="findings-count" class="text-xs font-mono font-bold bg-[#141B2D] text-gray-300 px-3 py-1 rounded border border-[#222B3D]">
                             0 Findings
                         </span>
                     </div>
@@ -759,18 +766,18 @@
                     <div class="overflow-x-auto w-full">
                         <table class="w-full text-left text-xs font-mono">
                             <thead>
-                                <tr class="border-b border-[#1E222D] bg-[#0b0c10] text-gray-400 uppercase text-[10px] tracking-wider">
-                                    <th class="px-3 py-2.5">Layer</th>
-                                    <th class="px-3 py-2.5">Indicator</th>
-                                    <th class="px-3 py-2.5">Severity</th>
-                                    <th class="px-3 py-2.5">Score</th>
-                                    <th class="px-3 py-2.5">Evidence</th>
-                                    <th class="px-3 py-2.5">Explanation</th>
+                                <tr class="border-b border-[#1C2333] bg-[#0D111A] text-[#8E9AB0] uppercase text-[10px] tracking-wider">
+                                    <th class="px-3 py-3">Layer</th>
+                                    <th class="px-3 py-3">Indicator</th>
+                                    <th class="px-3 py-3">Severity</th>
+                                    <th class="px-3 py-3">Score</th>
+                                    <th class="px-3 py-3">Evidence</th>
+                                    <th class="px-3 py-3">Explanation</th>
                                 </tr>
                             </thead>
-                            <tbody id="findings-tbody" class="divide-y divide-[#1A1D27]">
+                            <tbody id="findings-tbody" class="divide-y divide-[#1C2333]">
                                 <tr>
-                                    <td colspan="6" class="px-4 py-12 text-center text-gray-500 italic">
+                                    <td colspan="6" class="px-4 py-12 text-center text-[#52607A] italic">
                                         No scan executed yet. Enter email or URL details above and click Analyze.
                                     </td>
                                 </tr>
@@ -784,26 +791,6 @@
         <!-- END RESULTS SECTION -->
 
     </main>
-
-    <!-- Theme Switcher Javascript Logic -->
-    <script>
-        function setDevToolsTheme(themeName) {
-            document.body.setAttribute('data-theme', themeName);
-            ['lime', 'cyan', 'amber'].forEach(t => {
-                const btn = document.getElementById('theme-btn-' + t);
-                if (btn) {
-                    if (t === themeName) btn.classList.add('active');
-                    else btn.classList.remove('active');
-                }
-            });
-            // Update gauge color if chart exists
-            if (typeof scoreGaugeChart !== 'undefined' && scoreGaugeChart) {
-                const label = document.getElementById('gauge-risk-label');
-                const classification = label ? label.innerText.trim() : 'SAFE';
-                updateScoreGauge(parseFloat(document.getElementById('gauge-score-value').innerText) || 0, classification);
-            }
-        }
-    </script>
 
     <script src="js/app.js"></script>
 </body>
