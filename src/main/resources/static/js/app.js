@@ -404,10 +404,10 @@ function renderEmailMlCard(result) {
     if (chips) {
         if (mlFeatures.length > 0) {
             chips.innerHTML = mlFeatures.map(f =>
-                `<span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-indigo-900/60 text-indigo-300 border border-indigo-700/60 shadow-sm">${escapeHtml(f)}</span>`
+                `<span class="feature-chip">${escapeHtml(f)}</span>`
             ).join('');
         } else {
-            chips.innerHTML = `<span class="text-xs text-slate-400 italic">No suspicious lexical/NLP tokens detected</span>`;
+            chips.innerHTML = `<span class="text-xs italic" style="color:var(--text-dim);">No suspicious lexical/NLP tokens detected</span>`;
         }
     }
 
@@ -458,10 +458,10 @@ function renderUrlMlCard(result) {
     if (chips) {
         if (mlFeatures.length > 0) {
             chips.innerHTML = mlFeatures.map(f =>
-                `<span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-cyan-900/60 text-cyan-300 border border-cyan-700/60 shadow-sm">${escapeHtml(f)}</span>`
+                `<span class="feature-chip">${escapeHtml(f)}</span>`
             ).join('');
         } else {
-            chips.innerHTML = `<span class="text-xs text-slate-400 italic">No suspicious lexical/NLP tokens detected</span>`;
+            chips.innerHTML = `<span class="text-xs italic" style="color:var(--text-dim);">No suspicious lexical/NLP tokens detected</span>`;
         }
     }
 
@@ -601,10 +601,10 @@ function renderScanResults(result) {
     if (mlChips) {
         if (mlFeatures.length > 0) {
             mlChips.innerHTML = mlFeatures.map(f =>
-                `<span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-indigo-900/60 text-indigo-300 border border-indigo-700/60 shadow-sm">${escapeHtml(f)}</span>`
+                `<span class="feature-chip">${escapeHtml(f)}</span>`
             ).join('');
         } else {
-            mlChips.innerHTML = `<span class="text-xs text-slate-400 italic">No suspicious lexical/NLP tokens detected</span>`;
+            mlChips.innerHTML = `<span class="text-xs italic" style="color:var(--text-dim);">No suspicious lexical/NLP tokens detected</span>`;
         }
     }
 
@@ -644,10 +644,10 @@ function renderScanResults(result) {
     if (gsbPill) {
         gsbPill.classList.remove('hidden');
         if (result.googleSafeBrowsingFlagged) {
-            gsbPill.className = 'px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-red-950 text-red-300 border border-red-700 animate-pulse';
+            gsbPill.className = 'px-2.5 py-0.5 rounded text-[11px] font-mono font-bold badge-dangerous';
             gsbPill.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1"></i> Threat Feed: Malicious Alert!`;
         } else {
-            gsbPill.className = 'px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-emerald-950 text-emerald-300 border border-emerald-700';
+            gsbPill.className = 'px-2.5 py-0.5 rounded text-[11px] font-mono font-bold badge-safe';
             gsbPill.innerHTML = `<i class="fa-solid fa-shield-halved mr-1"></i> Threat Feed: Verified Clean`;
         }
     }
@@ -658,12 +658,14 @@ function renderScanResults(result) {
     if (result.recommendations && result.recommendations.length > 0) {
         result.recommendations.forEach(r => {
             const li = document.createElement('li');
-            li.innerText = r;
+            li.className = 'flex items-start gap-2';
+            li.innerHTML = `<i class="fa-solid fa-circle-dot mt-1 text-xs" style="color:var(--neon-cyan);flex-shrink:0;"></i><span>${escapeHtml(r)}</span>`;
             recsList.appendChild(li);
         });
     } else {
         const li = document.createElement('li');
-        li.innerText = 'No threat indicators flagged. Normal communication.';
+        li.className = 'flex items-start gap-2';
+        li.innerHTML = `<i class="fa-solid fa-circle-dot mt-1 text-xs" style="color:var(--neon-cyan);flex-shrink:0;"></i><span>No threat indicators flagged. Normal communication.</span>`;
         recsList.appendChild(li);
     }
 
@@ -678,19 +680,24 @@ function renderScanResults(result) {
                 lr.indicators.forEach(ind => {
                     totalFindings++;
                     const tr = document.createElement('tr');
-                    tr.className = 'hover:bg-slate-800/60 transition';
+                    tr.className = 'terminal-row';
 
-                    const sevBadge = ind.severity === 'CRITICAL' ? 'bg-red-950 text-red-300 border border-red-700' :
-                        (ind.severity === 'HIGH' ? 'bg-amber-950 text-amber-300 border border-amber-700' :
-                        'bg-blue-950 text-blue-300 border border-blue-700');
+                    const sev = (ind.severity || 'INFO').toUpperCase();
+                    const sevClass = sev === 'CRITICAL' ? 'sev-critical' :
+                                     sev === 'HIGH'     ? 'sev-high'     :
+                                     sev === 'MEDIUM'   ? 'sev-medium'   :
+                                     sev === 'LOW'      ? 'sev-low'      : 'sev-info';
+
+                    const scoreColor = ind.scoreContribution > 2 ? 'var(--neon-red)' :
+                                       ind.scoreContribution > 0 ? 'var(--neon-amber)' : 'var(--text-dim)';
 
                     tr.innerHTML = `
-                        <td class="p-3 font-mono font-bold text-slate-300 text-xs">${ind.layer}</td>
-                        <td class="p-3 font-bold text-white text-xs">${escapeHtml(ind.title)}</td>
-                        <td class="p-3"><span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold font-mono ${sevBadge}">${ind.severity}</span></td>
-                        <td class="p-3 font-mono font-extrabold text-red-400 text-xs">+${ind.scoreContribution.toFixed(1)}</td>
-                        <td class="p-3 font-mono text-cyan-300 text-xs break-all">${escapeHtml(ind.evidence || '')}</td>
-                        <td class="p-3 text-slate-200 text-xs leading-relaxed">${escapeHtml(ind.description || '')}</td>
+                        <td style="color:#A5B4FC;white-space:nowrap;">${escapeHtml(ind.layer || '')}</td>
+                        <td style="color:#ffffff;font-weight:600;">${escapeHtml(ind.title || '')}</td>
+                        <td><span class="${sevClass}">${sev}</span></td>
+                        <td style="color:${scoreColor};font-weight:700;">+${(ind.scoreContribution || 0).toFixed(1)}</td>
+                        <td style="color:var(--neon-cyan);word-break:break-all;max-width:140px;">${escapeHtml(ind.evidence || '')}</td>
+                        <td style="color:var(--text-primary);line-height:1.5;">${escapeHtml(ind.description || '')}</td>
                     `;
                     tbody.appendChild(tr);
                 });
@@ -701,7 +708,7 @@ function renderScanResults(result) {
     document.getElementById('findings-count').innerText = `${totalFindings} Finding(s)`;
 
     if (totalFindings === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-emerald-400 font-bold text-sm">✓ Clean: No threat indicators triggered in any of the detection layers.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" class="p-10 text-center font-mono text-sm font-bold" style="color:var(--neon-cyan);">✓ CLEAN — No threat indicators triggered in any detection layer.</td></tr>`;
     }
 }
 
@@ -741,19 +748,20 @@ function getAttachmentsData() {
     return items;
 }
 
-// Chart.js Gauge (Scale 0 - 15)
+// Chart.js Gauge — Neon Cybernetic Style (Scale 0 - 15)
 function initScoreGauge(score, classification) {
     const canvas = document.getElementById('scoreGaugeCanvas');
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
     const cappedScore = Math.min(score, 15);
+
     scoreGaugeChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             datasets: [{
                 data: [cappedScore, Math.max(0, 15 - cappedScore)],
-                backgroundColor: [getColorForClassification(classification), 'rgba(255, 255, 255, 0.1)'],
+                backgroundColor: [getColorForClassification(classification), 'rgba(255,255,255,0.05)'],
                 borderWidth: 0,
                 circumference: 260,
                 rotation: 230
@@ -762,7 +770,10 @@ function initScoreGauge(score, classification) {
         options: {
             responsive: false,
             cutout: '80%',
-            plugins: { tooltip: { enabled: false } }
+            plugins: {
+                tooltip: { enabled: false }
+            },
+            animation: { duration: 700, easing: 'easeOutQuart' }
         }
     });
 }
@@ -777,9 +788,12 @@ function updateScoreGauge(score, classification) {
 }
 
 function getColorForClassification(c) {
-    if (c === 'DANGEROUS') return '#ef4444';
-    if (c === 'SUSPICIOUS') return '#f59e0b';
-    return '#10b981';
+    if (c === 'DANGEROUS') return '#FF3B30';   // Ramotion hazard red
+    if (c === 'SUSPICIOUS') return '#FFB800';  // Ramotion electric amber
+    const theme = document.body.getAttribute('data-theme') || 'lime';
+    if (theme === 'cyan') return '#00F0FF';
+    if (theme === 'amber') return '#FFB800';
+    return '#CCFF00';                           // Ramotion signature lime
 }
 
 function formatBytes(bytes) {
@@ -828,26 +842,27 @@ function renderDatabaseHistory(scans) {
     tbody.innerHTML = '';
     scans.forEach((scan, index) => {
         const tr = document.createElement('tr');
-        tr.className = 'hover:bg-slate-800/60 transition';
+        tr.className = 'terminal-row';
 
         const classification = scan.classification || 'SAFE';
         const badgeClass = classification === 'DANGEROUS' ? 'badge-dangerous' :
                           (classification === 'SUSPICIOUS' ? 'badge-suspicious' : 'badge-safe');
 
-        const typeBadge = scan.scanType === 'URL' ? 'bg-cyan-950 text-cyan-300 border border-cyan-700' :
-                                                    'bg-blue-950 text-blue-300 border border-blue-700';
+        const typeBadgeStyle = scan.scanType === 'URL'
+            ? 'background:rgba(0,245,212,0.10);color:var(--neon-cyan);border:1px solid rgba(0,245,212,0.25);'
+            : 'background:rgba(59,130,246,0.10);color:#93C5FD;border:1px solid rgba(59,130,246,0.25);';
 
         const displayTarget = scan.inputTarget || scan.subject || scan.sender || 'Scan Record';
         const dateStr = scan.createdAt ? new Date(scan.createdAt).toLocaleString() : 'Recent';
 
         tr.innerHTML = `
-            <td class="px-4 py-3"><span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold ${typeBadge}">${escapeHtml(scan.scanType || 'EMAIL')}</span></td>
-            <td class="px-4 py-3 font-semibold text-white max-w-md truncate" title="${escapeHtml(displayTarget)}">${escapeHtml(displayTarget)}</td>
-            <td class="px-4 py-3"><span class="px-2.5 py-0.5 rounded-full text-xs font-bold font-mono ${badgeClass}">${classification}</span></td>
-            <td class="px-4 py-3 font-mono font-bold ${classification === 'DANGEROUS' ? 'text-red-400' : (classification === 'SUSPICIOUS' ? 'text-amber-400' : 'text-emerald-400')}">${(scan.overallRiskScore || 0).toFixed(1)} / 15</td>
-            <td class="px-4 py-3 text-xs text-slate-300 font-mono">${dateStr}</td>
-            <td class="px-4 py-3 text-right">
-                <button onclick="viewSavedScan(${index})" class="text-xs bg-blue-600 hover:bg-blue-500 text-white font-bold px-3 py-1.5 rounded-lg transition shadow">
+            <td><span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded" style="${typeBadgeStyle}">${escapeHtml(scan.scanType || 'EMAIL')}</span></td>
+            <td class="font-semibold text-white max-w-xs truncate" title="${escapeHtml(displayTarget)}">${escapeHtml(displayTarget)}</td>
+            <td><span class="text-xs font-bold font-mono px-2.5 py-0.5 rounded ${badgeClass}">${classification}</span></td>
+            <td class="font-mono font-bold" style="color:${classification === 'DANGEROUS' ? 'var(--neon-red)' : (classification === 'SUSPICIOUS' ? 'var(--neon-amber)' : 'var(--neon-cyan)')}">${(scan.overallRiskScore || 0).toFixed(1)} / 15</td>
+            <td style="color:var(--text-primary);">${dateStr}</td>
+            <td class="text-right">
+                <button onclick="viewSavedScan(${index})" class="text-xs font-bold px-3 py-1.5 rounded-lg transition btn-neon-cobalt" style="font-size:11px;">
                     <i class="fa-solid fa-eye mr-1"></i> View Audit
                 </button>
             </td>

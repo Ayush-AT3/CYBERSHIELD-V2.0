@@ -1,173 +1,573 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+/* ============================================================
+   CyberShield — Exact B2B DevTools Aesthetic
+   Reference: Ramotion Source Network DevTools Website Design
+   ============================================================ */
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+/* ── Theme Variables & Tokens ────────────────────────────── */
 :root {
-    --bg-dark: #0a0e1a;
-    --bg-card: #131b2e;
-    --bg-card-sub: #1a243b;
-    --border-color: #273553;
-    --border-highlight: #3b82f6;
-    
-    --safe: #10b981;
-    --safe-bg: #064e3b;
-    --suspicious: #f59e0b;
-    --suspicious-bg: #78350f;
-    --dangerous: #ef4444;
-    --dangerous-bg: #7f1d1d;
-    
-    --text-white: #ffffff;
-    --text-bright: #f8fafc;
-    --text-primary: #e2e8f0;
-    --text-secondary: #cbd5e1;
-    --text-cyan: #38bdf8;
-    --text-amber: #fbbf24;
-    --text-red: #f87171;
-    --text-green: #34d399;
+    --bg-black:        #08090B;
+    --bg-surface:      #0D0E12;
+    --bg-card:         #0F1117;
+    --bg-card-sub:     #13161F;
+
+    /* Ramotion Source Network Accent Colors */
+    --accent-lime:     #CCFF00;  /* Orbis Lime */
+    --accent-cyan:     #00F0FF;  /* DefraDB Cyan */
+    --accent-amber:    #FFB800;  /* LensVM Amber */
+    --accent-red:      #FF3B30;  /* Hazard Red */
+    --accent-emerald:  #10B981;  /* Clean Emerald */
+
+    /* Active dynamic theme (defaults to Lime / Cyan) */
+    --theme-accent:    var(--accent-lime);
+    --theme-accent-dim: rgba(204, 255, 0, 0.15);
+    --theme-accent-glow: rgba(204, 255, 0, 0.35);
+
+    --border-dark:     #1E222D;
+    --border-subtle:   #2A2F3D;
+    --border-accent:   var(--theme-accent);
+
+    --text-white:      #FFFFFF;
+    --text-gray-100:   #E4E7EB;
+    --text-gray-400:   #8C9099;
+    --text-gray-600:   #555A66;
+
+    --font-sans:       'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading:    'Space Grotesk', var(--font-sans);
+    --font-mono:       'JetBrains Mono', monospace;
 }
 
-* {
+/* Allow switching palette flavor via data-theme on body */
+body[data-theme="cyan"] {
+    --theme-accent:    var(--accent-cyan);
+    --theme-accent-dim: rgba(0, 240, 255, 0.15);
+    --theme-accent-glow: rgba(0, 240, 255, 0.35);
+}
+body[data-theme="amber"] {
+    --theme-accent:    var(--accent-amber);
+    --theme-accent-dim: rgba(255, 184, 0, 0.15);
+    --theme-accent-glow: rgba(255, 184, 0, 0.35);
+}
+body[data-theme="lime"] {
+    --theme-accent:    var(--accent-lime);
+    --theme-accent-dim: rgba(204, 255, 0, 0.15);
+    --theme-accent-glow: rgba(204, 255, 0, 0.35);
+}
+
+/* ── Global Reset ────────────────────────────────────────── */
+*, *::before, *::after {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    background-color: var(--bg-dark);
-    color: var(--text-bright);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-black);
+    color: var(--text-gray-100);
+    font-family: var(--font-sans);
     min-height: 100vh;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.6;
-    background-image: 
-        radial-gradient(circle at 10% 10%, rgba(59, 130, 246, 0.12) 0%, transparent 40%),
-        radial-gradient(circle at 90% 90%, rgba(6, 182, 212, 0.10) 0%, transparent 40%);
+    overflow-x: hidden;
+
+    /* Engineering Cartesian Grid Background with intersection tick marks */
+    background-image:
+        radial-gradient(circle at center, rgba(204, 255, 0, 0.03) 0%, transparent 70%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 100% 100%, 48px 48px, 48px 48px;
+    background-position: 0 0, 0 0, 0 0;
+    background-attachment: fixed;
+    position: relative;
 }
 
-.mono-font {
-    font-family: 'JetBrains Mono', monospace;
+/* Watermark technical background text */
+.bg-watermark {
+    position: fixed;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.35em;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.025);
+    pointer-events: none;
+    z-index: 0;
+    user-select: none;
 }
 
-/* Glass Panels with high visibility */
-.glass-panel {
+/* ── Diagonal CAD Hatched Hazard Stripes (from video) ───── */
+.cad-stripes {
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(204, 255, 0, 0.06),
+        rgba(204, 255, 0, 0.06) 2px,
+        transparent 2px,
+        transparent 10px
+    );
+    border: 1px dashed rgba(204, 255, 0, 0.20);
+}
+
+.cad-stripes-cyan {
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(0, 240, 255, 0.06),
+        rgba(0, 240, 255, 0.06) 2px,
+        transparent 2px,
+        transparent 10px
+    );
+    border: 1px dashed rgba(0, 240, 255, 0.20);
+}
+
+/* ── Industrial Tab Tags (The signature Ramotion header) ── */
+.devtools-tab-tag {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    background: var(--theme-accent);
+    color: #000000;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    z-index: 10;
+    border-bottom-right-radius: 4px;
+}
+
+.subcard-tag {
+    background: var(--theme-accent);
+    color: #000000;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 3px 10px;
+    display: inline-block;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+/* ── Framed Technical Canvas (Ramotion window) ──────────── */
+.devtools-frame {
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-subtle);
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+    transition: border-color 0.25s ease;
 }
 
-.card-sub {
-    background: var(--bg-card-sub);
-    border: 1px solid var(--border-color);
+.devtools-frame:hover {
+    border-color: rgba(204, 255, 0, 0.4);
 }
 
-/* High Contrast Input Fields */
+/* Corner bracket accents */
+.corner-bracket-br {
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--theme-accent);
+    border-bottom: 2px solid var(--theme-accent);
+    pointer-events: none;
+}
+
+/* ── The Signature Ramotion Split Button ────────────────── */
+.btn-ramotion {
+    display: inline-flex;
+    align-items: stretch;
+    background: var(--theme-accent);
+    color: #000000;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    box-shadow: 0 0 20px var(--theme-accent-dim);
+}
+
+.btn-ramotion:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 30px var(--theme-accent-glow);
+    filter: brightness(1.05);
+}
+
+.btn-ramotion .btn-text {
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-ramotion .btn-notch {
+    background: rgba(0, 0, 0, 0.18);
+    border-left: 1px solid rgba(0, 0, 0, 0.15);
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Secondary ghost link */
+.btn-ghost-link {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-gray-100);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    transition: color 0.2s ease, gap 0.2s ease;
+    cursor: pointer;
+}
+
+.btn-ghost-link:hover {
+    color: var(--theme-accent);
+    gap: 10px;
+}
+
+/* ── Navigation Bar ──────────────────────────────────────── */
+.devtools-header {
+    background: rgba(8, 9, 11, 0.92);
+    border-bottom: 1px solid var(--border-dark);
+    backdrop-filter: blur(20px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-tab-btn {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-gray-400);
+    padding: 8px 16px;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-tab-btn:hover {
+    color: var(--text-white);
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.nav-tab-btn.active {
+    color: #000000 !important;
+    background: var(--theme-accent) !important;
+    border-color: var(--theme-accent) !important;
+    font-weight: 700;
+}
+
+/* Sub-toggle buttons (Manual vs EML) */
+.sub-toggle-btn {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-gray-400);
+    padding: 7px 14px;
+    border-radius: 6px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sub-toggle-btn:hover {
+    color: var(--text-white);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.sub-toggle-btn.active {
+    background: var(--theme-accent);
+    color: #000000;
+    border-color: var(--theme-accent);
+    font-weight: 700;
+}
+
+/* ── Typography & Headings ───────────────────────────────── */
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+}
+
+.text-accent {
+    color: var(--theme-accent);
+}
+
+.mono {
+    font-family: var(--font-mono);
+}
+
+/* ── Halftone Dot-Matrix Component (Direct from video // ICON) ── */
+.halftone-screen {
+    width: 100%;
+    height: 180px;
+    background-color: #08090b;
+    background-image: radial-gradient(var(--theme-accent) 1.5px, transparent 1.5px);
+    background-size: 8px 8px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid var(--border-dark);
+}
+
+.halftone-screen::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 30%, #08090b 85%);
+}
+
+.halftone-glyph {
+    position: relative;
+    z-index: 2;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--theme-accent);
+    filter: drop-shadow(0 0 12px var(--theme-accent-glow));
+}
+
+/* ── Concentric Glowing Rings (from video background) ─────── */
+.concentric-rings {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 320px;
+    height: 320px;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ring-1 { width: 140px; height: 140px; border-color: rgba(204, 255, 0, 0.25); box-shadow: 0 0 30px rgba(204, 255, 0, 0.08); }
+.ring-2 { width: 220px; height: 220px; border-color: rgba(255, 255, 255, 0.04); }
+.ring-3 { width: 300px; height: 300px; border-color: rgba(255, 255, 255, 0.03); }
+
+/* Glowing Rim Isometric Rhombus */
+.isometric-rhombus {
+    width: 140px;
+    height: 140px;
+    background: #0d0f14;
+    border-radius: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        0 0 0 1px rgba(204, 255, 0, 0.2) inset,
+        0 0 30px rgba(204, 255, 0, 0.15);
+    transform: rotate(45deg);
+}
+.isometric-rhombus > * {
+    transform: rotate(-45deg);
+}
+
+/* ── High-Contrast Form Inputs ───────────────────────────── */
 input[type="text"],
 input[type="number"],
-textarea,
-select {
-    background-color: #0f172a !important;
+textarea {
+    background-color: #0b0c10 !important;
     color: #ffffff !important;
-    border: 1.5px solid #334155 !important;
-    font-size: 14px !important;
-    transition: all 0.2s ease;
+    border: 1px solid #232733 !important;
+    border-radius: 8px !important;
+    font-family: var(--font-mono) !important;
+    font-size: 13px !important;
+    transition: all 0.2s ease !important;
 }
 
 input[type="text"]:focus,
 input[type="number"]:focus,
-textarea:focus,
-select:focus {
-    border-color: #38bdf8 !important;
-    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25) !important;
+textarea:focus {
+    border-color: var(--theme-accent) !important;
+    box-shadow: 0 0 0 2px var(--theme-accent-dim), 0 0 15px var(--theme-accent-dim) !important;
     outline: none !important;
 }
 
 input::placeholder,
 textarea::placeholder {
-    color: #94a3b8 !important;
+    color: var(--text-gray-600) !important;
 }
 
-/* High Contrast Navigation Buttons */
-.nav-tab-btn {
-    background: #1e293b;
-    color: #e2e8f0;
-    border: 1.5px solid #334155;
-    font-size: 15px;
-    font-weight: 600;
-    transition: all 0.2s ease-in-out;
-}
-
-.nav-tab-btn:hover {
-    background: #25334d;
-    border-color: #60a5fa;
-    color: #ffffff;
-}
-
-.nav-tab-btn.active {
-    background: #2563eb !important;
-    color: #ffffff !important;
-    border-color: #60a5fa !important;
-    box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.45);
-}
-
-/* Sub-toggle buttons (Manual vs .eml) */
-.sub-toggle-btn {
-    background: #111827;
-    color: #cbd5e1;
-    border: 1px solid #374151;
-    font-weight: 600;
-    font-size: 14px;
-    transition: all 0.15s ease;
-}
-
-.sub-toggle-btn.active {
-    background: #0ea5e9;
-    color: #ffffff;
-    border-color: #38bdf8;
-    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.4);
-}
-
-/* Risk Badges with High Contrast */
+/* ── Risk Badges (DevTools Style) ────────────────────────── */
 .badge-safe {
-    background: #065f46;
-    color: #ecfdf5;
-    border: 1.5px solid #10b981;
+    background: rgba(16, 185, 129, 0.12);
+    color: #10B981;
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    font-family: var(--font-mono);
     font-weight: 700;
 }
 
 .badge-suspicious {
-    background: #854d0e;
-    color: #fefce8;
-    border: 1.5px solid #f59e0b;
+    background: rgba(255, 184, 0, 0.12);
+    color: #FFB800;
+    border: 1px solid rgba(255, 184, 0, 0.35);
+    font-family: var(--font-mono);
     font-weight: 700;
 }
 
 .badge-dangerous {
-    background: #991b1b;
-    color: #fef2f2;
-    border: 1.5px solid #ef4444;
+    background: rgba(255, 59, 48, 0.12);
+    color: #FF3B30;
+    border: 1px solid rgba(255, 59, 48, 0.35);
+    font-family: var(--font-mono);
     font-weight: 700;
+    box-shadow: 0 0 12px rgba(255, 59, 48, 0.25);
 }
 
-/* Drag & Drop Upload Zone */
+/* ── Layer Telemetry Pill ────────────────────────────────── */
+.layer-score-pill {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: #090a0d;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-white);
+}
+
+/* ── Forensic Findings Terminal Rows ─────────────────────── */
+.terminal-row {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    transition: background 0.15s ease;
+}
+
+.terminal-row:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.terminal-row td {
+    padding: 10px 14px;
+    vertical-align: middle;
+}
+
+/* Severity labels */
+.sev-critical {
+    background: rgba(255, 59, 48, 0.15);
+    color: #FF6B6B;
+    border: 1px solid rgba(255, 59, 48, 0.4);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.sev-high {
+    background: rgba(255, 149, 0, 0.15);
+    color: #FFAA33;
+    border: 1px solid rgba(255, 149, 0, 0.4);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.sev-medium {
+    background: rgba(255, 204, 0, 0.15);
+    color: #FFDD33;
+    border: 1px solid rgba(255, 204, 0, 0.4);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.sev-low {
+    background: rgba(0, 240, 255, 0.15);
+    color: #66F4FF;
+    border: 1px solid rgba(0, 240, 255, 0.4);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.sev-info {
+    background: rgba(140, 144, 153, 0.15);
+    color: #A0A5B0;
+    border: 1px solid rgba(140, 144, 153, 0.4);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+/* ── Feature Token Chips ─────────────────────────────────── */
+.feature-chip {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(204, 255, 0, 0.10);
+    color: var(--theme-accent);
+    border: 1px solid rgba(204, 255, 0, 0.25);
+}
+
+/* ── Drag & Drop Zone ────────────────────────────────────── */
 .drop-zone {
-    border: 2px dashed #475569;
-    background: rgba(15, 23, 42, 0.7);
+    border: 1.5px dashed var(--border-subtle);
+    background: #090a0d;
     transition: all 0.2s ease;
 }
 
 .drop-zone.dragover {
-    border-color: #38bdf8;
-    background: rgba(14, 165, 233, 0.15);
+    border-color: var(--theme-accent);
+    background: var(--theme-accent-dim);
 }
 
-/* Custom Scrollbars */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+/* ── Theme Switcher Pills ────────────────────────────────── */
+.theme-pill-btn {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: transform 0.15s, border-color 0.15s;
 }
-::-webkit-scrollbar-track {
-    background: #0b0f19;
+.theme-pill-btn:hover {
+    transform: scale(1.2);
 }
-::-webkit-scrollbar-thumb {
-    background: #334155;
-    border-radius: 4px;
+.theme-pill-btn.active {
+    border-color: #ffffff;
+    box-shadow: 0 0 8px currentColor;
 }
-::-webkit-scrollbar-thumb:hover {
-    background: #475569;
-}
+
+/* ── Scrollbars ──────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-black); }
+::-webkit-scrollbar-thumb { background: #232733; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--theme-accent); }
