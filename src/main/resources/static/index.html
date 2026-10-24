@@ -18,21 +18,21 @@
 
         <!-- Logo & Branding -->
         <div onclick="switchMainTool('home-view')" class="flex items-center gap-3.5 cursor-pointer group select-none">
-            <div class="w-10 h-10 rounded-xl bg-[#0D111A] border border-[#222B3D] flex items-center justify-center group-hover:border-[#00F5D4] transition"
+            <div class="w-10 h-10 rounded-xl bg-[#0D111A] border border-[rgba(59,130,246,0.4)] flex items-center justify-center group-hover:border-[#00F5D4] transition"
                  style="box-shadow:0 0 20px -5px rgba(0,245,212,0.3);">
                 <i class="fa-solid fa-shield-halved text-lg" style="color:var(--accent-cyan);"></i>
             </div>
             <div>
                 <div class="flex items-center gap-2">
                     <span class="text-lg font-extrabold tracking-tight text-white font-sans">CyberShield</span>
-                    <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#161C2C] text-[#00F5D4] border border-[#222B3D]">v2.0</span>
+                    <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#161C2C] text-[#00F5D4] border border-[rgba(59,130,246,0.4)]">v2.0</span>
                 </div>
                 <p class="text-[11px] text-[#94A3B8]">Smart Web Security System for Phishing Detection</p>
             </div>
         </div>
 
-        <!-- Navigation Links (Clean, No '//' artifacts) -->
-        <nav class="flex items-center gap-2 flex-wrap justify-center">
+        <!-- Navigation Links (Aligned towards right side) -->
+        <nav class="flex items-center gap-2 flex-wrap md:ml-auto">
             <button onclick="switchMainTool('home-view')" id="nav-btn-home" class="nav-link-btn active">
                 <i class="fa-solid fa-house text-sm"></i>
                 <span>Home</span>
@@ -51,14 +51,6 @@
                 <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-60"></i>
             </a>
         </nav>
-
-        <!-- Right: Status Beacon -->
-        <div class="flex items-center gap-3">
-            <div class="status-pill">
-                <span class="status-dot"></span>
-                <span>ENGINE ACTIVE</span>
-            </div>
-        </div>
     </header>
 
     <!-- ══════════════════════════════════════════════════════════
@@ -77,7 +69,7 @@
                     
                     <!-- Left: Hero Content (7 cols) -->
                     <div class="lg:col-span-7 space-y-6">
-                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#161C2C] border border-[#222B3D] text-[#00F5D4]">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#161C2C] border border-[rgba(59,130,246,0.4)] text-[#00F5D4]">
                             <i class="fa-solid fa-brain"></i>
                             <span>Five-Layer Hybrid Threat Inspection (Heuristics + Machine Learning)</span>
                         </div>
@@ -107,16 +99,16 @@
                         </div>
 
                         <!-- Telemetry Stats Row -->
-                        <div class="grid grid-cols-3 gap-6 pt-6 border-t border-[#1C2333]">
-                            <div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-[#1C2333]">
+                            <div class="p-4 rounded-xl bg-[#0A0D15] border border-[rgba(59,130,246,0.4)]">
                                 <div class="text-2xl sm:text-3xl font-extrabold text-white font-mono">48,600+</div>
                                 <div class="text-xs text-[#94A3B8] font-medium mt-1">Scans Analyzed</div>
                             </div>
-                            <div>
+                            <div class="p-4 rounded-xl bg-[#0A0D15] border border-[rgba(59,130,246,0.4)]">
                                 <div class="text-2xl sm:text-3xl font-extrabold font-mono" style="color:var(--accent-cyan);">98.2%</div>
                                 <div class="text-xs text-[#94A3B8] font-medium mt-1">Detection Accuracy</div>
                             </div>
-                            <div>
+                            <div class="p-4 rounded-xl bg-[#0A0D15] border border-[rgba(59,130,246,0.4)]">
                                 <div class="text-2xl sm:text-3xl font-extrabold text-white font-mono">&lt;40ms</div>
                                 <div class="text-xs text-[#94A3B8] font-medium mt-1">Average Latency</div>
                             </div>
@@ -126,7 +118,7 @@
                     <!-- Right: Live Security Monitor Card (5 cols) -->
                     <div class="lg:col-span-5">
                         <div class="card-sub p-6 space-y-4">
-                            <div class="flex items-center justify-between border-b border-[#222B3D] pb-3">
+                            <div class="flex items-center justify-between border-b border-[rgba(59,130,246,0.35)] pb-3">
                                 <span class="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-2">
                                     <i class="fa-solid fa-shield-virus text-[#00F5D4]"></i>
                                     Security System Diagnostics
@@ -137,31 +129,31 @@
                             </div>
 
                             <div class="space-y-3 text-xs font-mono">
-                                <div class="p-3 rounded-lg bg-[#0A0D15] border border-[#1C2333] flex justify-between items-center">
+                                <div class="p-3 rounded-lg bg-[#0A0D15] border border-[rgba(59,130,246,0.3)] flex justify-between items-center">
                                     <span class="text-[#94A3B8] flex items-center gap-2">
                                         <i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> Layer 1: Aho-Corasick Engine
                                     </span>
                                     <span class="text-emerald-400 font-bold">Active</span>
                                 </div>
-                                <div class="p-3 rounded-lg bg-[#0A0D15] border border-[#1C2333] flex justify-between items-center">
+                                <div class="p-3 rounded-lg bg-[#0A0D15] border border-[rgba(59,130,246,0.3)] flex justify-between items-center">
                                     <span class="text-[#94A3B8] flex items-center gap-2">
                                         <i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> Layer 2: Linguistic Regex
                                     </span>
                                     <span class="text-emerald-400 font-bold">Active</span>
                                 </div>
-                                <div class="p-3 rounded-lg bg-[#0A0D15] border border-[#1C2333] flex justify-between items-center">
+                                <div class="p-3 rounded-lg bg-[#0A0D15] border border-[rgba(59,130,246,0.3)] flex justify-between items-center">
                                     <span class="text-[#94A3B8] flex items-center gap-2">
                                         <i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> Layer 3: URL &amp; Threat Feeds
                                     </span>
                                     <span class="text-emerald-400 font-bold">Connected</span>
                                 </div>
-                                <div class="p-3 rounded-lg bg-[#0A0D15] border border-[#1C2333] flex justify-between items-center">
+                                <div class="p-3 rounded-lg bg-[#0A0D15] border border-[rgba(59,130,246,0.3)] flex justify-between items-center">
                                     <span class="text-[#94A3B8] flex items-center gap-2">
                                         <i class="fa-solid fa-check text-emerald-400 text-[10px]"></i> Layer 4: Payload Analysis
                                     </span>
                                     <span class="text-emerald-400 font-bold">Active</span>
                                 </div>
-                                <div class="p-3 rounded-lg bg-[#0A0D15] border border-[#222B3D] flex justify-between items-center">
+                                <div class="p-3 rounded-lg bg-[#0A0D15] border border-[rgba(59,130,246,0.4)] flex justify-between items-center">
                                     <span class="text-[#00F5D4] font-bold flex items-center gap-2">
                                         <i class="fa-solid fa-brain text-[10px]"></i> Layer 5: AI-ML NLP Model
                                     </span>
@@ -190,10 +182,10 @@
                     <div class="premium-card p-8 flex flex-col justify-between space-y-6">
                         <div class="space-y-4">
                             <div class="flex items-center justify-between">
-                                <div class="w-14 h-14 rounded-2xl bg-[#0A0D15] border border-[#222B3D] flex items-center justify-center text-2xl text-[#00F5D4]">
+                                <div class="w-14 h-14 rounded-2xl bg-[#0A0D15] border border-[rgba(59,130,246,0.4)] flex items-center justify-center text-2xl text-[#00F5D4]">
                                     <i class="fa-solid fa-envelope-open-text"></i>
                                 </div>
-                                <span class="text-xs font-mono font-bold text-[#00F5D4] bg-[#0A0D15] px-3 py-1 rounded-full border border-[#222B3D]">
+                                <span class="text-xs font-mono font-bold text-[#00F5D4] bg-[#0A0D15] px-3 py-1 rounded-full border border-[rgba(59,130,246,0.4)]">
                                     Tool 1
                                 </span>
                             </div>
@@ -205,7 +197,7 @@
                                 </p>
                             </div>
 
-                            <ul class="text-xs text-[#E2E8F0] space-y-2.5 font-medium pt-3 border-t border-[#1C2333]">
+                            <ul class="text-xs text-[#E2E8F0] space-y-2.5 font-medium pt-3 border-t border-[rgba(59,130,246,0.3)]">
                                 <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-emerald-400"></i> Sender domain verification &amp; spoofing checks</li>
                                 <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-emerald-400"></i> Aho-Corasick multi-keyword pattern search</li>
                                 <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-emerald-400"></i> Urgency and credential harvesting regex triggers</li>
@@ -225,10 +217,10 @@
                     <div class="premium-card p-8 flex flex-col justify-between space-y-6">
                         <div class="space-y-4">
                             <div class="flex items-center justify-between">
-                                <div class="w-14 h-14 rounded-2xl bg-[#0A0D15] border border-[#222B3D] flex items-center justify-center text-2xl text-blue-400">
+                                <div class="w-14 h-14 rounded-2xl bg-[#0A0D15] border border-[rgba(59,130,246,0.4)] flex items-center justify-center text-2xl text-blue-400">
                                     <i class="fa-solid fa-globe"></i>
                                 </div>
-                                <span class="text-xs font-mono font-bold text-blue-400 bg-[#0A0D15] px-3 py-1 rounded-full border border-[#222B3D]">
+                                <span class="text-xs font-mono font-bold text-blue-400 bg-[#0A0D15] px-3 py-1 rounded-full border border-[rgba(59,130,246,0.4)]">
                                     Tool 2
                                 </span>
                             </div>
@@ -240,7 +232,7 @@
                                 </p>
                             </div>
 
-                            <ul class="text-xs text-[#E2E8F0] space-y-2.5 font-medium pt-3 border-t border-[#1C2333]">
+                            <ul class="text-xs text-[#E2E8F0] space-y-2.5 font-medium pt-3 border-t border-[rgba(59,130,246,0.3)]">
                                 <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-emerald-400"></i> Direct IP host detection &amp; high-risk TLD filtering</li>
                                 <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-emerald-400"></i> Shannon entropy calculation for randomized domains</li>
                                 <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-emerald-400"></i> Brand impersonation &amp; Levenshtein typosquatting</li>
@@ -318,7 +310,7 @@
                 </div>
 
                 <div class="flex items-center gap-3">
-                    <label class="flex items-center gap-2 cursor-pointer bg-[#0A0D15] px-3.5 py-2 rounded-lg border border-[#222B3D] hover:border-[#00F5D4] transition">
+                    <label class="flex items-center gap-2 cursor-pointer bg-[#0A0D15] px-3.5 py-2 rounded-lg border border-[rgba(59,130,246,0.4)] hover:border-[#00F5D4] transition">
                         <input type="checkbox" id="toggle-realtime-email" checked class="w-4 h-4 rounded text-[#00F5D4]" style="accent-color:var(--accent-cyan);">
                         <span class="text-xs font-mono font-bold text-[#00F5D4] flex items-center gap-1.5">
                             <span class="w-2 h-2 rounded-full animate-pulse" style="background:var(--accent-cyan);"></span>
@@ -326,7 +318,7 @@
                         </span>
                     </label>
 
-                    <button onclick="clearManualFields()" class="text-xs text-[#94A3B8] hover:text-white px-3.5 py-2 rounded-lg border border-[#222B3D] transition">
+                    <button onclick="clearManualFields()" class="text-xs text-[#94A3B8] hover:text-white px-3.5 py-2 rounded-lg border border-[rgba(59,130,246,0.4)] transition">
                         <i class="fa-solid fa-eraser mr-1"></i> Clear Fields
                     </button>
                 </div>
@@ -358,14 +350,14 @@
                         </div>
 
                         <!-- Attachments Row -->
-                        <div class="p-4 rounded-xl bg-[#0A0D15] border border-[#1C2333] space-y-3">
+                        <div class="p-4 rounded-xl bg-[#0A0D15] border border-[rgba(59,130,246,0.4)] space-y-3">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs font-bold text-[#E2E8F0] flex items-center gap-2">
                                     <i class="fa-solid fa-paperclip text-[#00F5D4]"></i>
                                     Email Attachments <span class="text-[#94A3B8] font-normal">(Optional — Layer 4)</span>
                                 </span>
                                 <button type="button" onclick="addAttachmentRow()"
-                                        class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-[#161C2C] text-[#00F5D4] border border-[#222B3D] hover:border-[#00F5D4] transition">
+                                        class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-[#161C2C] text-[#00F5D4] border border-[rgba(59,130,246,0.4)] hover:border-[#00F5D4] transition">
                                     + Add File
                                 </button>
                             </div>
@@ -381,12 +373,12 @@
 
                     <!-- Right: Inline ML Classification Card (5 cols) -->
                     <div class="xl:col-span-5">
-                        <div id="email-ml-card" class="card-sub p-6 space-y-4 border border-indigo-500/30">
-                            <div class="flex items-center justify-between border-b border-[#222B3D] pb-3">
+                        <div id="email-ml-card" class="card-sub p-6 space-y-4 border border-indigo-500/40">
+                            <div class="flex items-center justify-between border-b border-[rgba(59,130,246,0.35)] pb-3">
                                 <span class="text-xs font-bold uppercase tracking-wider text-indigo-300 flex items-center gap-2">
                                     <i class="fa-solid fa-brain text-indigo-400"></i> AI/ML Classification Engine
                                 </span>
-                                <span class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-[#0A0D15] text-[#94A3B8] border border-[#222B3D]">
+                                <span class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-[#0A0D15] text-[#94A3B8] border border-[rgba(59,130,246,0.4)]">
                                     Unified Model
                                 </span>
                             </div>
@@ -452,7 +444,7 @@
                 <div id="eml-drop-zone" class="drop-zone py-16 rounded-xl text-center cursor-pointer space-y-3"
                      onclick="document.getElementById('eml-file-input').click()">
                     <input type="file" id="eml-file-input" accept=".eml" class="hidden" onchange="handleEmlFileSelect(this.files)">
-                    <div class="w-16 h-16 rounded-xl bg-[#161C2C] text-[#00F5D4] flex items-center justify-center mx-auto text-2xl border border-[#222B3D]">
+                    <div class="w-16 h-16 rounded-xl bg-[#161C2C] text-[#00F5D4] flex items-center justify-center mx-auto text-2xl border border-[rgba(59,130,246,0.4)]">
                         <i class="fa-solid fa-cloud-arrow-up"></i>
                     </div>
                     <div>
@@ -461,8 +453,8 @@
                     </div>
                 </div>
 
-                <div id="eml-file-preview" class="hidden p-5 rounded-xl bg-[#0A0D15] border border-[#1C2333] space-y-4">
-                    <div class="flex items-center justify-between border-b border-[#1C2333] pb-3">
+                <div id="eml-file-preview" class="hidden p-5 rounded-xl bg-[#0A0D15] border border-[rgba(59,130,246,0.4)] space-y-4">
+                    <div class="flex items-center justify-between border-b border-[rgba(59,130,246,0.35)] pb-3">
                         <div class="flex items-center gap-3">
                             <i class="fa-solid fa-file-code text-2xl text-[#00F5D4]"></i>
                             <div>
@@ -490,13 +482,13 @@
         <section id="url-tool" class="hidden">
             <div class="premium-card p-8 space-y-6">
 
-                <div class="flex flex-wrap justify-between items-center gap-3 border-b border-[#1C2333] pb-4">
+                <div class="flex flex-wrap justify-between items-center gap-3 border-b border-[rgba(59,130,246,0.35)] pb-4">
                     <div>
                         <h3 class="text-xl font-bold text-white">Scan Target URL</h3>
                         <p class="text-sm text-[#94A3B8] mt-1">Inspect any domain, IP-host, or web route for typosquatting, Shannon entropy, and malicious threat feeds.</p>
                     </div>
 
-                    <label class="flex items-center gap-2 cursor-pointer bg-[#0A0D15] px-3.5 py-2 rounded-lg border border-[#222B3D] hover:border-[#00F5D4] transition">
+                    <label class="flex items-center gap-2 cursor-pointer bg-[#0A0D15] px-3.5 py-2 rounded-lg border border-[rgba(59,130,246,0.4)] hover:border-[#00F5D4] transition">
                         <input type="checkbox" id="toggle-realtime-url" checked class="w-4 h-4 rounded text-[#00F5D4]" style="accent-color:var(--accent-cyan);">
                         <span class="text-xs font-mono font-bold text-[#00F5D4] flex items-center gap-1.5">
                             <span class="w-2 h-2 rounded-full animate-pulse" style="background:var(--accent-cyan);"></span>
@@ -520,7 +512,7 @@
                             <span>Scan URL (5-Layer Hybrid Engine)</span>
                         </button>
 
-                        <div class="p-4 rounded-xl bg-[#0A0D15] border border-[#1C2333] space-y-2 text-xs font-mono text-[#E2E8F0]">
+                        <div class="p-4 rounded-xl bg-[#0A0D15] border border-[rgba(59,130,246,0.4)] space-y-2 text-xs font-mono text-[#E2E8F0]">
                             <div class="text-[11px] text-[#94A3B8] font-bold">AUTOMATED LAYER CHECKS:</div>
                             <div class="grid grid-cols-2 gap-2 text-xs">
                                 <div>✓ Direct IP address as host</div>
@@ -535,12 +527,12 @@
 
                     <!-- Right: URL ML Classification Card (5 cols) -->
                     <div class="xl:col-span-5">
-                        <div id="url-ml-card" class="card-sub p-6 space-y-4 border border-cyan-500/30">
-                            <div class="flex items-center justify-between border-b border-[#1C2333] pb-3">
+                        <div id="url-ml-card" class="card-sub p-6 space-y-4 border border-cyan-500/40">
+                            <div class="flex items-center justify-between border-b border-[rgba(59,130,246,0.35)] pb-3">
                                 <span class="text-xs font-bold uppercase tracking-wider text-cyan-300 flex items-center gap-2">
                                     <i class="fa-solid fa-brain text-[#00F5D4]"></i> AI/ML Classification Engine
                                 </span>
-                                <span class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-[#0A0D15] text-[#94A3B8] border border-[#222B3D]">
+                                <span class="text-[11px] font-mono px-2 py-0.5 rounded-full bg-[#0A0D15] text-[#94A3B8] border border-[rgba(59,130,246,0.4)]">
                                     Unified Model
                                 </span>
                             </div>
@@ -620,14 +612,14 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-3 gap-2 text-xs font-mono pt-3 border-t border-[#1C2333]">
-                            <div class="p-2.5 rounded-lg bg-[#0A0D15] border border-emerald-900/50 text-emerald-400 font-bold">
+                        <div class="grid grid-cols-3 gap-2 text-xs font-mono pt-3 border-t border-[rgba(59,130,246,0.3)]">
+                            <div class="p-2.5 rounded-lg bg-[#0A0D15] border border-emerald-500/50 text-emerald-400 font-bold">
                                 SAFE<br>1 – 5
                             </div>
-                            <div class="p-2.5 rounded-lg bg-[#0A0D15] border border-amber-900/50 text-amber-400 font-bold">
+                            <div class="p-2.5 rounded-lg bg-[#0A0D15] border border-amber-500/50 text-amber-400 font-bold">
                                 SUSPICIOUS<br>5 – 10
                             </div>
-                            <div class="p-2.5 rounded-lg bg-[#0A0D15] border border-red-900/50 text-red-400 font-bold">
+                            <div class="p-2.5 rounded-lg bg-[#0A0D15] border border-red-500/50 text-red-400 font-bold">
                                 DANGEROUS<br>10 – 15
                             </div>
                         </div>
@@ -643,23 +635,23 @@
                         <div class="text-xs font-bold uppercase tracking-wider text-[#94A3B8]">Detection Layer Breakdown</div>
 
                         <div class="space-y-2 text-xs">
-                            <div class="p-3 rounded-lg bg-[#0A0D15] border border-[#1C2333] flex justify-between items-center">
+                            <div class="p-3 rounded-lg bg-[#0A0D15] border border-[rgba(59,130,246,0.35)] flex justify-between items-center">
                                 <span class="font-medium text-gray-300">Layer 1: Keywords &amp; Sender</span>
                                 <span id="l1-score-pill" class="layer-score-pill">0.0</span>
                             </div>
-                            <div class="p-3 rounded-lg bg-[#0A0D15] border border-[#1C2333] flex justify-between items-center">
+                            <div class="p-3 rounded-lg bg-[#0A0D15] border border-[rgba(59,130,246,0.35)] flex justify-between items-center">
                                 <span class="font-medium text-gray-300">Layer 2: Regex Linguistic</span>
                                 <span id="l2-score-pill" class="layer-score-pill">0.0</span>
                             </div>
-                            <div class="p-3 rounded-lg bg-[#0A0D15] border border-[#1C2333] flex justify-between items-center">
+                            <div class="p-3 rounded-lg bg-[#0A0D15] border border-[rgba(59,130,246,0.35)] flex justify-between items-center">
                                 <span class="font-medium text-gray-300">Layer 3: Heuristic URL &amp; Threat Feed</span>
                                 <span id="l3-score-pill" class="layer-score-pill">0.0</span>
                             </div>
-                            <div class="p-3 rounded-lg bg-[#0A0D15] border border-[#1C2333] flex justify-between items-center">
+                            <div class="p-3 rounded-lg bg-[#0A0D15] border border-[rgba(59,130,246,0.35)] flex justify-between items-center">
                                 <span class="font-medium text-gray-300">Layer 4: Attachment Payloads</span>
                                 <span id="l4-score-pill" class="layer-score-pill">0.0</span>
                             </div>
-                            <div class="p-3 rounded-lg bg-[#0A0D15] border border-indigo-500/40 flex justify-between items-center">
+                            <div class="p-3 rounded-lg bg-[#0A0D15] border border-indigo-500/50 flex justify-between items-center">
                                 <span class="font-bold text-indigo-300 flex items-center gap-1.5">
                                     <i class="fa-solid fa-brain"></i> Layer 5: AI-ML NLP &amp; Classifier
                                 </span>
@@ -669,24 +661,24 @@
                     </div>
 
                     <!-- Explainable AI (XAI) Cognitive Threat Reasoning Card -->
-                    <div id="gemini-xai-card" class="premium-card p-5 space-y-3 border border-indigo-500/30">
-                        <div class="flex items-center justify-between border-b border-[#1C2333] pb-3">
+                    <div id="gemini-xai-card" class="premium-card p-5 space-y-3 border border-indigo-500/40">
+                        <div class="flex items-center justify-between border-b border-[rgba(59,130,246,0.35)] pb-3">
                             <div class="text-xs font-bold uppercase tracking-wider text-indigo-300 flex items-center gap-2">
                                 <i class="fa-solid fa-brain text-amber-400"></i> Threat Reasoning &bull; Explainable AI
                             </div>
-                            <span id="gemini-verdict-badge" class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-[#161C2C] text-[#94A3B8] border border-[#222B3D]">
+                            <span id="gemini-verdict-badge" class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-[#161C2C] text-[#94A3B8] border border-[rgba(59,130,246,0.4)]">
                                 STANDBY
                             </span>
                         </div>
 
                         <div class="text-xs font-mono flex items-center gap-2">
                             <span class="text-[#94A3B8]">Attack Tactic:</span>
-                            <span id="gemini-tactic-tag" class="font-bold text-[#00F5D4] bg-[#0A0D15] px-2 py-0.5 rounded border border-[#222B3D] text-[11px]">
+                            <span id="gemini-tactic-tag" class="font-bold text-[#00F5D4] bg-[#0A0D15] px-2 py-0.5 rounded border border-[rgba(59,130,246,0.4)] text-[11px]">
                                 Standby
                             </span>
                         </div>
 
-                        <p id="gemini-reasoning-text" class="text-xs text-gray-300 leading-relaxed italic bg-[#0A0D15] p-3 rounded-lg border border-[#1C2333]">
+                        <p id="gemini-reasoning-text" class="text-xs text-gray-300 leading-relaxed italic bg-[#0A0D15] p-3 rounded-lg border border-[rgba(59,130,246,0.35)]">
                             Run a scan above to generate contextual threat analysis and plain-English attack explanations.
                         </p>
                     </div>
@@ -705,7 +697,7 @@
 
                 <!-- Right Column: Forensic Findings Terminal (7 cols) -->
                 <div class="xl:col-span-7 premium-card overflow-hidden">
-                    <div class="flex items-center justify-between px-6 py-4 border-b border-[#1C2333] bg-[#0A0D15]">
+                    <div class="flex items-center justify-between px-6 py-4 border-b border-[rgba(59,130,246,0.35)] bg-[#0A0D15]">
                         <div class="flex items-center gap-3">
                             <h3 class="text-sm font-bold text-white flex items-center gap-2">
                                 <i class="fa-solid fa-list-check text-[#00F5D4]"></i>
@@ -715,7 +707,7 @@
                                 <i class="fa-solid fa-shield-halved mr-1"></i> Threat Feed: Verified Clean
                             </span>
                         </div>
-                        <span id="findings-count" class="text-xs font-mono font-bold bg-[#161C2C] text-gray-300 px-3 py-1 rounded-full border border-[#222B3D]">
+                        <span id="findings-count" class="text-xs font-mono font-bold bg-[#161C2C] text-gray-300 px-3 py-1 rounded-full border border-[rgba(59,130,246,0.4)]">
                             0 Findings
                         </span>
                     </div>

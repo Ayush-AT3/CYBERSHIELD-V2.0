@@ -1,6 +1,6 @@
 /* ============================================================
    CyberShield — Modern Enterprise Security & DevTools UI
-   Clean · Premium Obsidian & Neon Cyan · High Contrast
+   Clean · Premium Obsidian & Neon Cyan · High-Contrast Borders
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
@@ -8,10 +8,10 @@
 /* ── Design Tokens ───────────────────────────────────────── */
 :root {
     --bg-dark:         #07090E;
-    --bg-surface:      #0D111A;
-    --bg-card:         #111622;
-    --bg-card-sub:     #161C2C;
-    --bg-input:        #0A0D15;
+    --bg-surface:      #0C1019;
+    --bg-card:         #0F1422;
+    --bg-card-sub:     #131929;
+    --bg-input:        #080C15;
 
     --accent-cyan:     #00F5D4;
     --accent-cobalt:   #3B82F6;
@@ -20,9 +20,11 @@
     --accent-red:      #EF4444;
     --accent-emerald:  #10B981;
 
-    --border-subtle:   #1C2333;
-    --border-card:     #222B3D;
-    --border-glow:     rgba(0, 245, 212, 0.35);
+    /* Distinct crisp entity border matching user specification */
+    --border-entity:       rgba(59, 130, 246, 0.48);
+    --border-entity-hover: rgba(0, 245, 212, 0.75);
+    --border-subtle:       rgba(59, 130, 246, 0.35);
+    --border-card:         rgba(59, 130, 246, 0.48);
 
     --text-white:      #FFFFFF;
     --text-main:       #E2E8F0;
@@ -61,7 +63,7 @@ body {
 /* ── Navigation Header ───────────────────────────────────── */
 .navbar-wrapper {
     background: rgba(7, 9, 14, 0.94);
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1.5px solid var(--border-entity);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     position: sticky;
@@ -88,7 +90,7 @@ body {
 .nav-link-btn:hover {
     color: var(--text-white);
     background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.15);
 }
 
 .nav-link-btn.active {
@@ -99,53 +101,30 @@ body {
     box-shadow: 0 0 16px -2px rgba(0, 245, 212, 0.5);
 }
 
-/* Status Beacon */
-.status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 14px;
-    border-radius: 20px;
-    background: rgba(0, 245, 212, 0.08);
-    border: 1px solid rgba(0, 245, 212, 0.25);
-    color: var(--accent-cyan);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-}
-
-.status-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--accent-cyan);
-    box-shadow: 0 0 8px 1px var(--accent-cyan);
-    animation: beacon-pulse 2s infinite ease-in-out;
-}
-
-@keyframes beacon-pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.85); }
-}
-
-/* ── Modern Premium Cards & Panels ───────────────────────── */
+/* ── Modern Premium Cards & Panels (With Crisp Entity Borders) ── */
 .premium-card {
     background: var(--bg-surface);
-    border: 1px solid var(--border-card);
-    border-radius: 16px;
-    box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+    border: 1.5px solid var(--border-entity);
+    border-radius: 14px;
+    box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
     transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .premium-card:hover {
-    border-color: rgba(0, 245, 212, 0.35);
+    border-color: var(--border-entity-hover);
+    box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.7), 0 0 24px -4px rgba(0, 245, 212, 0.25);
 }
 
 .card-sub {
     background: var(--bg-card-sub);
-    border: 1px solid var(--border-subtle);
+    border: 1.5px solid var(--border-entity);
     border-radius: 12px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-sub:hover {
+    border-color: rgba(59, 130, 246, 0.65);
+    box-shadow: 0 0 18px -4px rgba(59, 130, 246, 0.2);
 }
 
 /* ── Gradient Headline ───────────────────────────────────── */
@@ -168,7 +147,7 @@ body {
     font-size: 14px;
     padding: 13px 26px;
     border-radius: 10px;
-    border: none;
+    border: 1px solid rgba(0, 245, 212, 0.4);
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 0 24px -4px rgba(0, 245, 212, 0.45);
@@ -196,7 +175,7 @@ body {
     font-size: 14px;
     padding: 13px 24px;
     border-radius: 10px;
-    border: 1px solid var(--border-card);
+    border: 1.5px solid var(--border-entity);
     cursor: pointer;
     transition: all 0.2s ease;
     text-decoration: none;
@@ -220,7 +199,7 @@ body {
     border-radius: 10px;
     font-weight: 700;
     font-size: 14px;
-    border: none;
+    border: 1.5px solid transparent;
     cursor: pointer;
     transition: all 0.2s ease;
     text-decoration: none;
@@ -229,6 +208,7 @@ body {
 .btn-tool-action.cyan {
     background: var(--accent-cyan);
     color: #050811;
+    border-color: rgba(0, 245, 212, 0.4);
     box-shadow: 0 0 20px -3px rgba(0, 245, 212, 0.4);
 }
 .btn-tool-action.cyan:hover {
@@ -240,6 +220,7 @@ body {
 .btn-tool-action.blue {
     background: var(--accent-cobalt);
     color: #FFFFFF;
+    border-color: rgba(59, 130, 246, 0.5);
     box-shadow: 0 0 20px -3px rgba(59, 130, 246, 0.4);
 }
 .btn-tool-action.blue:hover {
@@ -254,7 +235,7 @@ input[type="number"],
 textarea {
     background-color: var(--bg-input) !important;
     color: #FFFFFF !important;
-    border: 1px solid var(--border-card) !important;
+    border: 1.5px solid var(--border-entity) !important;
     border-radius: 10px !important;
     font-family: var(--font-mono) !important;
     font-size: 13.5px !important;
@@ -265,7 +246,7 @@ input[type="text"]:focus,
 input[type="number"]:focus,
 textarea:focus {
     border-color: var(--accent-cyan) !important;
-    box-shadow: 0 0 0 3px rgba(0, 245, 212, 0.18) !important;
+    box-shadow: 0 0 0 3px rgba(0, 245, 212, 0.22) !important;
     outline: none !important;
 }
 
@@ -282,7 +263,7 @@ textarea::placeholder {
     padding: 8px 18px;
     border-radius: 8px;
     background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
+    border: 1.5px solid var(--border-entity);
     cursor: pointer;
     transition: all 0.2s ease;
     display: inline-flex;
@@ -292,7 +273,7 @@ textarea::placeholder {
 
 .sub-mode-btn:hover {
     color: #FFFFFF;
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(59, 130, 246, 0.7);
 }
 
 .sub-mode-btn.active {
@@ -307,7 +288,7 @@ textarea::placeholder {
 .badge-safe {
     background: rgba(16, 185, 129, 0.15);
     color: #10B981;
-    border: 1px solid rgba(16, 185, 129, 0.4);
+    border: 1.5px solid rgba(16, 185, 129, 0.5);
     font-family: var(--font-mono);
     font-weight: 700;
 }
@@ -315,7 +296,7 @@ textarea::placeholder {
 .badge-suspicious {
     background: rgba(245, 158, 11, 0.15);
     color: #F59E0B;
-    border: 1px solid rgba(245, 158, 11, 0.4);
+    border: 1.5px solid rgba(245, 158, 11, 0.5);
     font-family: var(--font-mono);
     font-weight: 700;
 }
@@ -323,7 +304,7 @@ textarea::placeholder {
 .badge-dangerous {
     background: rgba(239, 68, 68, 0.15);
     color: #EF4444;
-    border: 1px solid rgba(239, 68, 68, 0.45);
+    border: 1.5px solid rgba(239, 68, 68, 0.5);
     font-family: var(--font-mono);
     font-weight: 700;
     box-shadow: 0 0 12px rgba(239, 68, 68, 0.3);
@@ -337,7 +318,7 @@ textarea::placeholder {
     padding: 4px 12px;
     border-radius: 6px;
     background: #080B12;
-    border: 1px solid var(--border-subtle);
+    border: 1.5px solid var(--border-entity);
     color: #FFFFFF;
     min-width: 48px;
     text-align: center;
@@ -429,12 +410,12 @@ textarea::placeholder {
     border-radius: 5px;
     background: rgba(0, 245, 212, 0.10);
     color: var(--accent-cyan);
-    border: 1px solid rgba(0, 245, 212, 0.3);
+    border: 1.5px solid rgba(0, 245, 212, 0.35);
 }
 
 /* ── Drag & Drop Zone ────────────────────────────────────── */
 .drop-zone {
-    border: 2px dashed var(--border-card);
+    border: 2px dashed var(--border-entity);
     background: #080B12;
     transition: all 0.2s ease;
 }

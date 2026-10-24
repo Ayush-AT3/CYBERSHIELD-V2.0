@@ -93,4 +93,4 @@ Add screenshots to the `screenshots/` folder and reference them below:
 This project is licensed under the **MIT License** – see the `LICENSE` file for details.
 
 ---
-*Generated with assistance from Google Antigravity.*
+
