@@ -692,11 +692,11 @@ function renderScanResults(result) {
                                        ind.scoreContribution > 0 ? 'var(--accent-amber)' : 'var(--text-dim)';
 
                     tr.innerHTML = `
-                        <td style="color:#93C5FD;white-space:nowrap;">${escapeHtml(ind.layer || '')}</td>
+                        <td style="color:#93C5FD;white-space:nowrap;font-weight:600;">${escapeHtml(ind.layer || '')}</td>
                         <td style="color:#ffffff;font-weight:600;">${escapeHtml(ind.title || '')}</td>
                         <td><span class="${sevClass}">${sev}</span></td>
                         <td style="color:${scoreColor};font-weight:700;">+${(ind.scoreContribution || 0).toFixed(1)}</td>
-                        <td style="color:var(--accent-cyan);word-break:break-all;max-width:140px;">${escapeHtml(ind.evidence || '')}</td>
+                        <td style="color:var(--accent-cyan);word-break:break-word;overflow-wrap:anywhere;line-height:1.4;">${escapeHtml(ind.evidence || '')}</td>
                         <td style="color:var(--text-main);line-height:1.5;">${escapeHtml(ind.description || '')}</td>
                     `;
                     tbody.appendChild(tr);
