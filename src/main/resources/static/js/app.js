@@ -846,20 +846,20 @@ function renderDatabaseHistory(scans) {
                           (classification === 'SUSPICIOUS' ? 'badge-suspicious' : 'badge-safe');
 
         const typeBadgeStyle = scan.scanType === 'URL'
-            ? 'background:rgba(0,245,212,0.10);color:var(--accent-cyan);border:1px solid rgba(0,245,212,0.25);'
-            : 'background:rgba(59,130,246,0.10);color:#93C5FD;border:1px solid rgba(59,130,246,0.25);';
+            ? 'background:rgba(0,245,212,0.10);color:var(--accent-cyan);border:1.5px solid rgba(0,245,212,0.45);'
+            : 'background:rgba(59,130,246,0.10);color:#93C5FD;border:1.5px solid rgba(59,130,246,0.45);';
 
         const displayTarget = scan.inputTarget || scan.subject || scan.sender || 'Scan Record';
         const dateStr = scan.createdAt ? new Date(scan.createdAt).toLocaleString() : 'Recent';
 
         tr.innerHTML = `
-            <td><span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded" style="${typeBadgeStyle}">${escapeHtml(scan.scanType || 'EMAIL')}</span></td>
+            <td><span class="text-[11px] font-mono font-bold px-2.5 py-1 rounded" style="${typeBadgeStyle}">${escapeHtml(scan.scanType || 'EMAIL')}</span></td>
             <td class="font-semibold text-white max-w-xs truncate" title="${escapeHtml(displayTarget)}">${escapeHtml(displayTarget)}</td>
             <td><span class="text-xs font-bold font-mono px-2.5 py-0.5 rounded ${badgeClass}">${classification}</span></td>
             <td class="font-mono font-bold" style="color:${classification === 'DANGEROUS' ? 'var(--accent-red)' : (classification === 'SUSPICIOUS' ? 'var(--accent-amber)' : 'var(--accent-cyan)')}">${(scan.overallRiskScore || 0).toFixed(1)} / 15</td>
             <td style="color:var(--text-main);">${dateStr}</td>
             <td class="text-right">
-                <button onclick="viewSavedScan(${index})" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg bg-[#141B2D] text-[#00F5D4] border border-[#222B3D] hover:border-[#00F5D4] transition">
+                <button onclick="viewSavedScan(${index})" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg bg-[#141B2D] text-[#00F5D4] border border-[rgba(59,130,246,0.55)] hover:border-[#00F5D4] transition">
                     <i class="fa-solid fa-eye mr-1"></i> View Audit
                 </button>
             </td>

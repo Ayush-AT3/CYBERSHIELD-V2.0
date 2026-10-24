@@ -99,16 +99,16 @@
                         </div>
 
                         <!-- Telemetry Stats Row -->
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-[#1C2333]">
-                            <div class="p-4 rounded-xl bg-[#0A0D15] border border-[rgba(59,130,246,0.4)]">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-[rgba(59,130,246,0.4)]">
+                            <div class="p-4 rounded-xl bg-[#0A0D15] border border-[rgba(59,130,246,0.6)] hover:border-[#00F5D4] transition">
                                 <div class="text-2xl sm:text-3xl font-extrabold text-white font-mono">48,600+</div>
                                 <div class="text-xs text-[#94A3B8] font-medium mt-1">Scans Analyzed</div>
                             </div>
-                            <div class="p-4 rounded-xl bg-[#0A0D15] border border-[rgba(59,130,246,0.4)]">
+                            <div class="p-4 rounded-xl bg-[#0A0D15] border border-[rgba(59,130,246,0.6)] hover:border-[#00F5D4] transition">
                                 <div class="text-2xl sm:text-3xl font-extrabold font-mono" style="color:var(--accent-cyan);">98.2%</div>
                                 <div class="text-xs text-[#94A3B8] font-medium mt-1">Detection Accuracy</div>
                             </div>
-                            <div class="p-4 rounded-xl bg-[#0A0D15] border border-[rgba(59,130,246,0.4)]">
+                            <div class="p-4 rounded-xl bg-[#0A0D15] border border-[rgba(59,130,246,0.6)] hover:border-[#00F5D4] transition">
                                 <div class="text-2xl sm:text-3xl font-extrabold text-white font-mono">&lt;40ms</div>
                                 <div class="text-xs text-[#94A3B8] font-medium mt-1">Average Latency</div>
                             </div>
@@ -331,19 +331,19 @@
                     <!-- Left: Input fields (7 cols) -->
                     <div class="xl:col-span-7 space-y-5">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
+                            <div class="p-4 rounded-xl bg-[#0A0D15] border border-[rgba(59,130,246,0.4)]">
                                 <label class="block text-xs font-bold text-[#E2E8F0] mb-2">Sender Address (From):</label>
                                 <input id="input-sender" type="text" placeholder="e.g. security-update@paypaI-support.com"
                                        class="w-full px-4 py-3 text-sm">
                             </div>
-                            <div>
+                            <div class="p-4 rounded-xl bg-[#0A0D15] border border-[rgba(59,130,246,0.4)]">
                                 <label class="block text-xs font-bold text-[#E2E8F0] mb-2">Subject Line:</label>
                                 <input id="input-subject" type="text" placeholder="e.g. Urgent: Account Verification Required"
                                        class="w-full px-4 py-3 text-sm">
                             </div>
                         </div>
 
-                        <div>
+                        <div class="p-4 rounded-xl bg-[#0A0D15] border border-[rgba(59,130,246,0.4)]">
                             <label class="block text-xs font-bold text-[#E2E8F0] mb-2">Email Body Content:</label>
                             <textarea id="input-body" rows="7" placeholder="Paste or type the full email body content here..."
                                       class="w-full p-4 text-xs font-mono leading-relaxed"></textarea>
@@ -388,14 +388,14 @@
                                 Awaiting input to begin live prediction…
                             </div>
 
-                            <div class="flex items-center justify-between pt-2">
-                                <div>
+                            <div class="flex items-center justify-between pt-3 border-t border-[rgba(59,130,246,0.3)]">
+                                <div class="p-3 rounded-lg bg-[#0A0D15] border border-[rgba(59,130,246,0.4)] flex-1 mr-3">
                                     <span class="text-xs text-[#94A3B8] block font-medium">Model Prediction:</span>
                                     <span id="email-ml-prediction-badge" class="text-xl font-extrabold font-mono text-gray-500">
                                         —
                                     </span>
                                 </div>
-                                <div class="text-right">
+                                <div class="p-3 rounded-lg bg-[#0A0D15] border border-[rgba(59,130,246,0.4)] flex-1 text-right">
                                     <span class="text-xs text-[#94A3B8] block font-medium">Confidence:</span>
                                     <span id="email-ml-confidence-val" class="text-xl font-extrabold font-mono text-gray-500">
                                         — %
@@ -405,7 +405,7 @@
 
                             <!-- Confidence Meter -->
                             <div class="space-y-1.5">
-                                <div class="w-full bg-[#0A0D15] rounded-full h-2 overflow-hidden border border-[#1C2333]">
+                                <div class="w-full bg-[#0A0D15] rounded-full h-2 overflow-hidden border border-[rgba(59,130,246,0.4)]">
                                     <div id="email-ml-confidence-bar" class="h-full transition-all duration-500 rounded-full" style="width:0%;background:var(--accent-cyan);"></div>
                                 </div>
                                 <div class="flex justify-between text-[11px] text-[#94A3B8] font-mono">
@@ -415,7 +415,7 @@
                             </div>
 
                             <!-- Token Chips -->
-                            <div class="pt-3 border-t border-[#1C2333]">
+                            <div class="pt-3 border-t border-[rgba(59,130,246,0.3)]">
                                 <span class="text-xs font-bold text-gray-300 block mb-2 flex items-center gap-1.5">
                                     <i class="fa-solid fa-microchip text-indigo-400"></i> Key Influential Tokens:
                                 </span>
@@ -424,7 +424,7 @@
                                 </div>
                             </div>
 
-                            <div class="text-[11px] text-[#94A3B8] font-mono border-t border-[#1C2333] pt-3 flex items-start gap-1.5">
+                            <div class="text-[11px] text-[#94A3B8] font-mono border-t border-[rgba(59,130,246,0.3)] pt-3 flex items-start gap-1.5">
                                 <i class="fa-solid fa-circle-info text-[#00F5D4] mt-0.5"></i>
                                 Click <strong>Analyze Email</strong> for the full 5-layer cumulative forensic audit.
                             </div>
@@ -501,7 +501,7 @@
 
                     <!-- Left: URL Input (7 cols) -->
                     <div class="xl:col-span-7 space-y-5">
-                        <div>
+                        <div class="p-4 rounded-xl bg-[#0A0D15] border border-[rgba(59,130,246,0.4)]">
                             <label class="block text-xs font-bold text-[#E2E8F0] mb-2">Target URL to Inspect:</label>
                             <input id="input-target-url" type="text" placeholder="https://secure-login-portal-auth.com/verify?account=982"
                                    class="w-full px-4 py-3.5 text-sm font-mono">
@@ -542,14 +542,14 @@
                                 Awaiting URL input to begin live prediction…
                             </div>
 
-                            <div class="flex items-center justify-between pt-2">
-                                <div>
+                            <div class="flex items-center justify-between pt-3 border-t border-[rgba(59,130,246,0.3)]">
+                                <div class="p-3 rounded-lg bg-[#0A0D15] border border-[rgba(59,130,246,0.4)] flex-1 mr-3">
                                     <span class="text-xs text-[#94A3B8] block font-medium">Model Prediction:</span>
                                     <span id="url-ml-prediction-badge" class="text-xl font-extrabold font-mono text-gray-500">
                                         —
                                     </span>
                                 </div>
-                                <div class="text-right">
+                                <div class="p-3 rounded-lg bg-[#0A0D15] border border-[rgba(59,130,246,0.4)] flex-1 text-right">
                                     <span class="text-xs text-[#94A3B8] block font-medium">Confidence:</span>
                                     <span id="url-ml-confidence-val" class="text-xl font-extrabold font-mono text-gray-500">
                                         — %
@@ -558,7 +558,7 @@
                             </div>
 
                             <div class="space-y-1.5">
-                                <div class="w-full bg-[#0A0D15] rounded-full h-2 overflow-hidden border border-[#1C2333]">
+                                <div class="w-full bg-[#0A0D15] rounded-full h-2 overflow-hidden border border-[rgba(59,130,246,0.4)]">
                                     <div id="url-ml-confidence-bar" class="h-full transition-all duration-500 rounded-full" style="width:0%;background:var(--accent-cyan);"></div>
                                 </div>
                                 <div class="flex justify-between text-[11px] text-[#94A3B8] font-mono">
@@ -567,7 +567,7 @@
                                 </div>
                             </div>
 
-                            <div class="pt-3 border-t border-[#1C2333]">
+                            <div class="pt-3 border-t border-[rgba(59,130,246,0.3)]">
                                 <span class="text-xs font-bold text-gray-300 block mb-2 flex items-center gap-1.5">
                                     <i class="fa-solid fa-microchip text-[#00F5D4]"></i> Top Influential Tokens:
                                 </span>
@@ -576,7 +576,7 @@
                                 </div>
                             </div>
 
-                            <div class="text-[11px] text-[#94A3B8] font-mono border-t border-[#1C2333] pt-3 flex items-start gap-1.5">
+                            <div class="text-[11px] text-[#94A3B8] font-mono border-t border-[rgba(59,130,246,0.3)] pt-3 flex items-start gap-1.5">
                                 <i class="fa-solid fa-circle-info text-[#00F5D4] mt-0.5"></i>
                                 Click <strong>Scan URL</strong> for the full 5-layer cumulative forensic audit.
                             </div>
@@ -600,11 +600,11 @@
 
                     <!-- Cumulative Score Gauge -->
                     <div class="premium-card p-6 text-center space-y-4">
-                        <div>
+                        <div class="border-b border-[rgba(59,130,246,0.35)] pb-3">
                             <span class="text-xs font-bold uppercase tracking-wider text-[#94A3B8] block">Overall Cumulative Risk Score</span>
                         </div>
 
-                        <div class="relative w-44 h-44 mx-auto flex items-center justify-center my-2">
+                        <div class="relative w-44 h-44 mx-auto flex items-center justify-center my-2 p-2 rounded-2xl bg-[#0A0D15] border border-[rgba(59,130,246,0.4)]">
                             <canvas id="scoreGaugeCanvas" width="176" height="176"></canvas>
                             <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                                 <span id="gauge-score-value" class="text-5xl font-extrabold font-mono tracking-tight text-white">0.0</span>
@@ -612,19 +612,19 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-3 gap-2 text-xs font-mono pt-3 border-t border-[rgba(59,130,246,0.3)]">
-                            <div class="p-2.5 rounded-lg bg-[#0A0D15] border border-emerald-500/50 text-emerald-400 font-bold">
+                        <div class="grid grid-cols-3 gap-2.5 text-xs font-mono pt-3 border-t border-[rgba(59,130,246,0.4)]">
+                            <div class="p-2.5 rounded-lg bg-[#0A0D15] border border-emerald-500/60 text-emerald-400 font-bold">
                                 SAFE<br>1 – 5
                             </div>
-                            <div class="p-2.5 rounded-lg bg-[#0A0D15] border border-amber-500/50 text-amber-400 font-bold">
+                            <div class="p-2.5 rounded-lg bg-[#0A0D15] border border-amber-500/60 text-amber-400 font-bold">
                                 SUSPICIOUS<br>5 – 10
                             </div>
-                            <div class="p-2.5 rounded-lg bg-[#0A0D15] border border-red-500/50 text-red-400 font-bold">
+                            <div class="p-2.5 rounded-lg bg-[#0A0D15] border border-red-500/60 text-red-400 font-bold">
                                 DANGEROUS<br>10 – 15
                             </div>
                         </div>
 
-                        <div class="text-xs text-[#94A3B8] font-mono flex items-center justify-between pt-1">
+                        <div class="text-xs text-[#94A3B8] font-mono flex items-center justify-between pt-2 border-t border-[rgba(59,130,246,0.3)]">
                             <span>Analysis Speed:</span>
                             <span id="scan-time-label" class="text-[#00F5D4] font-bold">— ms</span>
                         </div>
@@ -632,7 +632,7 @@
 
                     <!-- Five Detection Layer Breakdown -->
                     <div class="premium-card p-5 space-y-3">
-                        <div class="text-xs font-bold uppercase tracking-wider text-[#94A3B8]">Detection Layer Breakdown</div>
+                        <div class="text-xs font-bold uppercase tracking-wider text-[#94A3B8] border-b border-[rgba(59,130,246,0.35)] pb-3">Detection Layer Breakdown</div>
 
                         <div class="space-y-2.5 text-xs">
                             <div class="p-3 rounded-xl bg-[#0A0D15] border border-[rgba(59,130,246,0.6)] flex justify-between items-center hover:border-[#00F5D4] transition">
